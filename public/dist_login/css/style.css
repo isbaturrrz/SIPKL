@@ -1,0 +1,48 @@
+
+body {
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    background-image:url();
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.main-logo img{
+    height: 60px;
+}
+
+.email .username-input{
+    margin-bottom: 20px;
+}
+
+.password .password-input{
+    margin-bottom: 40px;
+}
+
+.login-card {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px 0 rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.641);
+      backdrop-filter: blur(10px);
+}
+
+.btn-primary-custom {
+    background: linear-gradient(45deg, #0167FF, #b6d3ff);
+    color: white;
+    border: none;
+    border-radius: 14px;
+}
+
+@media (max-width: 426px){
+    .login_card{
+        padding: 0px 30px 0px 30px;
+    }
+
+    .padding_card{
+        padding-top: 30px !important;
+        padding-bottom: 40px !important;
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+}
