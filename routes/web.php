@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\Admin\GuruController;
 
 
 Route::middleware(['guest'])->group(function () {
@@ -33,12 +36,11 @@ Route::middleware(['auth', 'role:admin'])
     ->name('admin.')
     ->group(function () {
         
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');       
-        // Contoh jika nanti nambah halaman profil admin
-        // Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
-        // Hasil URL: /admin/profile
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        
+        Route::resource('siswa', App\Http\Controllers\Admin\SiswaController::class);
+
+        Route::resource('guru', App\Http\Controllers\Admin\GuruController::class);
     });
 
 

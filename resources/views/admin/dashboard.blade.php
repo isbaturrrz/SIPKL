@@ -42,16 +42,18 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Dashboard</span>
+                </a>
             </li>   
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-cart-plus"></i>
-                    <span>Kelola Siswa</span></a>
+                <a class="nav-link" href="{{ route('admin.siswa.index') }}">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Kelola Siswa</span>
+                </a>
             </li>
 
             <li class="nav-item">
@@ -61,9 +63,10 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-cart-arrow-down"></i>
-                    <span>Kelola Guru</span></a>    
+                <a class="nav-link" href="{{ route('admin.guru.index') }}">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Kelola Guru</span>
+                </a>    
             </li>
 
             <!-- Divider -->
@@ -138,7 +141,7 @@
                                                 Total Siswa
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                {{-- codingan penampil nilai card --}}
+                                                {{ $totalSiswa }}
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -158,7 +161,7 @@
                                                 Total Instansi
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                {{-- codingan penampil nilai card --}}
+                                                {{ $totalInstansi }}
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -179,7 +182,7 @@
                                                 Total Guru
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                {{-- codingan penampil nilai card --}}
+                                                {{ $totalGuru }}
                                             </div>
                                         </div>
                                         <div class="col-auto">

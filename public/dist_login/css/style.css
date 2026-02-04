@@ -1,8 +1,10 @@
 
 body {
-    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-    background-image:url();
+    background-image:url('/dist_login/img/login.webp');
     min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
 }
@@ -24,7 +26,7 @@ body {
     box-shadow: 0 10px 30px 0 rgba(0,0,0,0.15);
     backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.641);
-      backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 .btn-primary-custom {
