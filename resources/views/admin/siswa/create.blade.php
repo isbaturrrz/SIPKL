@@ -10,11 +10,11 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset ('dist_admin/css/style.css')}}">
     <link href="{{ asset ('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon main-logo">
@@ -39,16 +39,30 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('admin.instansi.index') }}">
                     <i class="fas fa-building"></i>
                     <span>Kelola Instansi</span>
                 </a> 
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('admin.guru.index') }}">
                     <i class="fas fa-chalkboard-teacher"></i>
                     <span>Kelola Guru</span>
+                </a>    
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.user.index') }}">
+                    <i class="fas fa-users"></i>
+                    <span>Kelola User</span>
+                </a>    
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.sistem.index') }}">
+                    <i class="fas fa-cogs"></i>
+                    <span>Kelola Sistem</span>
                 </a>    
             </li>
 
@@ -71,10 +85,8 @@
             </div>
         </ul>
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
@@ -93,14 +105,11 @@
                     </ul>
                 </nav>
 
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Tambah Data Siswa</h1>
                     </div>
 
-                    <!-- Form Tambah Siswa -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Form Input Siswa</h6>
@@ -133,49 +142,56 @@
                                 @endif
 
                                 <div class="row">
-                                    <!-- NIPD -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nipd">NIPD <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control @error('nipd') is-invalid @enderror" 
                                                 id="nipd" name="nipd" value="{{ old('nipd') }}" 
-                                                placeholder="Masukkan NIPD (Max 9 karakter)" maxlength="9" required>
+                                                placeholder="Masukkan NIPD (Max 9 karakter)" maxlength="9" 
+                                                pattern="[0-9]+" 
+                                                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                                required>
                                             @error('nipd')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
-                                            <small class="form-text text-muted">NIPD akan digunakan sebagai username login siswa</small>
+                                            <small class="form-text text-muted">NIPD hanya boleh berisi angka dan akan digunakan sebagai username login siswa</small>
                                         </div>
                                     </div>
 
-                                    <!-- Nama Lengkap -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nama">Nama Lengkap <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control @error('nama') is-invalid @enderror" 
                                                 id="nama" name="nama" value="{{ old('nama') }}" 
-                                                placeholder="Masukkan nama lengkap" required>
+                                                placeholder="Masukkan nama lengkap" 
+                                                pattern="[A-Za-z\s]+" 
+                                                oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')"
+                                                required>
                                             @error('nama')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
+                                            <small class="form-text text-muted">Nama hanya boleh berisi huruf</small>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <!-- Tempat Lahir -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="tempat_lahir">Tempat Lahir <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control @error('tempat_lahir') is-invalid @enderror" 
                                                 id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir') }}" 
-                                                placeholder="Masukkan tempat lahir" required>
+                                                placeholder="Masukkan tempat lahir" 
+                                                pattern="[A-Za-z\s]+" 
+                                                oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')"
+                                                required>
                                             @error('tempat_lahir')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
+                                            <small class="form-text text-muted">Tempat lahir hanya boleh berisi huruf</small>
                                         </div>
                                     </div>
 
-                                    <!-- Tanggal Lahir -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="tgl_lahir">Tanggal Lahir <span class="text-danger">*</span></label>
@@ -190,47 +206,71 @@
                                 </div>
 
                                 <div class="row">
-                                    <!-- No HP -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="no_hp">No HP <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control @error('no_hp') is-invalid @enderror" 
                                                 id="no_hp" name="no_hp" value="{{ old('no_hp') }}" 
-                                                placeholder="Contoh: 08123456789" maxlength="13" required>
+                                                placeholder="Contoh: 08123456789" maxlength="13" 
+                                                pattern="[0-9]+" 
+                                                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                                required>
                                             @error('no_hp')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
+                                            <small class="form-text text-muted">No HP hanya boleh berisi angka</small>
                                         </div>
                                     </div>
 
-                                    <!-- Kelas -->
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="kelas">Kelas <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('kelas') is-invalid @enderror" 
-                                                id="kelas" name="kelas" value="{{ old('kelas') }}" 
-                                                placeholder="Contoh: 12" maxlength="5" required>
+                                            <select class="form-control @error('kelas') is-invalid @enderror" 
+                                                    id="kelas" name="kelas" required>
+                                                <option value="">-- Pilih --</option>
+                                                @foreach(\App\Models\Siswa::KELAS_LIST as $kls)
+                                                    <option value="{{ $kls }}" {{ old('kelas') == $kls ? 'selected' : '' }}>
+                                                        {{ $kls }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                             @error('kelas')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
 
-                                    <!-- Jurusan -->
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="jurusan">Jurusan <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('jurusan') is-invalid @enderror" 
-                                                id="jurusan" name="jurusan" value="{{ old('jurusan') }}" 
-                                                placeholder="Contoh: RPL" required>
+                                            <select class="form-control @error('jurusan') is-invalid @enderror" 
+                                                    id="jurusan" name="jurusan" required>
+                                                <option value="">-- Pilih --</option>
+                                                @foreach(\App\Models\Siswa::JURUSAN_LIST as $kode => $nama)
+                                                    <option value="{{ $kode }}" {{ old('jurusan') == $kode ? 'selected' : '' }}>
+                                                        {{ $kode }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                             @error('jurusan')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="rombel">Rombel</label>
+                                            <input type="number" class="form-control @error('rombel') is-invalid @enderror" 
+                                                id="rombel" name="rombel" value="{{ old('rombel') }}" 
+                                                placeholder="1-99" min="1" max="99">
+                                            @error('rombel')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Alamat -->
                                 <div class="form-group">
                                     <label for="alamat">Alamat <span class="text-danger">*</span></label>
                                     <textarea class="form-control @error('alamat') is-invalid @enderror" 
@@ -241,47 +281,53 @@
                                     @enderror
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="id_instansi">Instansi Prakerin</label>
+                                    <select name="id_instansi" class="form-control @error('id_instansi') is-invalid @enderror">
+                                        <option value="">-- Pilih Instansi --</option>
+                                        @foreach($instansi as $inst)
+                                            <option value="{{ $inst->id_instansi }}" 
+                                                    {{ old('id_instansi') == $inst->id_instansi ? 'selected' : '' }}
+                                                    {{ $inst->kuota_terpakai >= $inst->kuota_siswa ? 'disabled' : '' }}>
+                                                {{ $inst->nama_instansi }} 
+                                                (Kuota: {{ $inst->kuota_terpakai }}/{{ $inst->kuota_siswa }})
+                                                @if($inst->kuota_terpakai >= $inst->kuota_siswa)
+                                                    - PENUH
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('id_instansi')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="form-text text-muted">Guru pembimbing akan otomatis dipilih berdasarkan instansi yang dipilih</small>
+                                </div>
+
                                 <div class="row">
-                                    <!-- Guru Pembimbing -->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="id_guru">Guru Pembimbing</label>
-                                            <select class="form-control @error('id_guru') is-invalid @enderror" 
-                                                id="id_guru" name="id_guru">
-                                                <option value="">-- Pilih Guru Pembimbing --</option>
-                                                @foreach($guru as $g)
-                                                    <option value="{{ $g->id_guru }}" {{ old('id_guru') == $g->id_guru ? 'selected' : '' }}>
-                                                        {{ $g->nama }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('id_guru')
+                                            <label for="tanggal_mulai">Tanggal Mulai PKL</label>
+                                            <input type="date" class="form-control @error('tanggal_mulai') is-invalid @enderror" 
+                                                id="tanggal_mulai" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}">
+                                            @error('tanggal_mulai')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
 
-                                    <!-- Instansi -->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="id_instansi">Instansi Prakerin</label>
-                                            <select class="form-control @error('id_instansi') is-invalid @enderror" 
-                                                id="id_instansi" name="id_instansi">
-                                                <option value="">-- Pilih Instansi --</option>
-                                                @foreach($instansi as $i)
-                                                    <option value="{{ $i->id_instansi }}" {{ old('id_instansi') == $i->id_instansi ? 'selected' : '' }}>
-                                                        {{ $i->nama_instansi }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('id_instansi')
+                                            <label for="tanggal_selesai">Tanggal Selesai PKL</label>
+                                            <input type="date" class="form-control @error('tanggal_selesai') is-invalid @enderror" 
+                                                id="tanggal_selesai" name="tanggal_selesai" value="{{ old('tanggal_selesai') }}">
+                                            @error('tanggal_selesai')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
+                                            <small class="form-text text-muted">Tanggal selesai harus setelah atau sama dengan tanggal mulai</small>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Tombol Submit -->
                                 <div class="form-group">
                                     <a href="{{ route('admin.siswa.index') }}" class="btn btn-secondary">
                                         <i class="fas fa-arrow-left"></i> Kembali
@@ -296,7 +342,6 @@
                 </div>
             </div>
 
-            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">

@@ -13,22 +13,34 @@ use Illuminate\Support\Facades\DB;
 
 class SiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $siswa = Siswa::with(['guru', 'instansi'])->get();
+        $search = $request->search;
+
+        $siswa = Siswa::with(['guru', 'instansi'])
+        ->when($search, function ($query) use ($search) {
+            $query->where('nama', 'like', "%{$search}%")
+                  ->orWhere('nipd', 'like', "%{$search}%");
+        })
+        ->latest()
+        ->paginate(10);
+        
         $totalSiswa = Siswa::count();
         $totalInstansi = Instansi::count();
         $totalGuru = Guru::count();
+
+        $siswa->appends(['search' => $search]);
 
         return view('admin.siswa.index', compact('siswa', 'totalSiswa', 'totalInstansi', 'totalGuru'));
     }
 
     public function create()
     {
-        $guru = Guru::all();
-        $instansi = Instansi::all();
-        
-        return view('admin.siswa.create', compact('guru', 'instansi'));
+        $instansi = Instansi::with('guru')
+            ->whereRaw('kuota_terpakai < kuota_siswa')
+            ->get();
+    
+        return view('admin.siswa.create', compact('instansi'));
     }
 
     public function store(Request $request)
@@ -40,27 +52,42 @@ class SiswaController extends Controller
             'tgl_lahir' => 'required|date',
             'no_hp' => 'required|max:13',
             'alamat' => 'required|max:100',
-            'kelas' => 'required|max:5',
-            'jurusan' => 'required|max:50',
-            'id_guru' => 'nullable|exists:guru,id_guru',
+            'kelas' => 'required|in:X,XI,XII',
+            'rombel' => 'nullable|numeric|min:1|max:99',
+            'jurusan' => 'required|in:' . implode(',', array_keys(\App\Models\Siswa::JURUSAN_LIST)),
             'id_instansi' => 'nullable|exists:instansi,id_instansi',
+            'tanggal_mulai' => 'nullable|date',
+            'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
         ]);
 
-        // Gunakan transaction untuk memastikan data konsisten
+        if ($request->id_instansi) {
+            $instansi = Instansi::findOrFail($request->id_instansi);
+            
+            if ($instansi->kuota_terpakai >= $instansi->kuota_siswa) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Kuota instansi ' . $instansi->nama_instansi . ' sudah penuh!');
+            }
+        }
+
         DB::beginTransaction();
         
         try {
-            // STEP 1: Buat user dulu
+            $id_guru = null;
+            if ($request->id_instansi) {
+                $instansi = Instansi::findOrFail($request->id_instansi);
+                $id_guru = $instansi->id_guru;
+            }
+
             $user = User::create([
                 'name' => $request->nama,
-                'email' => $request->nipd . '@sipkl.com',
-                'password' => Hash::make($request->tgl_lahir), // Password = tanggal lahir
+                'username' => $request->nipd,
+                'password' => Hash::make($request->tgl_lahir),
                 'role' => 'siswa'
             ]);
 
-            // STEP 2: Buat siswa dengan id dari user
             Siswa::create([
-                'id' => $user->id,  // ID dari user yang baru dibuat
+                'id' => $user->id,
                 'nipd' => $request->nipd,
                 'nama' => $request->nama,
                 'tempat_lahir' => $request->tempat_lahir,
@@ -68,11 +95,19 @@ class SiswaController extends Controller
                 'no_hp' => $request->no_hp,
                 'alamat' => $request->alamat,
                 'kelas' => $request->kelas,
+                'rombel' => $request->rombel,
                 'jurusan' => $request->jurusan,
-                'id_guru' => $request->id_guru,
+                'id_guru' => $id_guru,
                 'id_instansi' => $request->id_instansi,
-                'status_penempatan' => 'belum'
+                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_selesai' => $request->tanggal_selesai,
+                'status_penempatan' => $request->id_instansi ? 'sudah' : 'belum'
             ]);
+
+            if ($request->id_instansi) {
+                Instansi::where('id_instansi', $request->id_instansi)
+                    ->increment('kuota_terpakai');
+            }
 
             DB::commit();
 
@@ -91,10 +126,14 @@ class SiswaController extends Controller
     public function edit($id)
     {
         $siswa = Siswa::findOrFail($id);
-        $guru = Guru::all();
-        $instansi = Instansi::all();
+    
+        $instansi = Instansi::with('guru')
+            ->where(function($query) use ($siswa) {
+                $query->whereRaw('kuota_terpakai < kuota_siswa')
+                      ->orWhere('id_instansi', $siswa->id_instansi);
+            })->get();
 
-        return view('admin.siswa.edit', compact('siswa', 'guru', 'instansi'));
+        return view('admin.siswa.edit', compact('siswa', 'instansi'));
     }
 
     public function update(Request $request, $id)
@@ -108,16 +147,36 @@ class SiswaController extends Controller
             'tgl_lahir' => 'required|date',
             'no_hp' => 'required|max:13',
             'alamat' => 'required|max:100',
-            'kelas' => 'required|max:5',
-            'jurusan' => 'required|max:50',
-            'id_guru' => 'nullable|exists:guru,id_guru',
+            'kelas' => 'required|in:X,XI,XII',
+            'rombel' => 'nullable|numeric|min:1|max:99',
+            'jurusan' => 'required|in:' . implode(',', array_keys(\App\Models\Siswa::JURUSAN_LIST)),
             'id_instansi' => 'nullable|exists:instansi,id_instansi',
+            'tanggal_mulai' => 'nullable|date',
+            'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
         ]);
+
+        $instansiLama = $siswa->id_instansi;
+        $instansiBaru = $request->id_instansi;
+
+        if ($instansiBaru && $instansiBaru != $instansiLama) {
+            $instansi = Instansi::findOrFail($instansiBaru);
+            
+            if ($instansi->kuota_terpakai >= $instansi->kuota_siswa) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Kuota instansi ' . $instansi->nama_instansi . ' sudah penuh!');
+            }
+        }
 
         DB::beginTransaction();
         
         try {
-            // Update data siswa
+            $id_guru = null;
+            if ($instansiBaru) {
+                $instansi = Instansi::findOrFail($instansiBaru);
+                $id_guru = $instansi->id_guru;
+            }
+
             $siswa->update([
                 'nipd' => $request->nipd,
                 'nama' => $request->nama,
@@ -126,17 +185,31 @@ class SiswaController extends Controller
                 'no_hp' => $request->no_hp,
                 'alamat' => $request->alamat,
                 'kelas' => $request->kelas,
+                'rombel' => $request->rombel,
                 'jurusan' => $request->jurusan,
-                'id_guru' => $request->id_guru,
+                'id_guru' => $id_guru,
                 'id_instansi' => $request->id_instansi,
+                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_selesai' => $request->tanggal_selesai,
+                'status_penempatan' => $request->id_instansi ? 'sudah' : 'belum'
             ]);
 
-            // Update juga data user
+            if ($instansiLama && $instansiBaru && $instansiLama != $instansiBaru) {
+                Instansi::where('id_instansi', $instansiLama)->decrement('kuota_terpakai');
+                Instansi::where('id_instansi', $instansiBaru)->increment('kuota_terpakai');
+            }
+            elseif (!$instansiLama && $instansiBaru) {
+                Instansi::where('id_instansi', $instansiBaru)->increment('kuota_terpakai');
+            }
+            elseif ($instansiLama && !$instansiBaru) {
+                Instansi::where('id_instansi', $instansiLama)->decrement('kuota_terpakai');
+            }
+
             $user = User::find($siswa->id);
             if ($user) {
                 $user->update([
                     'name' => $request->nama,
-                    'email' => $request->nipd . '@sipkl.com'
+                    'username' => $request->nipd,
                 ]);
             }
 
@@ -161,10 +234,12 @@ class SiswaController extends Controller
         DB::beginTransaction();
         
         try {
-            // Hapus user dulu
+            if ($siswa->id_instansi) {
+                Instansi::where('id_instansi', $siswa->id_instansi)
+                    ->decrement('kuota_terpakai');
+            }
+
             User::where('id', $siswa->id)->delete();
-            
-            // Baru hapus siswa
             $siswa->delete();
 
             DB::commit();

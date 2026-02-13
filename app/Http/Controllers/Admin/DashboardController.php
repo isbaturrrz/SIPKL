@@ -12,12 +12,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Hitung total data
         $totalSiswa = Siswa::count();
         $totalGuru = Guru::count();
         $totalInstansi = Instansi::count();
 
-        // Kirim data ke view
         return view('admin.dashboard', compact('totalSiswa', 'totalGuru', 'totalInstansi'));
     }
 }

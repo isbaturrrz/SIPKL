@@ -9,28 +9,21 @@ use App\Http\Controllers\Admin\GuruController;
 
 Route::middleware(['guest'])->group(function () {
     
-    // 1. Jika user buka website utama (root), lempar ke /login
     Route::get('/', function () {
         return redirect()->route('login');
     });
-
-    // 2. Tampilkan Halaman Login (Ini solusi error GET not supported)
-    // URL: http://127.0.0.1:8000/login
+ 
     Route::get('/login', [AuthController::class, 'index'])->name('login');
 
-    // 3. Proses Submit Login
     Route::post('/login', [AuthController::class, 'login'])->name('login.proses');
 });
 
-// --- ROUTE LOGOUT ---
+
 Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout')
     ->middleware('auth');
 
 
-// --- 1. GROUP ADMIN ---
-// URL: /admin/dashboard
-// Route Name: admin.dashboard
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->name('admin.')
@@ -41,12 +34,16 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('siswa', App\Http\Controllers\Admin\SiswaController::class);
 
         Route::resource('guru', App\Http\Controllers\Admin\GuruController::class);
+
+        Route::resource('instansi', App\Http\Controllers\Admin\InstansiController::class);
+
+        Route::resource('user',  App\Http\Controllers\Admin\UserController::class);
+    
+        Route::resource('sistem',  App\Http\Controllers\Admin\SistemController::class);
     });
 
 
-// --- 2. GROUP SISWA ---
-// URL: /siswa/dashboard
-// Route Name: siswa.dashboard
+
 Route::middleware(['auth', 'role:siswa'])
     ->prefix('siswa')
     ->name('siswa.')
@@ -57,9 +54,7 @@ Route::middleware(['auth', 'role:siswa'])
     });
 
 
-// --- 3. GROUP MENTOR ---
-// URL: /mentor/dashboard
-// Route Name: mentor.dashboard
+
 Route::middleware(['auth', 'role:mentor'])
     ->prefix('mentor')
     ->name('mentor.')
@@ -69,14 +64,19 @@ Route::middleware(['auth', 'role:mentor'])
         })->name('dashboard');
     });
 
-// --- 4. GROUP GURU ---
-// URL: /guru/dashboard
-// Route Name: guru.dashboard
+
 Route::middleware(['auth', 'role:guru'])
     ->prefix('guru')
     ->name('guru.')
     ->group(function () {      
-        Route::get('/dashboard', function () {
-            return view('guru.dashboard');
+        Route::get('/dashboard', function () {return view('guru.dashboard');
         })->name('dashboard');
+
+        Route::get('/siswa', [App\Http\Controllers\Guru\SiswaController::class, 'index'])->name('siswa.index');
+        Route::post('/siswa/{siswa}/update-status', [App\Http\Controllers\Guru\SiswaController::class, 'updateStatus'])->name('siswa.updateStatus');
+
+        Route::get('/jurnal', [App\Http\Controllers\Guru\JurnalController::class, 'index'])->name('jurnal.index');
+        Route::get('/jurnal/create', [App\Http\Controllers\Guru\JurnalController::class, 'create'])->name('jurnal.create');
+        Route::post('/jurnal', [App\Http\Controllers\Guru\JurnalController::class, 'store'])->name('jurnal.store');
+        Route::get('/jurnal/{id}', [App\Http\Controllers\Guru\JurnalController::class, 'show'])->name('jurnal.show');
     });

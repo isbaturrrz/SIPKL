@@ -18,18 +18,22 @@ class Guru extends Model
         'email',
         'tempat_lahir',
         'tgl_lahir',
-        'no_hp'
+        'no_hp',
+        'id_instansi',
     ];
 
-    // Relasi ke User
     public function user()
     {
         return $this->belongsTo(User::class, 'id', 'id');
     }
 
-    // Relasi ke Siswa
     public function siswa()
     {
         return $this->hasMany(Siswa::class, 'id_guru', 'id_guru');
+    }
+
+     public function instansi()
+    {
+        return $this->belongsTo(Instansi::class, 'id_instansi', 'id_instansi');
     }
 }

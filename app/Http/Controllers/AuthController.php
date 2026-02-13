@@ -7,73 +7,60 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    function index()
+    public function index()
     {
         return view('login');
     }
 
-    function login(Request $request)
+    public function login(Request $request)
     {
-        // 1. Validasi Input
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required'
         ], [
-            'email.required' => 'Email Wajib Diisi',
-            'email.email' => 'Format Email Salah',
+            'email.required' => 'Username atau Email Wajib Diisi',
             'password.required' => 'Password Wajib Diisi',
         ]);
 
+        $loginType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
         $credentials = [
-            'email' => $request->email,
+            $loginType => $request->email,
             'password' => $request->password,
         ];
 
-        // 2. Coba Login
         if (Auth::attempt($credentials)) {
-            // [PENTING] Regenerate Session untuk mencegah Session Fixation
             $request->session()->regenerate();
 
-            // Ambil data user
-            $user = Auth::user(); // Gunakan Auth:: (kapital) agar konsisten
+            $user = Auth::user();
 
-            // 3. Cek Role & Redirect
             switch ($user->role) {
                 case 'admin':
                     return redirect()->route('admin.dashboard');
                 case 'siswa':
-                    return redirect()->route('siswa.dashboard'); // TYPO FIXED: 'dasshboard' -> 'dashboard'
+                    return redirect()->route('siswa.dashboard');
                 case 'mentor':
                     return redirect()->route('mentor.dashboard');
                 case 'guru':
                     return redirect()->route('guru.dashboard');
                 default:
-                    // Jika role tidak dikenali, paksa logout
                     Auth::logout();
                     $request->session()->invalidate();
                     $request->session()->regenerateToken();
-                    return redirect('/login')->withErrors('Role akun tidak valid, hubungi admin.');
+                    return redirect('/login')->withErrors(['email' => 'Role akun tidak valid.']);
             }
         } else {
-            // 4. Jika Login Gagal
             return redirect()->back()
-                // Gunakan key ['email' => ...] agar pesan error muncul tepat di bawah input email (jika pakai @error('email'))
-                ->withErrors(['email' => 'Email atau password salah']) 
+                ->withErrors(['email' => 'Username/Email atau Password salah']) 
                 ->withInput($request->except('password'));
         }
     }
 
-    function logout(Request $request)
+    public function logout(Request $request)
     {
-        // [STANDAR KEAMANAN] Logout yang benar
         Auth::logout();
-        
-        // Menghapus sesi agar tidak bisa di-back
         $request->session()->invalidate();
-        
-        // Membuat ulang token CSRF
         $request->session()->regenerateToken();
-
-        return redirect()->route('login'); // Lebih baik redirect ke /login daripada '' (root)
+        return redirect()->route('login');
     }
 }
