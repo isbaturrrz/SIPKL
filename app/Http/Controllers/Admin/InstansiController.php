@@ -39,6 +39,7 @@ class InstansiController extends Controller
             'pemilik' => 'required|string|max:50',
             'kuota_siswa' => 'required|integer|min:1',
             'id_guru' => 'nullable|exists:guru,id_guru',
+            'jurusan_diterima' => 'required|in:PPLG,BRP,DKV,PPLG-BRP,PPLG-DKV,BRP-DKV,PPLG-BRP-DKV',
         ]);
 
         if ($request->id_guru) {
@@ -63,6 +64,7 @@ class InstansiController extends Controller
                 'kuota_terpakai' => 0,
                 'is_from_submission' => 0,
                 'id_guru' => $validated['id_guru'],
+                'jurusan_diterima' => $validated['jurusan_diterima'],
             ]);
 
             $username = strtolower($validated['nama_instansi']);
@@ -130,6 +132,7 @@ class InstansiController extends Controller
             'pemilik' => 'required|string|max:50',
             'kuota_siswa' => 'required|integer|min:1',
             'id_guru' => 'nullable|exists:guru,id_guru',
+            'jurusan_diterima' => 'required|in:PPLG,BRP,DKV,PPLG-BRP,PPLG-DKV,BRP-DKV,PPLG-BRP-DKV',
         ]);
 
         if ($validated['kuota_siswa'] < $instansi->kuota_terpakai) {

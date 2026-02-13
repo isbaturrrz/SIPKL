@@ -103,10 +103,7 @@
                 <div class="container-fluid">
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Jurnal Siswa</h1>
-                        <a href="{{ route('guru.jurnal.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Jurnal
-                        </a>
+                        <h1 class="h3 mb-3 mb-sm-0 text-gray-800">Jurnal Siswa</h1>
                     </div>
 
                     <div class="row">
@@ -150,8 +147,13 @@
                     @endif
 
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-primary">Data Jurnal Siswa (Terverifikasi Pembimbing Instansi)</h6>
+                            <div>
+                            <a href="{{ route('guru.jurnal.create') }}" class="btn btn-sm btn-primary shadow-sm">
+                                <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Jurnal
+                            </a>
+                        </div>
                         </div>
                         <div class="card-body">
                             
@@ -185,9 +187,14 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label>&nbsp;</label>
-                                            <button type="submit" class="btn btn-primary btn-sm btn-block">
-                                                <i class="fas fa-filter"></i> Filter
-                                            </button>
+                                            <div class="d-flex">
+                                                <button type="submit" class="btn btn-primary btn-sm mr-1 flex-fill">
+                                                    <i class="fas fa-filter"></i> Filter
+                                                </button>
+                                                <a href="{{ route('guru.jurnal.index') }}" class="btn btn-secondary btn-sm flex-fill" title="Reset Filter">
+                                                    <i class="fas fa-sync-alt"></i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -235,7 +242,7 @@
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan="8" class="text-center">
+                                            <td colspan="7" class="text-center">
                                                 <div class="py-4">
                                                     <i class="fas fa-inbox fa-3x text-gray-300 mb-3"></i>
                                                     <p class="text-gray-500">Tidak ada data jurnal yang terverifikasi</p>

@@ -184,7 +184,9 @@
                                            name="no_hp" 
                                            value="{{ old('no_hp') }}" 
                                            placeholder="Masukkan nomor HP (maksimal 13 digit)"
-                                           maxlength="13"
+                                           maxlength="13" 
+                                           pattern="[0-9]+" 
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                            required>
                                     @error('no_hp')
                                         <div class="invalid-feedback">{{ $message }}</div>

@@ -108,7 +108,6 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
             
-            // Cek jangan sampai hapus diri sendiri
             if ($user->id == Auth::id()) {
             return redirect()->back()
                 ->with('error', 'Anda tidak dapat menghapus akun sendiri!');

@@ -86,6 +86,7 @@ class SiswaController extends Controller
             'jam_selesai' => '00:00:00',
             'status_kehadiran' => 'alfa',
             'status_verifikasi' => 'verified',
+            'verified_by' => 'guru',
             'input_by' => 'guru',
             'created_at' => now(),
             'updated_at' => now()

@@ -157,9 +157,11 @@
                                                    id="no_hp" 
                                                    name="no_hp" 
                                                    value="{{ old('no_hp') }}"
-                                                   placeholder="Contoh: 081234567890"
-                                                   maxlength="13"
-                                                   required>
+                                                   placeholder="Masukkan nomor HP (maksimal 13 digit)"
+                                                   maxlength="13" 
+                                                    pattern="[0-9]+" 
+                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                                    required>
                                             @error('no_hp')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -199,6 +201,56 @@
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                             <small class="form-text text-muted">Jumlah maksimal siswa yang dapat diterima</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="jurusan_diterima">Jurusan yang Diterima <span class="text-danger">*</span></label>
+                                            <select name="jurusan_diterima" 
+                                                    id="jurusan_diterima" 
+                                                    class="form-control @error('jurusan_diterima') is-invalid @enderror" 
+                                                    required>
+                                                <option value="">-- Pilih Jurusan yang Diterima --</option>
+                                                
+                                                <optgroup label="Satu Jurusan">
+                                                    <option value="PPLG" {{ old('jurusan_diterima') == 'PPLG' ? 'selected' : '' }}>
+                                                        PPLG
+                                                    </option>
+                                                    <option value="BRP" {{ old('jurusan_diterima') == 'BRP' ? 'selected' : '' }}>
+                                                        BRP
+                                                    </option>
+                                                    <option value="DKV" {{ old('jurusan_diterima') == 'DKV' ? 'selected' : '' }}>
+                                                        DKV
+                                                    </option>
+                                                </optgroup>
+                                                
+                                                <optgroup label="Dua Jurusan">
+                                                    <option value="PPLG-BRP" {{ old('jurusan_diterima') == 'PPLG-BRP' ? 'selected' : '' }}>
+                                                        PPLG dan BRP
+                                                    </option>
+                                                    <option value="PPLG-DKV" {{ old('jurusan_diterima') == 'PPLG-DKV' ? 'selected' : '' }}>
+                                                        PPLG dan DKV
+                                                    </option>
+                                                    <option value="BRP-DKV" {{ old('jurusan_diterima') == 'BRP-DKV' ? 'selected' : '' }}>
+                                                        BRP dan DKV
+                                                    </option>
+                                                </optgroup>
+                                                
+                                                <optgroup label="Semua Jurusan">
+                                                    <option value="PPLG-BRP-DKV" {{ old('jurusan_diterima') == 'PPLG-BRP-DKV' ? 'selected' : '' }}>
+                                                        Semua Jurusan (PPLG, BRP, DKV)
+                                                    </option>
+                                                </optgroup>
+                                            </select>
+                                            @error('jurusan_diterima')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                            <small class="form-text text-muted">
+                                                <i class="fas fa-info-circle"></i> Pilih jurusan yang dapat diterima di instansi ini
+                                            </small>
                                         </div>
                                     </div>
                                 </div>

@@ -139,7 +139,6 @@
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Email</th>
-                                            <th>Tempat Lahir</th>
                                             <th>Tanggal Lahir</th>
                                             <th>No HP</th>
                                             <th>Instansi</th>
@@ -152,16 +151,15 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $item->nama }}</td>
                                             <td>{{ $item->email }}</td>
-                                            <td>{{ $item->tempat_lahir }}</td>
                                             <td>{{ \Carbon\Carbon::parse($item->tgl_lahir)->format('d-m-Y') }}</td>
                                             <td>{{ $item->no_hp }}</td>
                                              <td>
                                                 @if($item->instansi)
-                                                    <span class="badge badge-primary">
+                                                    <span class="text-success">
                                                         {{ $item->instansi->nama_instansi }}
                                                     </span>
                                                 @else
-                                                    <span class="badge badge-secondary">Belum Ditugaskan</span>
+                                                    <span class="text-danger">Belum Ditugaskan</span>
                                                 @endif
                                             </td>
                                             <td>

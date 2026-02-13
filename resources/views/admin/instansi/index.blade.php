@@ -141,6 +141,7 @@
                                             <th>Alamat</th>
                                             <th>No HP</th>
                                             <th>Pemilik</th>
+                                            <th>Jurusan</th>
                                             <th>Kuota</th>
                                             <th>Terpakai</th>
                                             <th>Guru Pembimbing</th>
@@ -157,6 +158,20 @@
                                             <td>{{ $item->alamat }}</td>
                                             <td>{{ $item->no_hp }}</td>
                                             <td>{{ $item->pemilik }}</td>
+                                            <td>
+                                                @if($item->jurusan_diterima === 'PPLG-BRP-DKV')
+                                                    <span class="text-success">
+                                                        Semua Jurusan
+                                                    </span>
+                                                @else
+                                                    @php
+                                                        $jurusan_list = explode('-', $item->jurusan_diterima);
+                                                    @endphp
+                                                    <span class="text-primary">
+                                                        {{ implode(', ', $jurusan_list) }}
+                                                    </span>
+                                                @endif
+                                            </td>
                                             <td>{{ $item->kuota_siswa }}</td>
                                             <td>{{ $item->kuota_terpakai }}</td>
                                             <td>
@@ -165,7 +180,7 @@
                                                         {{ $item->guru->nama }}
                                                     </span>
                                                 @else
-                                                    <span class="badge badge-warning">Belum ada guru</span>
+                                                    <span class="text-danger">Belum ada guru</span>
                                                 @endif
                                             </td>
                                             <td>

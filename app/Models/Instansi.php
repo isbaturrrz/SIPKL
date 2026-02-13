@@ -22,9 +22,30 @@ class Instansi extends Model
         'kuota_siswa',
         'kuota_terpakai',
         'is_from_submission',
-        'id_guru'
+        'id_guru',
+        'jurusan_diterima'
     ];
 
+    public function menerimaSiswa($kode_jurusan_siswa)
+    {
+        if ($this->jurusan_diterima === 'PPLG-BRP-DKV') {
+            return true;
+        }
+        
+        $jurusan_array = explode('-', $this->jurusan_diterima);
+        
+        return in_array($kode_jurusan_siswa, $jurusan_array);
+    }
+    
+    public function getJurusanDiterimaListAttribute()
+    {
+        if ($this->jurusan_diterima === 'PPLG-BRP-DKV') {
+            return ['PPLG', 'BRP', 'DKV'];
+        }
+        
+        return explode('-', $this->jurusan_diterima);
+    }
+    
     public function siswa()
     {
         return $this->hasMany(Siswa::class, 'id_instansi', 'id_instansi');

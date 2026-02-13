@@ -123,7 +123,7 @@ class JurnalController extends Controller
                            ->with('error', 'Jurnal untuk siswa ini pada tanggal tersebut sudah ada');
         }
 
-        Jurnal::create([
+        Jurnal::create([    
             'id_siswa' => $request->id_siswa,
             'tgl' => $request->tgl,
             'jam_mulai' => $request->jam_mulai,
@@ -133,7 +133,7 @@ class JurnalController extends Controller
             'manfaat' => $request->manfaat,
             'wfh' => $request->wfh ?? 0,
             'status_verifikasi' => 'pending',
-            'input_by' => 'guru'
+            'input_by' => 'guru',
         ]);
         
         return redirect()->route('guru.jurnal.index')
