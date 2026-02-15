@@ -81,4 +81,6 @@ class Siswa extends Model
     {
         return $this->hasMany(Jurnal::class, 'id_siswa', 'id_siswa');
     }
+
+    
 }

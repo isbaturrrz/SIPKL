@@ -122,7 +122,7 @@ class GuruController extends Controller
     public function update(Request $request, $id)
     {
         $guru = Guru::findOrFail($id);
-        $oldInstansiId = $guru->id_instansi; // Simpan ID lama di awal
+        $oldInstansiId = $guru->id_instansi;
 
         try {
             $validated = $request->validate([
@@ -163,13 +163,11 @@ class GuruController extends Controller
                 ]);
             }
 
-            // Hapus relasi dari instansi lama
             if ($oldInstansiId && $oldInstansiId != $request->id_instansi) {
                 Instansi::where('id_instansi', $oldInstansiId)
                         ->update(['id_guru' => null]);
             }
 
-            // Set relasi ke instansi baru
             if ($request->id_instansi) {
                 Instansi::where('id_instansi', $request->id_instansi)
                         ->update(['id_guru' => $id]);

@@ -32,7 +32,7 @@ class UserController extends Controller
                 'username' => 'required|max:50|unique:users,username',
                 'email' => 'required|email|unique:users,email|max:50',
                 'password' => 'required|min:6|confirmed',
-                'role' => 'required|in:admin,guru,siswa,',
+                'role' => 'required|in:admin,guru,siswa,mentor',
             ]);
 
             User::create([
@@ -72,7 +72,7 @@ class UserController extends Controller
                 'name' => 'required|max:50',
                 'username' => 'required|max:50|unique:users,username,' . $id,
                 'email' => 'required|email|max:50|unique:users,email,' . $id,
-                'role' => 'required|in:admin,guru,siswa,',
+                'role' => 'required|in:admin,guru,siswa,mentor',
                 'password' => 'nullable|min:6|confirmed',
             ]);
 

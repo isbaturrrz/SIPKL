@@ -340,7 +340,8 @@
                                     <ul class="mb-0 mt-2">
                                         <li>Akun mentor akan otomatis dibuat setelah data instansi disimpan</li>
                                         <li>Username mentor: <strong>nama_instansi</strong> (huruf kecil, spasi diganti underscore)</li>
-                                        <li>Password default mentor: <strong>mentor123</strong></li>
+                                        <li>Email mentor: <strong>nama_instansi@sipkl.com</strong> (huruf kecil, spasi diganti underscore)</li>
+                                        <li>Password default mentor: <strong>@mentor123</strong></li>
                                         <li>Mentor dapat login menggunakan akun tersebut</li>
                                     </ul>
                                 </div>

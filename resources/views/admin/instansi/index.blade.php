@@ -199,8 +199,14 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex gap-1">
+                                                    <a href="{{ route('admin.instansi.show', $item->id_instansi) }}" 
+                                                    class="btn btn-info btn-sm" 
+                                                    title="Detail">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
                                                     <a href="{{ route('admin.instansi.edit', $item->id_instansi) }}" 
-                                                    class="btn btn-warning btn-sm">
+                                                    class="btn btn-warning btn-sm"
+                                                    title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <form action="{{ route('admin.instansi.destroy', $item->id_instansi) }}" 
@@ -210,7 +216,8 @@
                                                         @method('DELETE')
                                                         <button type="submit" 
                                                                 class="btn btn-danger btn-sm" 
-                                                                onclick="return confirm('Yakin ingin menghapus?')">
+                                                                onclick="return confirm('Yakin ingin menghapus?')"
+                                                                title="Hapus">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>

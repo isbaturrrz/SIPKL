@@ -59,9 +59,25 @@ Route::middleware(['auth', 'role:mentor'])
     ->prefix('mentor')
     ->name('mentor.')
     ->group(function () {      
-        Route::get('/dashboard', function () {
-            return view('mentor.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [App\Http\Controllers\Mentor\DashboardController::class, 'index'])->name('dashboard');
+
+        Route::resource('siswa', App\Http\Controllers\Mentor\SiswaController::class)
+            ->only(['index', 'show']);
+
+        Route::resource('jurnal', App\Http\Controllers\Mentor\JurnalController::class)
+            ->only(['index', 'show']);
+        
+        Route::post('jurnal/{jurnal}/verify', [App\Http\Controllers\Mentor\JurnalController::class, 'verify'])
+            ->name('jurnal.verify');
+        
+        Route::post('jurnal/{jurnal}/reject', [App\Http\Controllers\Mentor\JurnalController::class, 'reject'])
+            ->name('jurnal.reject');
+
+        Route::get('/riwayat-jurnal', [App\Http\Controllers\Mentor\RiwayatJurnalController::class, 'index'])
+            ->name('riwayat.index');
+        
+        Route::get('/riwayat-jurnal/{id}', [App\Http\Controllers\Mentor\RiwayatJurnalController::class, 'show'])
+            ->name('riwayat.show');
     });
 
 
@@ -72,11 +88,11 @@ Route::middleware(['auth', 'role:guru'])
         Route::get('/dashboard', function () {return view('guru.dashboard');
         })->name('dashboard');
 
-        Route::get('/siswa', [App\Http\Controllers\Guru\SiswaController::class, 'index'])->name('siswa.index');
-        Route::post('/siswa/{siswa}/update-status', [App\Http\Controllers\Guru\SiswaController::class, 'updateStatus'])->name('siswa.updateStatus');
+        Route::resource('siswa', App\Http\Controllers\Guru\SiswaController::class)
+            ->only(['index', 'show']);
 
-        Route::get('/jurnal', [App\Http\Controllers\Guru\JurnalController::class, 'index'])->name('jurnal.index');
-        Route::get('/jurnal/create', [App\Http\Controllers\Guru\JurnalController::class, 'create'])->name('jurnal.create');
-        Route::post('/jurnal', [App\Http\Controllers\Guru\JurnalController::class, 'store'])->name('jurnal.store');
-        Route::get('/jurnal/{id}', [App\Http\Controllers\Guru\JurnalController::class, 'show'])->name('jurnal.show');
+        Route::post('siswa/{siswa}/update-status', [App\Http\Controllers\Guru\SiswaController::class, 'updateStatus'])
+            ->name('siswa.updateStatus');
+
+        Route::resource('jurnal', App\Http\Controllers\Guru\JurnalController::class);
     });

@@ -9,6 +9,7 @@ use App\Models\Guru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class InstansiController extends Controller
 {
@@ -29,81 +30,88 @@ class InstansiController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nama_instansi' => 'required|string|max:50',
-            'alamat' => 'required|string|max:50',
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
-            'no_hp' => 'required|string|max:13',
-            'pemilik' => 'required|string|max:50',
-            'kuota_siswa' => 'required|integer|min:1',
-            'id_guru' => 'nullable|exists:guru,id_guru',
-            'jurusan_diterima' => 'required|in:PPLG,BRP,DKV,PPLG-BRP,PPLG-DKV,BRP-DKV,PPLG-BRP-DKV',
+{
+    $validated = $request->validate([
+        'nama_instansi' => 'required|string|max:50',
+        'alamat' => 'required|string|max:50',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
+        'no_hp' => 'required|string|max:13',
+        'pemilik' => 'required|string|max:50',
+        'kuota_siswa' => 'required|integer|min:1',
+        'id_guru' => 'nullable|exists:guru,id_guru',
+        'jurusan_diterima' => 'required|in:PPLG,BRP,DKV,PPLG-BRP,PPLG-DKV,BRP-DKV,PPLG-BRP-DKV',
+    ]);
+
+    if ($request->id_guru) {
+        $guru = Guru::find($request->id_guru);
+        if ($guru && $guru->id_instansi) {
+            return back()->withInput()
+                ->with('error', 'Guru "' . $guru->nama . '" sudah membimbing instansi lain!');
+        }
+    }
+
+    try {
+        DB::beginTransaction();
+
+        $instansi = Instansi::create([
+            'nama_instansi' => $validated['nama_instansi'],
+            'alamat' => $validated['alamat'],
+            'latitude' => $validated['latitude'],
+            'longitude' => $validated['longitude'],
+            'no_hp' => $validated['no_hp'],
+            'pemilik' => $validated['pemilik'],
+            'kuota_siswa' => $validated['kuota_siswa'],
+            'kuota_terpakai' => 0,
+            'is_from_submission' => 0,
+            'id_guru' => $validated['id_guru'],
+            'jurusan_diterima' => $validated['jurusan_diterima'],
+        ]);
+
+        $username = strtolower($validated['nama_instansi']);
+        $username = preg_replace('/[^a-z0-9]+/', '_', $username);
+        $username = trim($username, '_');
+
+        if (strlen($username) > 20) {
+            $username = substr($username, 0, 20);
+        }
+        
+        $originalUsername = $username;
+        $counter = 1;
+        while (User::where('username', $username)->exists()) {
+            $username = $originalUsername . '_' . $counter;
+            $counter++;
+        }
+
+        $mentor = User::create([
+            'name' => 'Mentor ' . $validated['nama_instansi'],
+            'username' => $username,
+            'email' => $username . '@sipkl.com',
+            'password' => Hash::make('@mentor123'),
+            'role' => 'mentor',
+            'id_instansi' => $instansi->id_instansi,
         ]);
 
         if ($request->id_guru) {
-            $guru = Guru::find($request->id_guru);
-            if ($guru && $guru->id_instansi) {
-                return back()->withInput()
-                    ->with('error', 'Guru "' . $guru->nama . '" sudah membimbing instansi lain!');
-            }
+            Guru::where('id_guru', $request->id_guru)
+                ->update(['id_instansi' => $instansi->id_instansi]);
         }
 
-        try {
-            DB::beginTransaction();
+        DB::commit();
 
-            $instansi = Instansi::create([
-                'nama_instansi' => $validated['nama_instansi'],
-                'alamat' => $validated['alamat'],
-                'latitude' => $validated['latitude'],
-                'longitude' => $validated['longitude'],
-                'no_hp' => $validated['no_hp'],
-                'pemilik' => $validated['pemilik'],
-                'kuota_siswa' => $validated['kuota_siswa'],
-                'kuota_terpakai' => 0,
-                'is_from_submission' => 0,
-                'id_guru' => $validated['id_guru'],
-                'jurusan_diterima' => $validated['jurusan_diterima'],
-            ]);
+        return redirect()->route('admin.instansi.index')
+            ->with('success', 'Data instansi berhasil ditambahkan! Akun mentor dibuat dengan username: ' . $username . ' dan password: @mentor123');
 
-            $username = strtolower($validated['nama_instansi']);
-            $username = preg_replace('/[^a-z0-9]+/', '_', $username);
-            $username = trim($username, '_');
-            
-            $originalUsername = $username;
-            $counter = 1;
-            while (User::where('username', $username)->exists()) {
-                $username = $originalUsername . '_' . $counter;
-                $counter++;
-            }
-
-            User::create([
-                'name' => 'Mentor ' . $validated['nama_instansi'],
-                'username' => $username,
-                'email' => null,
-                'password' => Hash::make('@mentor123'),
-                'role' => 'mentor',
-                'id_instansi' => $instansi->id_instansi,
-            ]);
-
-            if ($request->id_guru) {
-                Guru::where('id_guru', $request->id_guru)
-                    ->update(['id_instansi' => $instansi->id_instansi]);
-            }
-
-            DB::commit();
-
-            return redirect()->route('admin.instansi.index')
-                ->with('success', 'Data instansi berhasil ditambahkan! Akun mentor dibuat dengan username: ' . $username . ' dan password: @mentor123');
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            
-            return back()->withInput()
-                ->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
-        }
+    } catch (\Exception $e) {
+        DB::rollBack();
+        
+        Log::error('Error creating instansi: ' . $e->getMessage());
+        Log::error('Stack trace: ' . $e->getTraceAsString());
+        
+        return back()->withInput()
+            ->with('error', 'Gagal menyimpan data: ' . $e->getMessage());
     }
+}
 
     public function edit($id)
     {
@@ -205,5 +213,13 @@ class InstansiController extends Controller
             DB::rollBack();
             return back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
+    }
+
+    public function show($id)
+    {
+        $instansi = Instansi::with(['mentor', 'siswa', 'guru'])
+            ->findOrFail($id);
+        
+        return view('admin.instansi.show', compact('instansi'));
     }
 }
