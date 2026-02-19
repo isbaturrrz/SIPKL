@@ -48,9 +48,9 @@ Route::middleware(['auth', 'role:siswa'])
     ->prefix('siswa')
     ->name('siswa.')
     ->group(function () {       
-        Route::get('/dashboard', function () {
-            return view('siswa.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [App\Http\Controllers\Siswa\DashboardController::class, 'index'])->name('dashboard');
+
+         Route::resource('jurnal', App\Http\Controllers\Siswa\JurnalController::class);
     });
 
 
@@ -78,6 +78,8 @@ Route::middleware(['auth', 'role:mentor'])
         
         Route::get('/riwayat-jurnal/{id}', [App\Http\Controllers\Mentor\RiwayatJurnalController::class, 'show'])
             ->name('riwayat.show');
+
+        Route::resource('nilai', App\Http\Controllers\Mentor\NilaiController::class);
     });
 
 

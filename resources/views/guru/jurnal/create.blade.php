@@ -210,7 +210,8 @@
                                                     class="form-control @error('status_kehadiran') is-invalid @enderror" 
                                                     required>
                                                 <option value="">-- Pilih Status --</option>
-                                                <option value="hadir" {{ old('status_kehadiran') == 'hadir' ? 'selected' : '' }}>Hadir</option>
+                                                <option value="wfo" {{ old('status_kehadiran') == 'wfo' ? 'selected' : '' }}>WFO</option>
+                                                <option value="wfh" {{ old('status_kehadiran') == 'wfh' ? 'selected' : '' }}>WFH</option>
                                                 <option value="izin" {{ old('status_kehadiran') == 'izin' ? 'selected' : '' }}>Izin</option>
                                                 <option value="sakit" {{ old('status_kehadiran') == 'sakit' ? 'selected' : '' }}>Sakit</option>
                                                 <option value="libur" {{ old('status_kehadiran') == 'libur' ? 'selected' : '' }}>Libur</option>
@@ -254,21 +255,6 @@
                                     <small class="form-text text-muted">
                                         <i class="fas fa-lightbulb"></i> Contoh: Memahami konsep relational database, belajar komunikasi dalam tim, meningkatkan skill desain, dll.
                                     </small>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" 
-                                               name="wfh" 
-                                               value="1" 
-                                               class="custom-control-input" 
-                                               id="wfh" 
-                                               {{ old('wfh') ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="wfh">
-                                            <i class="fas fa-home"></i> Work From Home (WFH)
-                                        </label>
-                                    </div>
-                                    <small class="form-text text-muted">Centang jika siswa bekerja dari rumah pada hari tersebut</small>
                                 </div>
 
                                 <hr>

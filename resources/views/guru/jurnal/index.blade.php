@@ -221,8 +221,10 @@
                                             <td>{{ $jurnal->siswa->nama }}</td>
                                             <td class="text-center">{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}</td>
                                             <td class="text-center">
-                                                @if($jurnal->status_kehadiran == 'hadir')
-                                                    <span class="badge badge-success">Hadir</span>
+                                                @if($jurnal->status_kehadiran == 'wfo')
+                                                    <span class="badge badge-success">WFO</span>
+                                                @elseif($jurnal->status_kehadiran == 'wfh')
+                                                    <span class="badge badge-success">WFH</span>
                                                 @elseif($jurnal->status_kehadiran == 'izin')
                                                     <span class="badge badge-warning">Izin</span>
                                                 @elseif($jurnal->status_kehadiran == 'sakit')

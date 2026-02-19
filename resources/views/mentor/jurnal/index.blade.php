@@ -53,7 +53,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('mentor.nilai.index') }}">
                     <i class="fas fa-star"></i>
                     <span>Nilai Siswa</span>
                 </a>    
@@ -196,8 +196,10 @@
                                             <td>{{ $item->siswa->nama ?? '-' }}</td>
                                             <td>{{ $item->tgl ? $item->tgl->format('d M Y') : '-' }}</td>
                                             <td>
-                                                @if($item->status_kehadiran == 'hadir')
-                                                    <span class="badge badge-success">Hadir</span>
+                                                @if($item->status_kehadiran == 'wfo')
+                                                    <span class="badge badge-success">WFO</span>
+                                                @elseif($item->status_kehadiran == 'wfh')
+                                                    <span class="badge badge-success">WFH</span>
                                                 @elseif($item->status_kehadiran == 'izin')
                                                     <span class="badge badge-info">Izin</span>
                                                 @elseif($item->status_kehadiran == 'sakit')

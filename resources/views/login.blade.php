@@ -16,7 +16,7 @@
                 <div class="card login-card">
                     <div class="card-body p-5 padding_card">
                         <div class="text-center mb-4 main-logo">
-                            <figure><img src="#" alt="Logo" style="max-width: 100px;"></figure>
+                            <figure><img src="{{ asset ('dist_login/img/logo.png')}}" alt="Logo"></figure>
                         </div>
                         
                         @if ($errors->any())

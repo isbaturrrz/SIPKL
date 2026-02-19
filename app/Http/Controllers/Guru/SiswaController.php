@@ -27,7 +27,11 @@ class SiswaController extends Controller
         
         foreach ($siswaList as $siswa) {
             $siswa->hadir = Jurnal::where('id_siswa', $siswa->id_siswa)
-                                  ->where('status_kehadiran', 'hadir')
+                                  ->where('status_kehadiran', 'wfo')
+                                  ->count();
+
+            $siswa->hadir = Jurnal::where('id_siswa', $siswa->id_siswa)
+                                  ->where('status_kehadiran', 'wfh')
                                   ->count();
             
             $siswa->izin = Jurnal::where('id_siswa', $siswa->id_siswa)
@@ -82,8 +86,8 @@ class SiswaController extends Controller
         Jurnal::create([
             'id_siswa' => $siswa->id_siswa,
             'tgl' => $request->tanggal,
-            'jam_mulai' => '00:00:00',
-            'jam_selesai' => '00:00:00',
+            'jam_mulai' => '00:00',
+            'jam_selesai' => '00:00',
             'status_kehadiran' => 'alfa',
             'status_verifikasi' => 'verified',
             'verified_by' => 'guru',

@@ -46,6 +46,7 @@ class Siswa extends Model
 
     public const KELAS_LIST = ['X', 'XI', 'XII'];
 
+    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class, 'id', 'id');
@@ -60,7 +61,17 @@ class Siswa extends Model
     {
         return $this->belongsTo(Instansi::class, 'id_instansi', 'id_instansi');
     }
-    
+
+    public function jurnal()
+    {
+        return $this->hasMany(Jurnal::class, 'id_siswa', 'id_siswa');
+    }
+
+    public function penilaian()
+    {
+        return $this->hasOne(Penilaian::class, 'id_siswa', 'id_siswa');
+    }
+
     public function getJurusanLengkapAttribute()
     {
         return self::JURUSAN_LIST[$this->jurusan] ?? $this->jurusan;
@@ -77,10 +88,18 @@ class Siswa extends Model
         return implode(' ', $parts);
     }
 
-    public function jurnal()
+    public function hasInstansi()
     {
-        return $this->hasMany(Jurnal::class, 'id_siswa', 'id_siswa');
+        return !is_null($this->id_instansi) && $this->instansi !== null;
     }
 
-    
+    public function getInstansiNama()
+    {
+        return $this->instansi->nama_instansi ?? 'Belum ada instansi';
+    }
+
+    public function getInstansiAlamat()
+    {
+        return $this->instansi->alamat ?? 'Alamat belum tersedia';
+    }
 }

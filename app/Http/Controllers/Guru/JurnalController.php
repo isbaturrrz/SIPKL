@@ -79,7 +79,7 @@ class JurnalController extends Controller
             'tgl' => 'required|date',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
-            'status_kehadiran' => 'required|in:hadir,izin,sakit,libur,alfa',
+            'status_kehadiran' => 'required|in:wfo,wfh,izin,sakit,izin,libur,alfa',
             'kegiatan' => 'required|string',
             'manfaat' => 'required|string',
             'wfh' => 'nullable|boolean'
@@ -131,7 +131,6 @@ class JurnalController extends Controller
             'status_kehadiran' => $request->status_kehadiran,
             'kegiatan' => $request->kegiatan,
             'manfaat' => $request->manfaat,
-            'wfh' => $request->wfh ?? 0,
             'status_verifikasi' => 'pending',
             'input_by' => 'guru',
         ]);

@@ -183,9 +183,13 @@
                                         <div class="col-md-6 mb-3">
                                             <p class="detail-label mb-1">Status Kehadiran</p>
                                             <p class="detail-value">
-                                                @if($jurnal->status_kehadiran == 'hadir')
+                                                @if($jurnal->status_kehadiran == 'wfo')
                                                     <span class="badge badge-success badge-lg">
-                                                        <i class="fas fa-check-circle"></i> Hadir
+                                                        <i class="fas fa-check-circle"></i> WFO
+                                                    </span>
+                                                @elseif($jurnal->status_kehadiran == 'wfh')
+                                                    <span class="badge badge-success badge-lg">
+                                                        <i class="fas fa-check-circle"></i> WFH
                                                     </span>
                                                 @elseif($jurnal->status_kehadiran == 'izin')
                                                     <span class="badge badge-warning badge-lg">
@@ -209,19 +213,19 @@
                                         <div class="col-md-6 mb-3">
                                             <p class="detail-label mb-1">Lokasi Kerja</p>
                                             <p class="detail-value">
-                                                @if($jurnal->status_kehadiran == 'hadir')
-                                                    @if($jurnal->wfh)
+                                                @if($jurnal->status_kehadiran == 'wfo')
+                                                    @if($jurnal->wfo)
                                                         <span class="badge badge-info badge-lg">
-                                                            <i class="fas fa-home"></i> Work From Home
+                                                            <i class="fas fa-home"></i> Kantor
                                                         </span>
                                                     @else
                                                         <span class="badge badge-primary badge-lg">
-                                                            <i class="fas fa-building"></i> Kantor
+                                                            <i class="fas fa-building"></i> Rumah
                                                         </span>
                                                     @endif
                                                 @else
                                                     <span class="badge badge-secondary badge-lg">
-                                                        <i class="fas fa-home"></i> Rumah
+                                                        <span>-</span>
                                                     </span>
                                                 @endif
                                             </p>

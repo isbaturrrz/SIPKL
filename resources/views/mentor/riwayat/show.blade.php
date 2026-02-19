@@ -98,7 +98,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('mentor.nilai.index') }}">
                     <i class="fas fa-star"></i>
                     <span>Nilai Siswa</span>
                 </a>    
@@ -247,11 +247,11 @@
                                     </tr>
                                     <tr>
                                         <td class="font-weight-bold">Diverifikasi Oleh</td>
-                                        <td>
-                                            @if(!$item->verifiedBy)
-                                                -
-                                            @elseif($item->verifiedBy->role == 'mentor')
-                                                {{ $item->verifiedBy->name }}
+                                        <td>:
+                                            @if(!$jurnal->verifiedBy)
+                                                Guru Pembimbing
+                                            @elseif($jurnal->verifiedBy->role == 'mentor')
+                                                {{ $jurnal->verifiedBy->name }}
                                             @else
                                                 Guru Pembimbing
                                             @endif

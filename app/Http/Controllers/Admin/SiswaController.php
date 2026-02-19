@@ -210,6 +210,7 @@ class SiswaController extends Controller
                 $user->update([
                     'name' => $request->nama,
                     'username' => $request->nipd,
+                    'password' => Hash::make($request->tgl_lahir),
                 ]);
             }
 

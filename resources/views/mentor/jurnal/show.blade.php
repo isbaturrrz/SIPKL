@@ -99,7 +99,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('mentor.nilai.index') }}">
                     <i class="fas fa-star"></i>
                     <span>Nilai Siswa</span>
                 </a>    
@@ -166,8 +166,10 @@
                                 <div class="info-row">
                                     <div class="info-label">Status</div>
                                     <div class="info-value">: 
-                                        @if($jurnal->status_kehadiran == 'hadir')
-                                            <span class="badge badge-success">Hadir</span>
+                                        @if($jurnal->status_kehadiran == 'wfo')
+                                            <span class="badge badge-success">WFO</span>
+                                        @elseif($jurnal->status_kehadiran == 'wfh')
+                                            <span class="badge badge-success">WFH</span>
                                         @elseif($jurnal->status_kehadiran == 'izin')
                                             <span class="badge badge-info">Izin</span>
                                         @elseif($jurnal->status_kehadiran == 'sakit')

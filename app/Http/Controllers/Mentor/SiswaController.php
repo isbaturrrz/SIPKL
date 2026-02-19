@@ -17,8 +17,9 @@ class SiswaController extends Controller
         $user = Auth::user();
         $instansiId = $user->id_instansi;
 
-        $query = Siswa::where('id_instansi', $instansiId)
-            ->orderBy('nama', 'asc');
+        $query = Siswa::with('guru')
+        ->where('id_instansi', $instansiId)
+        ->orderBy('nama', 'asc');
 
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
@@ -32,21 +33,32 @@ class SiswaController extends Controller
                 ->where('id_siswa', $s->id_siswa)
                 ->selectRaw('
                     COUNT(*) as total_jurnal,
-                    SUM(CASE WHEN status_kehadiran = "hadir" THEN 1 ELSE 0 END) as total_hadir,
+                    SUM(CASE WHEN status_kehadiran = "wfo" THEN 1 ELSE 0 END) as total_wfo,
+                    SUM(CASE WHEN status_kehadiran = "wfh" THEN 1 ELSE 0 END) as total_wfh,
+                    SUM(CASE WHEN status_kehadiran = "izin" THEN 1 ELSE 0 END) as total_izin,
+                    SUM(CASE WHEN status_kehadiran = "sakit" THEN 1 ELSE 0 END) as total_sakit,
+                    SUM(CASE WHEN status_kehadiran = "alfa" THEN 1 ELSE 0 END) as total_alfa,
+                    SUM(CASE WHEN status_kehadiran = "libur" THEN 1 ELSE 0 END) as total_libur,
                     SUM(CASE WHEN status_verifikasi = "verified" THEN 1 ELSE 0 END) as total_verified
                 ')
                 ->first();
 
             $s->total_jurnal_all = $jurnalStats->total_jurnal ?? 0;
-            $s->total_jurnal_hadir = $jurnalStats->total_hadir ?? 0;
+            $s->total_jurnal_wfo = $jurnalStats->total_wfo ?? 0;
+            $s->total_jurnal_wfh = $jurnalStats->total_wfh ?? 0;
+            $s->total_jurnal_izin = $jurnalStats->total_izin ?? 0;
+            $s->total_jurnal_sakit = $jurnalStats->total_sakit ?? 0;
+            $s->total_jurnal_alfa = $jurnalStats->total_alfa ?? 0;
+            $s->total_jurnal_libur = $jurnalStats->total_libur ?? 0;
             $s->total_jurnal_verified = $jurnalStats->total_verified ?? 0;
 
-            $s->total_hari_kerja = $this->hitungHariKerja($s->tanggal_mulai, $s->tanggal_selesai);
+            $s->total_jurnal_hadir = $s->total_jurnal_wfo + $s->total_jurnal_wfh;
+            $s->total_jurnal_tidak_hadir = $s->total_jurnal_izin + $s->total_jurnal_sakit + $s->total_jurnal_alfa;
+            
+            $totalUntukPersentase = $s->total_jurnal_hadir + $s->total_jurnal_tidak_hadir;
 
-            if ($s->total_hari_kerja > 0) {
-                $s->persentase_kehadiran = round(($s->total_jurnal_hadir / $s->total_hari_kerja) * 100);
-            } elseif ($s->total_jurnal_all > 0) {
-                $s->persentase_kehadiran = round(($s->total_jurnal_hadir / $s->total_jurnal_all) * 100);
+            if ($totalUntukPersentase > 0) {
+                $s->persentase_kehadiran = round(($s->total_jurnal_hadir / $totalUntukPersentase) * 100);
             } else {
                 $s->persentase_kehadiran = 0;
             }
@@ -74,7 +86,8 @@ class SiswaController extends Controller
             ->where('id_siswa', $siswa->id_siswa)
             ->selectRaw('
                 COUNT(*) as total_jurnal,
-                SUM(CASE WHEN status_kehadiran = "hadir" THEN 1 ELSE 0 END) as total_hadir,
+                SUM(CASE WHEN status_kehadiran = "wfo" THEN 1 ELSE 0 END) as total_wfo,
+                SUM(CASE WHEN status_kehadiran = "wfh" THEN 1 ELSE 0 END) as total_wfh,
                 SUM(CASE WHEN status_kehadiran = "izin" THEN 1 ELSE 0 END) as total_izin,
                 SUM(CASE WHEN status_kehadiran = "sakit" THEN 1 ELSE 0 END) as total_sakit,
                 SUM(CASE WHEN status_kehadiran = "alfa" THEN 1 ELSE 0 END) as total_alfa,
@@ -86,7 +99,8 @@ class SiswaController extends Controller
             ->first();
 
         $siswa->total_jurnal_all = $jurnalStats->total_jurnal ?? 0;
-        $siswa->total_jurnal_hadir = $jurnalStats->total_hadir ?? 0;
+        $siswa->total_jurnal_wfo = $jurnalStats->total_wfo ?? 0;
+        $siswa->total_jurnal_wfh = $jurnalStats->total_wfh ?? 0;
         $siswa->total_jurnal_izin = $jurnalStats->total_izin ?? 0;
         $siswa->total_jurnal_sakit = $jurnalStats->total_sakit ?? 0;
         $siswa->total_jurnal_alfa = $jurnalStats->total_alfa ?? 0;
@@ -95,12 +109,13 @@ class SiswaController extends Controller
         $siswa->total_jurnal_pending = $jurnalStats->total_pending ?? 0;
         $siswa->total_jurnal_rejected = $jurnalStats->total_rejected ?? 0;
 
-        $siswa->total_hari_kerja = $this->hitungHariKerja($siswa->tanggal_mulai, $siswa->tanggal_selesai);
+        $siswa->total_jurnal_hadir = $siswa->total_jurnal_wfo + $siswa->total_jurnal_wfh;
+        $siswa->total_jurnal_tidak_hadir = $siswa->total_jurnal_izin + $siswa->total_jurnal_sakit + $siswa->total_jurnal_alfa;
 
-        if ($siswa->total_hari_kerja > 0) {
-            $siswa->persentase_kehadiran = round(($siswa->total_jurnal_hadir / $siswa->total_hari_kerja) * 100);
-        } elseif ($siswa->total_jurnal_all > 0) {
-            $siswa->persentase_kehadiran = round(($siswa->total_jurnal_hadir / $siswa->total_jurnal_all) * 100);
+        $totalUntukPersentase = $siswa->total_jurnal_hadir + $siswa->total_jurnal_tidak_hadir;
+
+        if ($totalUntukPersentase > 0) {
+            $siswa->persentase_kehadiran = round(($siswa->total_jurnal_hadir / $totalUntukPersentase) * 100);
         } else {
             $siswa->persentase_kehadiran = 0;
         }
@@ -117,36 +132,6 @@ class SiswaController extends Controller
             ->get();
 
         return view('mentor.siswa.show', compact('siswa', 'recentJurnal'));
-    }
-
-    private function hitungHariKerja($tglMulai, $tglSelesai)
-    {
-        if (!$tglMulai || !$tglSelesai) {
-            return 0;
-        }
-
-        try {
-            $start = Carbon::parse($tglMulai);
-            $end = Carbon::parse($tglSelesai);
-            
-            if ($start->gt($end)) {
-                return 0;
-            }
-
-            $hariKerja = 0;
-            $current = $start->copy();
-
-            while ($current->lte($end)) {
-                if ($current->isWeekday()) {
-                    $hariKerja++;
-                }
-                $current->addDay();
-            }
-
-            return $hariKerja;
-        } catch (\Exception $e) {
-            return 0;
-        }
     }
 
     private function getPredikat($persentase)
