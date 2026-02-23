@@ -12,16 +12,31 @@ use Carbon\Carbon;
 
 class JurnalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $siswa = Siswa::where('id', $user->id)->firstOrFail();
-        
-        $jurnal = Jurnal::where('id_siswa', $siswa->id_siswa)
+    
+        $query = Jurnal::where('id_siswa', $siswa->id_siswa)
+            ->whereIn('status_verifikasi', ['verified', 'pending'])
+            ->orderBy('tgl', 'desc');
+    
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('tgl', 'like', '%' . $search . '%')
+                  ->orWhere('status_kehadiran', 'like', '%' . $search . '%');
+            });
+        }
+    
+        $jurnal = $query->paginate(10);
+
+        $jurnalRejected = Jurnal::where('id_siswa', $siswa->id_siswa)
+            ->where('status_verifikasi', 'rejected')
             ->orderBy('tgl', 'desc')
-            ->paginate(10);
-        
-        return view('siswa.jurnal.index', compact('jurnal', 'siswa'));
+            ->get();
+    
+        return view('siswa.jurnal.index', compact('jurnal', 'siswa', 'jurnalRejected'));
     }
 
     public function create()
@@ -33,7 +48,7 @@ class JurnalController extends Controller
             ->firstOrFail();
         
         if (!$siswa->instansi) {
-            return redirect()->route('siswa.dashboard')
+            return redirect()->route('siswa.jurnal.index')
                 ->with('error', 'Anda belum memiliki instansi PKL. Silakan pilih instansi terlebih dahulu.');
         }
         
@@ -43,14 +58,14 @@ class JurnalController extends Controller
             ->first();
         
         if ($existingJurnal) {
-            return redirect()->route('siswa.dashboard')
+            return redirect()->route('siswa.jurnal.index')
                 ->with('error', 'Anda sudah mengisi jurnal hari ini');
         }
         
         return view('siswa.jurnal.create', compact('siswa'));
     }
 
-   public function store(StoreJurnalRequest $request)
+    public function store(StoreJurnalRequest $request)
     {
         $user = Auth::user();
         $siswa = Siswa::with('instansi')->where('id', $user->id)->firstOrFail();
@@ -98,7 +113,7 @@ class JurnalController extends Controller
         
         Jurnal::create($dataJurnal);
         
-        return redirect()->route('siswa.dashboard')
+        return redirect()->route('siswa.jurnal.index')
             ->with('success', 'Jurnal berhasil disimpan dan menunggu verifikasi');
     }
 
@@ -123,7 +138,7 @@ class JurnalController extends Controller
             ->where('id_siswa', $siswa->id_siswa)
             ->firstOrFail();
         
-        if ($jurnal->status_verifikasi !== 'pending') {
+        if (!in_array($jurnal->status_verifikasi, ['pending', 'rejected'])) {
             return redirect()->route('siswa.jurnal.index')
                 ->with('error', 'Jurnal yang sudah diverifikasi tidak dapat diedit');
         }
@@ -140,13 +155,13 @@ class JurnalController extends Controller
             ->where('id_siswa', $siswa->id_siswa)
             ->firstOrFail();
         
-        if ($jurnal->status_verifikasi !== 'pending') {
+        if (!in_array($jurnal->status_verifikasi, ['pending', 'rejected'])) {
             return back()->with('error', 'Jurnal yang sudah diverifikasi tidak dapat diedit');
         }
         
         $validated = $request->validated();
         
-        if ($request->wfh == 1) {
+        if ($validated['status_kehadiran'] === 'wfo') {
             $distance = $this->calculateDistance(
                 $validated['latitude'],
                 $validated['longitude'],
@@ -159,10 +174,20 @@ class JurnalController extends Controller
             }
         }
         
-        $jurnal->update($validated);
+        $updateData = $validated;
+        
+        if ($jurnal->status_verifikasi === 'rejected') {
+            $updateData['status_verifikasi'] = 'pending';
+        }
+        
+        $jurnal->update($updateData);
+        
+        $message = $jurnal->wasChanged('status_verifikasi') 
+            ? 'Jurnal berhasil diperbarui dan diajukan kembali untuk verifikasi' 
+            : 'Jurnal berhasil diperbarui';
         
         return redirect()->route('siswa.jurnal.index')
-            ->with('success', 'Jurnal berhasil diperbarui');
+            ->with('success', $message);
     }
 
     public function destroy($id)

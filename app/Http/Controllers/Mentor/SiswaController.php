@@ -31,6 +31,7 @@ class SiswaController extends Controller
         foreach ($siswa as $s) {
             $jurnalStats = DB::table('jurnal')
                 ->where('id_siswa', $s->id_siswa)
+                ->where('status_verifikasi', 'verified')
                 ->selectRaw('
                     COUNT(*) as total_jurnal,
                     SUM(CASE WHEN status_kehadiran = "wfo" THEN 1 ELSE 0 END) as total_wfo,
@@ -38,8 +39,7 @@ class SiswaController extends Controller
                     SUM(CASE WHEN status_kehadiran = "izin" THEN 1 ELSE 0 END) as total_izin,
                     SUM(CASE WHEN status_kehadiran = "sakit" THEN 1 ELSE 0 END) as total_sakit,
                     SUM(CASE WHEN status_kehadiran = "alfa" THEN 1 ELSE 0 END) as total_alfa,
-                    SUM(CASE WHEN status_kehadiran = "libur" THEN 1 ELSE 0 END) as total_libur,
-                    SUM(CASE WHEN status_verifikasi = "verified" THEN 1 ELSE 0 END) as total_verified
+                    SUM(CASE WHEN status_kehadiran = "libur" THEN 1 ELSE 0 END) as total_libur
                 ')
                 ->first();
 
@@ -50,7 +50,6 @@ class SiswaController extends Controller
             $s->total_jurnal_sakit = $jurnalStats->total_sakit ?? 0;
             $s->total_jurnal_alfa = $jurnalStats->total_alfa ?? 0;
             $s->total_jurnal_libur = $jurnalStats->total_libur ?? 0;
-            $s->total_jurnal_verified = $jurnalStats->total_verified ?? 0;
 
             $s->total_jurnal_hadir = $s->total_jurnal_wfo + $s->total_jurnal_wfh;
             $s->total_jurnal_tidak_hadir = $s->total_jurnal_izin + $s->total_jurnal_sakit + $s->total_jurnal_alfa;
@@ -84,6 +83,7 @@ class SiswaController extends Controller
 
         $jurnalStats = DB::table('jurnal')
             ->where('id_siswa', $siswa->id_siswa)
+            ->where('status_verifikasi', 'verified')
             ->selectRaw('
                 COUNT(*) as total_jurnal,
                 SUM(CASE WHEN status_kehadiran = "wfo" THEN 1 ELSE 0 END) as total_wfo,
@@ -91,7 +91,13 @@ class SiswaController extends Controller
                 SUM(CASE WHEN status_kehadiran = "izin" THEN 1 ELSE 0 END) as total_izin,
                 SUM(CASE WHEN status_kehadiran = "sakit" THEN 1 ELSE 0 END) as total_sakit,
                 SUM(CASE WHEN status_kehadiran = "alfa" THEN 1 ELSE 0 END) as total_alfa,
-                SUM(CASE WHEN status_kehadiran = "libur" THEN 1 ELSE 0 END) as total_libur,
+                SUM(CASE WHEN status_kehadiran = "libur" THEN 1 ELSE 0 END) as total_libur
+            ')
+            ->first();
+
+        $jurnalVerifikasiStats = DB::table('jurnal')
+            ->where('id_siswa', $siswa->id_siswa)
+            ->selectRaw('
                 SUM(CASE WHEN status_verifikasi = "verified" THEN 1 ELSE 0 END) as total_verified,
                 SUM(CASE WHEN status_verifikasi = "pending" THEN 1 ELSE 0 END) as total_pending,
                 SUM(CASE WHEN status_verifikasi = "rejected" THEN 1 ELSE 0 END) as total_rejected
@@ -105,9 +111,9 @@ class SiswaController extends Controller
         $siswa->total_jurnal_sakit = $jurnalStats->total_sakit ?? 0;
         $siswa->total_jurnal_alfa = $jurnalStats->total_alfa ?? 0;
         $siswa->total_jurnal_libur = $jurnalStats->total_libur ?? 0;
-        $siswa->total_jurnal_verified = $jurnalStats->total_verified ?? 0;
-        $siswa->total_jurnal_pending = $jurnalStats->total_pending ?? 0;
-        $siswa->total_jurnal_rejected = $jurnalStats->total_rejected ?? 0;
+        $siswa->total_jurnal_verified = $jurnalVerifikasiStats->total_verified ?? 0;
+        $siswa->total_jurnal_pending = $jurnalVerifikasiStats->total_pending ?? 0;
+        $siswa->total_jurnal_rejected = $jurnalVerifikasiStats->total_rejected ?? 0;
 
         $siswa->total_jurnal_hadir = $siswa->total_jurnal_wfo + $siswa->total_jurnal_wfh;
         $siswa->total_jurnal_tidak_hadir = $siswa->total_jurnal_izin + $siswa->total_jurnal_sakit + $siswa->total_jurnal_alfa;

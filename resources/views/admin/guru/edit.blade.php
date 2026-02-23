@@ -45,6 +45,13 @@
                 </a> 
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.pengajuan-instansi.index') }}">
+                    <i class="fas fa-inbox"></i>
+                    <span>Pengajuan Instansi</span>
+                </a> 
+            </li>
+
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('admin.guru.index') }}">
                     <i class="fas fa-chalkboard-teacher"></i>
@@ -56,6 +63,13 @@
                 <a class="nav-link" href="{{ route('admin.user.index') }}">
                     <i class="fas fa-users"></i>
                     <span>Kelola User</span>
+                </a>    
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.import.index') }}">
+                    <i class="fas fa-file-import"></i>
+                    <span>Import Data</span>
                 </a>    
             </li>
 
@@ -173,7 +187,7 @@
                                             @error('tgl_lahir')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
-                                            <small class="form-text text-muted">Password tidak akan berubah saat mengedit tanggal lahir</small>
+                                            <small class="form-text text-muted">Password akan berubah saat mengedit tanggal lahir</small>
                                         </div>
                                     </div>
                                 </div>
@@ -220,7 +234,7 @@
                                 <div class="alert alert-warning">
                                     <strong>Perhatian:</strong>
                                     <ul class="mb-0">
-                                        <li>Password guru tidak akan berubah saat mengedit data</li>
+                                        <li>Password guru akan berubah saat mengedit data</li>
                                         <li>Password tetap menggunakan tanggal lahir awal saat pendaftaran</li>
                                         <li>Semua field bertanda <span class="text-danger">*</span> wajib diisi</li>
                                     </ul>

@@ -43,13 +43,14 @@ class NilaiController extends Controller
             'id_siswa' => 'required',
             'nilai_kreatifitas' => 'required|numeric|between:0,100',
             'nilai_kedisiplinan' => 'required|numeric|between:0,100',
-            'nilai_keaktifan' => 'required|numeric|between:0,100',
+            'nilai_tanggung_jawab' => 'required|numeric|between:0,100',
             'nilai_kerjasama' => 'required|numeric|between:0,100',
+            'nilai_komunikasi' => 'required|numeric|between:0,100',
         ]);
 
         $user = Auth::user();
 
-        $nilai_akhir = ($request->nilai_kreatifitas + $request->nilai_kedisiplinan + $request->nilai_keaktifan + $request->nilai_kerjasama) / 4;
+        $nilai_akhir = ($request->nilai_kreatifitas + $request->nilai_kedisiplinan + $request->nilai_tanggung_jawab + $request->nilai_kerjasama + $request->nilai_komunikasi) / 5;
 
         \App\Models\Penilaian::updateOrCreate(
             ['id_siswa' => $request->id_siswa],
@@ -57,8 +58,9 @@ class NilaiController extends Controller
                 'id_instansi' => $user->id_instansi, 
                 'nilai_kreatifitas' => $request->nilai_kreatifitas,
                 'nilai_kedisiplinan' => $request->nilai_kedisiplinan,
-                'nilai_keaktifan' => $request->nilai_keaktifan,
+                'nilai_tanggung_jawab' => $request->nilai_tanggung_jawab,
                 'nilai_kerjasama' => $request->nilai_kerjasama,
+                'nilai_komunikasi' => $request->nilai_komunikasi,
                 'nilai_akhir' => $nilai_akhir,
                 'keterangan' => $request->keterangan
             ]

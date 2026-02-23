@@ -101,7 +101,7 @@
                         <li class="nav-item">                             
                             <a class="nav-link" href="#">                                 
                                 <span class="mr-2 d-none d-lg-inline text-gray-600">
-                                    Mentor
+                                    Halo {{ Auth::user()->name }}
                                 </span>                             
                             </a>                         
                         </li>
@@ -161,7 +161,7 @@
                                             <td>
                                                 {{ $item->nama }}
                                             </td>
-                                            <td>{{ $item->kelas ?? '-' }}</td>
+                                            <td>{{ $item->kelas_lengkap ?? '-' }}</td>
                                             <td>
                                                 @if($item->tanggal_mulai && $item->tanggal_selesai)
                                                     {{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d M Y') }} - 

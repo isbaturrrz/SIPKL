@@ -12,11 +12,31 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::whereIn('role', ['admin', 'guru', 'mentor'])->get();
+        $search = $request->search;
+        $filterRole = $request->filter_role;
+
+        $users = User::whereIn('role', ['admin', 'guru', 'mentor'])
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                      ->orWhere('username', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->when($filterRole, function ($query) use ($filterRole) {
+                $query->where('role', $filterRole);
+            })
+            ->latest()
+            ->get();
 
         return view('admin.user.index', compact('users'));
+    }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        
+        return view('admin.user.show', compact('user'));
     }
 
     public function create()
@@ -109,9 +129,9 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             
             if ($user->id == Auth::id()) {
-            return redirect()->back()
-                ->with('error', 'Anda tidak dapat menghapus akun sendiri!');
-        }
+                return redirect()->back()
+                    ->with('error', 'Anda tidak dapat menghapus akun sendiri!');
+            }
 
             $user->delete();
 

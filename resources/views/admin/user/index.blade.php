@@ -47,6 +47,13 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.pengajuan-instansi.index') }}">
+                    <i class="fas fa-inbox"></i>
+                    <span>Pengajuan Instansi</span>
+                </a> 
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.guru.index') }}">
                     <i class="fas fa-chalkboard-teacher"></i>
                     <span>Kelola Guru</span>
@@ -57,6 +64,13 @@
                 <a class="nav-link" href="{{ route('admin.user.index') }}">
                     <i class="fas fa-users"></i>
                     <span>Kelola User</span>
+                </a>    
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.import.index') }}">
+                    <i class="fas fa-file-import"></i>
+                    <span>Import Data</span>
                 </a>    
             </li>
 
@@ -110,7 +124,13 @@
 
                 
                 <div class="container-fluid">
-                    
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Data User</h1>
+                        <a href="{{ route('admin.user.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah User
+                        </a>
+                    </div>
+
                     @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <i class="fas fa-check-circle"></i> {{ session('success') }}
@@ -130,15 +150,49 @@
                     @endif
 
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Data User</h6>
-                            <a href="{{ route('admin.user.create') }}" class="btn btn-primary btn-sm">
-                                <i class="fas fa-plus"></i> Tambah User
-                            </a>
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Cari User</h6>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ route('admin.user.index') }}" method="GET">
+                                <div class="row">
+                                    <div class="col-md-8 mb-3">
+                                        <input type="text" class="form-control" name="search" 
+                                               placeholder="Cari nama, username, email..." 
+                                               value="{{ request('search') }}">
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <select class="form-control" name="filter_role">
+                                            <option value="">-- Semua Role --</option>
+                                            <option value="admin" {{ request('filter_role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                            <option value="guru" {{ request('filter_role') == 'guru' ? 'selected' : '' }}>Guru</option>
+                                            <option value="mentor" {{ request('filter_role') == 'mentor' ? 'selected' : '' }}>Mentor</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i> Cari
+                                        </button>
+                                        <a href="{{ route('admin.user.index') }}" class="btn btn-secondary">
+                                            <i class="fas fa-sync"></i> Reset
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Daftar User</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
                                     <thead class="thead-light">
                                         <tr>
                                             <th width="5%">No</th>
@@ -168,6 +222,11 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">
+                                                <a href="{{ route('admin.user.show', $user->id) }}" 
+                                                   class="btn btn-info btn-sm" 
+                                                   title="Lihat Detail">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
                                                 <a href="{{ route('admin.user.edit', $user->id) }}" 
                                                    class="btn btn-warning btn-sm" 
                                                    title="Edit">

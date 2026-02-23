@@ -73,11 +73,15 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <span class="ml-3 font-weight-bold text-primary">Input Nilai Siswa</span>
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600">Mentor</span>
-                            </a>
+                        @auth
+                        <li class="nav-item">                             
+                            <a class="nav-link" href="#">                                 
+                                <span class="mr-2 d-none d-lg-inline text-gray-600">
+                                   Halo {{ Auth::user()->name }}
+                                </span>                             
+                            </a>                         
                         </li>
+                        @endauth
                     </ul>
                 </nav>
 
@@ -140,20 +144,26 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-center">2</td>
-                                                <td>Tanggung Jawab (Kreativitas)</td>
+                                                <td>Kretifitas</td>
                                                 <td><input type="number" name="nilai_kreatifitas" class="form-control input-score" min="0" max="100" required></td>
                                                 <td class="text-center font-weight-bold row-predikat">-</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-center">3</td>
-                                                <td>Keaktifan</td>
-                                                <td><input type="number" name="nilai_keaktifan" class="form-control input-score" min="0" max="100" required></td>
+                                                <td>Tanggung Jawab</td>
+                                                <td><input type="number" name="nilai_tanggung_jawab" class="form-control input-score" min="0" max="100" required></td>
                                                 <td class="text-center font-weight-bold row-predikat">-</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-center">4</td>
                                                 <td>Kerjasama</td>
                                                 <td><input type="number" name="nilai_kerjasama" class="form-control input-score" min="0" max="100" required></td>
+                                                <td class="text-center font-weight-bold row-predikat">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">5</td>
+                                                <td>Komunikasi</td>
+                                                <td><input type="number" name="nilai_komunikasi" class="form-control input-score" min="0" max="100" required></td>
                                                 <td class="text-center font-weight-bold row-predikat">-</td>
                                             </tr>
                                         </tbody>

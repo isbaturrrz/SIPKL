@@ -108,19 +108,38 @@
 
                     <div class="row">
                         <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Total Jurnal Terverifikasi
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                {{ $jurnals->total() }}
+                                                {{ $jurnalsVerified->total() }}
                                             </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Total Jurnal Belum Terverifikasi
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                {{ $jurnalsUnverified->total() }}
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -148,12 +167,12 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Data Jurnal Siswa (Terverifikasi Pembimbing Instansi)</h6>
+                            <h6 class="m-0 font-weight-bold text-warning">Data Jurnal Siswa (Belum Terverifikasi)</h6>
                             <div>
-                            <a href="{{ route('guru.jurnal.create') }}" class="btn btn-sm btn-primary shadow-sm">
-                                <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Jurnal
-                            </a>
-                        </div>
+                                <a href="{{ route('guru.jurnal.create') }}" class="btn btn-sm btn-primary shadow-sm">
+                                    <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Jurnal
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             
@@ -206,17 +225,96 @@
                                         <tr>
                                             <th width="5%">No</th>
                                             <th width="10%">Tanggal</th>
-                                            <th width="20%">Nama Siswa</th>
+                                            <th width="18%">Nama Siswa</th>
                                             <th width="12%">Jam</th>
                                             <th width="10%">Kehadiran</th>
-                                            <th width="18%">Kegiatan</th>
-                                            <th width="5%">Aksi</th>
+                                            <th width="20%">Kegiatan</th>
+                                            <th width="10%">Status</th>
+                                            <th width="10%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($jurnals as $index => $jurnal)
+                                        @forelse($jurnalsUnverified as $index => $jurnal)
                                         <tr>
-                                            <td class="text-center">{{ $jurnals->firstItem() + $index }}</td>
+                                            <td class="text-center">{{ $jurnalsUnverified->firstItem() + $index }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($jurnal->tgl)->format('d/m/Y') }}</td>
+                                            <td>{{ $jurnal->siswa->nama }}</td>
+                                            <td class="text-center">{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}</td>
+                                            <td class="text-center">
+                                                @if($jurnal->status_kehadiran == 'wfo')
+                                                    <span class="badge badge-success">WFO</span>
+                                                @elseif($jurnal->status_kehadiran == 'wfh')
+                                                    <span class="badge badge-success">WFH</span>
+                                                @elseif($jurnal->status_kehadiran == 'izin')
+                                                    <span class="badge badge-warning">Izin</span>
+                                                @elseif($jurnal->status_kehadiran == 'sakit')
+                                                    <span class="badge badge-info">Sakit</span>
+                                                @elseif($jurnal->status_kehadiran == 'libur')
+                                                    <span class="badge badge-secondary">Libur</span>
+                                                @else
+                                                    <span class="badge badge-danger">Alfa</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ Str::limit($jurnal->kegiatan, 50) }}</td>
+                                            <td class="text-center">
+                                                <span class="badge badge-warning">Pending</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('guru.jurnal.edit', $jurnal->id_jurnal) }}" class="btn btn-sm btn-warning" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="{{ route('guru.jurnal.destroy', $jurnal->id_jurnal) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jurnal ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">
+                                                <div class="py-4">
+                                                    <i class="fas fa-inbox fa-3x text-gray-300 mb-3"></i>
+                                                    <p class="text-gray-500">Tidak ada data jurnal yang belum terverifikasi</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="mt-3">
+                                {{ $jurnalsUnverified->appends(request()->query())->links() }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 font-weight-bold text-success">Data Jurnal Siswa (Terverifikasi Pembimbing Instansi)</h6>
+                        </div>
+                        <div class="card-body">
+                            
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th width="5%">No</th>
+                                            <th width="10%">Tanggal</th>
+                                            <th width="18%">Nama Siswa</th>
+                                            <th width="12%">Jam</th>
+                                            <th width="10%">Kehadiran</th>
+                                            <th width="18%">Kegiatan</th>
+                                            <th width="10%">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($jurnalsVerified as $index => $jurnal)
+                                        <tr>
+                                            <td class="text-center">{{ $jurnalsVerified->firstItem() + $index }}</td>
                                             <td>{{ \Carbon\Carbon::parse($jurnal->tgl)->format('d/m/Y') }}</td>
                                             <td>{{ $jurnal->siswa->nama }}</td>
                                             <td class="text-center">{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}</td>
@@ -240,6 +338,13 @@
                                                 <a href="{{ route('guru.jurnal.show', $jurnal->id_jurnal) }}" class="btn btn-sm btn-info" title="Lihat Detail">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
+                                                <form action="{{ route('guru.jurnal.destroy', $jurnal->id_jurnal) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jurnal yang sudah terverifikasi ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                         @empty
@@ -257,7 +362,7 @@
                             </div>
                             
                             <div class="mt-3">
-                                {{ $jurnals->appends(request()->query())->links() }}
+                                {{ $jurnalsVerified->appends(request()->query())->links() }}
                             </div>
                         </div>
                     </div>

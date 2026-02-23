@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
 
 class AuthController extends Controller
 {
@@ -30,9 +31,18 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
             $user = Auth::user();
+
+            $appStatus = Setting::get('app_status', 'open');
+
+            if ($appStatus === 'closed' && $user->role !== 'admin') {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect('/login')->withErrors(['email' => 'Anda belum mempunyai akses untuk login.']);
+            }
+
+            $request->session()->regenerate();
 
             switch ($user->role) {
                 case 'admin':

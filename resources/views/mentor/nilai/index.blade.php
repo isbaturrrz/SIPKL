@@ -66,11 +66,15 @@
             <div id="content">
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600">Mentor</span>
-                            </a>
+                        @auth
+                        <li class="nav-item">                             
+                            <a class="nav-link" href="#">                                 
+                                <span class="mr-2 d-none d-lg-inline text-gray-600">
+                                   Halo {{ Auth::user()->name }}
+                                </span>                             
+                            </a>                         
                         </li>
+                        @endauth
                     </ul>
                 </nav>
 
@@ -111,7 +115,7 @@
                                         <tr>
                                             <td>{{ ($siswa->currentPage() - 1) * $siswa->perPage() + $index + 1 }}</td>
                                             <td>{{ $item->nama }}</td>
-                                            <td>{{ $item->kelas }}</td>
+                                            <td>{{ $item->kelas_lengkap}}</td>
                                             <td>
                                                 @if($item->penilaian)
                                                     <span class="badge badge-success">Sudah Dinilai</span>

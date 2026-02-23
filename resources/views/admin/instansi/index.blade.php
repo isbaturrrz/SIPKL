@@ -46,6 +46,13 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.pengajuan-instansi.index') }}">
+                    <i class="fas fa-inbox"></i>
+                    <span>Pengajuan Instansi</span>
+                </a> 
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.guru.index') }}">
                     <i class="fas fa-chalkboard-teacher"></i>
                     <span>Kelola Guru</span>
@@ -56,6 +63,13 @@
                 <a class="nav-link" href="{{ route('admin.user.index') }}">
                     <i class="fas fa-users"></i>
                     <span>Kelola User</span>
+                </a>    
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.import.index') }}">
+                    <i class="fas fa-file-import"></i>
+                    <span>Import Data</span>
                 </a>    
             </li>
 
@@ -106,131 +120,188 @@
                 </nav>
 
                 <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Data Instansi</h1>
+                        <a href="{{ route('admin.instansi.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Instansi
+                        </a>
+                    </div>
+
+                    @if(session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Data Instansi</h6>
-                            <a href="{{ route('admin.instansi.create') }}" class="btn btn-primary btn-sm">
-                                <i class="fas fa-plus"></i> Tambah Instansi
-                            </a>
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Cari Instansi</h6>
                         </div>
                         <div class="card-body">
-                            @if(session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ session('success') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                            <form method="GET" action="{{ route('admin.instansi.index') }}">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <input type="text" name="search" class="form-control" 
+                                               placeholder="Cari nama instansi, pemilik, alamat..." 
+                                               value="{{ request('search') }}">
+                                    </div>
                                 </div>
-                            @endif
 
-                            @if(session('error'))
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    {{ session('error') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label>Filter Jurusan</label>
+                                        <select name="jurusan" class="form-control">
+                                            <option value="">-- Semua Jurusan --</option>
+                                            <option value="PPLG" {{ request('jurusan') == 'PPLG' ? 'selected' : '' }}>PPLG</option>
+                                            <option value="BRP" {{ request('jurusan') == 'BRP' ? 'selected' : '' }}>BRP</option>
+                                            <option value="DKV" {{ request('jurusan') == 'DKV' ? 'selected' : '' }}>DKV</option>
+                                            <option value="PPLG-BRP-DKV" {{ request('jurusan') == 'PPLG-BRP-DKV' ? 'selected' : '' }}>Semua Jurusan</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Filter Sumber</label>
+                                        <select name="sumber" class="form-control">
+                                            <option value="">-- Semua Sumber --</option>
+                                            <option value="admin" {{ request('sumber') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                            <option value="pengajuan" {{ request('sumber') == 'pengajuan' ? 'selected' : '' }}>Pengajuan Siswa</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>Filter Kuota</label>
+                                        <select name="kuota" class="form-control">
+                                            <option value="">-- Semua --</option>
+                                            <option value="tersedia" {{ request('kuota') == 'tersedia' ? 'selected' : '' }}>Kuota Tersedia</option>
+                                            <option value="penuh" {{ request('kuota') == 'penuh' ? 'selected' : '' }}>Kuota Penuh</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            @endif
 
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i> Cari
+                                        </button>
+                                        <a href="{{ route('admin.instansi.index') }}" class="btn btn-secondary">
+                                            <i class="fas fa-sync"></i> Reset
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Daftar Instansi</h6>
+                        </div>
+                        <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead>
+                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <th>No</th>
+                                            <th width="3%">No</th>
                                             <th>Nama Instansi</th>
-                                            <th>Alamat</th>
-                                            <th>No HP</th>
                                             <th>Pemilik</th>
+                                            <th>No HP</th>
                                             <th>Jurusan</th>
                                             <th>Kuota</th>
-                                            <th>Terpakai</th>
-                                            <th>Guru Pembimbing</th>
-                                            <th>Username Mentor</th>
+                                            <th>Guru</th>
                                             <th>Sumber</th>
-                                            <th>Aksi</th>
+                                            <th width="15%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($instansi as $index => $item)
                                         <tr>
-                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $instansi->firstItem() + $index }}</td>
                                             <td>{{ $item->nama_instansi }}</td>
-                                            <td>{{ $item->alamat }}</td>
-                                            <td>{{ $item->no_hp }}</td>
                                             <td>{{ $item->pemilik }}</td>
+                                            <td>{{ $item->no_hp }}</td>
                                             <td>
                                                 @if($item->jurusan_diterima === 'PPLG-BRP-DKV')
-                                                    <span class="text-success">
-                                                        Semua Jurusan
-                                                    </span>
+                                                    <span class="badge badge-success">Semua Jurusan</span>
                                                 @else
                                                     @php
                                                         $jurusan_list = explode('-', $item->jurusan_diterima);
                                                     @endphp
-                                                    <span class="text-primary">
-                                                        {{ implode(', ', $jurusan_list) }}
-                                                    </span>
+                                                    <span class="badge badge-primary">{{ implode(', ', $jurusan_list) }}</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $item->kuota_siswa }}</td>
-                                            <td>{{ $item->kuota_terpakai }}</td>
+                                            <td>
+                                                <span class="badge {{ $item->kuota_terpakai >= $item->kuota_siswa ? 'badge-danger' : 'badge-info' }}">
+                                                    {{ $item->kuota_terpakai }}/{{ $item->kuota_siswa }}
+                                                </span>
+                                            </td>
                                             <td>
                                                 @if($item->guru)
-                                                    <span class="text-success">
-                                                        {{ $item->guru->nama }}
-                                                    </span>
+                                                    <span class="badge badge-success">{{ $item->guru->nama }}</span>
                                                 @else
-                                                    <span class="text-danger">Belum ada guru</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($item->mentor)
-                                                    <code class="text-primary">{{ $item->mentor->username }}</code>
-                                                @else
-                                                    <span class="badge badge-secondary">Belum ada akun</span>
+                                                    <span class="badge badge-secondary">Belum ada</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 @if($item->is_from_submission)
-                                                    <span class="badge badge-info">Pengajuan Siswa</span>
+                                                    <span class="badge badge-info">Pengajuan</span>
                                                 @else
                                                     <span class="badge badge-success">Admin</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <div class="d-flex gap-1">
-                                                    <a href="{{ route('admin.instansi.show', $item->id_instansi) }}" 
-                                                    class="btn btn-info btn-sm" 
-                                                    title="Detail">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="{{ route('admin.instansi.edit', $item->id_instansi) }}" 
-                                                    class="btn btn-warning btn-sm"
-                                                    title="Edit">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <form action="{{ route('admin.instansi.destroy', $item->id_instansi) }}" 
-                                                        method="POST" 
-                                                        class="d-inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" 
-                                                                class="btn btn-danger btn-sm" 
-                                                                onclick="return confirm('Yakin ingin menghapus?')"
-                                                                title="Hapus">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
+                                                <a href="{{ route('admin.instansi.show', $item->id_instansi) }}" 
+                                                   class="btn btn-info btn-sm" 
+                                                   title="Lihat Detail">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('admin.instansi.edit', $item->id_instansi) }}" 
+                                                   class="btn btn-warning btn-sm"
+                                                   title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="{{ route('admin.instansi.destroy', $item->id_instansi) }}" 
+                                                      method="POST" 
+                                                      class="d-inline"
+                                                      onsubmit="return confirm('Yakin ingin menghapus?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" 
+                                                            class="btn btn-danger btn-sm" 
+                                                            title="Hapus">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan="11" class="text-center">Belum ada data instansi</td>
+                                            <td colspan="9" class="text-center">Belum ada data instansi</td>
                                         </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div>
+                                    Menampilkan {{ $instansi->firstItem() ?? 0 }} - {{ $instansi->lastItem() ?? 0 }} 
+                                    dari {{ $instansi->total() }} data
+                                </div>
+                                <div>
+                                    {{ $instansi->appends(request()->query())->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>

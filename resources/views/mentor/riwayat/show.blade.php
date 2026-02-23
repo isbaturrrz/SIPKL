@@ -135,7 +135,7 @@
                         <li class="nav-item">                             
                             <a class="nav-link" href="#">                                 
                                 <span class="mr-2 d-none d-lg-inline text-gray-600">
-                                    Mentor
+                                    Halo {{ Auth::user()->name }}
                                 </span>                             
                             </a>                         
                         </li>
@@ -165,12 +165,14 @@
                                 <div class="info-row">
                                     <div class="info-label">Status</div>
                                     <div class="info-value">: 
-                                        @if($jurnal->status_kehadiran == 'hadir')
-                                            <span class="badge badge-success">Hadir</span>
+                                        @if($jurnal->status_kehadiran == 'wfo')
+                                            <span class="badge badge-success">WFO</span>
+                                        @elseif($jurnal->status_kehadiran == 'wfh')
+                                            <span class="badge badge-success">WFH</span>
                                         @elseif($jurnal->status_kehadiran == 'izin')
-                                            <span class="badge badge-info">Izin</span>
+                                            <span class="badge badge-warning">Izin</span>
                                         @elseif($jurnal->status_kehadiran == 'sakit')
-                                            <span class="badge badge-warning">Sakit</span>
+                                            <span class="badge badge-info">Sakit</span>
                                         @elseif($jurnal->status_kehadiran == 'libur')
                                             <span class="badge badge-secondary">Libur</span>
                                         @else

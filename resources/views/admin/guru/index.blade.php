@@ -45,6 +45,13 @@
                 </a> 
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.pengajuan-instansi.index') }}">
+                    <i class="fas fa-inbox"></i>
+                    <span>Pengajuan Instansi</span>
+                </a> 
+            </li>
+
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('admin.guru.index') }}">
                     <i class="fas fa-chalkboard-teacher"></i>
@@ -56,6 +63,13 @@
                 <a class="nav-link" href="{{ route('admin.user.index') }}">
                     <i class="fas fa-users"></i>
                     <span>Kelola User</span>
+                </a>    
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.import.index') }}">
+                    <i class="fas fa-file-import"></i>
+                    <span>Import Data</span>
                 </a>    
             </li>
 
@@ -106,80 +120,123 @@
                 </nav>
 
                 <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Data Guru</h1>
+                        <a href="{{ route('admin.guru.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Guru
+                        </a>
+                    </div>
+
+                    @if(session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Data Guru</h6>
-                            <a href="{{ route('admin.guru.create') }}" class="btn btn-primary btn-sm">
-                                <i class="fas fa-plus"></i> Tambah Guru
-                            </a>
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Cari Guru</h6>
                         </div>
                         <div class="card-body">
-                            @if(session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ session('success') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            @endif
+                            <form method="GET" action="{{ route('admin.guru.index') }}">
+                                <div class="row">
+                                    <div class="col-md-8 mb-3">
+                                        <input type="text" name="search" class="form-control" 
+                                               placeholder="Cari nama, email, no HP..." 
+                                               value="{{ request('search') }}">
+                                    </div>
 
-                            @if(session('error'))
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    {{ session('error') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    <div class="col-md-4 mb-3">
+                                        <select name="instansi" class="form-control">
+                                            <option value="">-- Semua Status --</option>
+                                            <option value="ada" {{ request('instansi') == 'ada' ? 'selected' : '' }}>Sudah Ditugaskan</option>
+                                            <option value="kosong" {{ request('instansi') == 'kosong' ? 'selected' : '' }}>Belum Ditugaskan</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            @endif
 
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i> Cari
+                                        </button>
+                                        <a href="{{ route('admin.guru.index') }}" class="btn btn-secondary">
+                                            <i class="fas fa-sync"></i> Reset
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Daftar Guru</h6>
+                        </div>
+                        <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead>
+                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <th>No</th>
+                                            <th width="5%">No</th>
                                             <th>Nama</th>
                                             <th>Email</th>
                                             <th>Tanggal Lahir</th>
                                             <th>No HP</th>
                                             <th>Instansi</th>
-                                            <th>Aksi</th>
+                                            <th width="15%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($guru as $index => $item)
                                         <tr>
-                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $guru->firstItem() + $index }}</td>
                                             <td>{{ $item->nama }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ \Carbon\Carbon::parse($item->tgl_lahir)->format('d-m-Y') }}</td>
                                             <td>{{ $item->no_hp }}</td>
-                                             <td>
+                                            <td>
                                                 @if($item->instansi)
-                                                    <span class="text-success">
-                                                        {{ $item->instansi->nama_instansi }}
-                                                    </span>
+                                                    <span class="badge badge-success">{{ $item->instansi->nama_instansi }}</span>
                                                 @else
-                                                    <span class="text-danger">Belum Ditugaskan</span>
+                                                    <span class="badge badge-secondary">Belum Ditugaskan</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <div class="d-flex gap-1">
-                                                    <a href="{{ route('admin.guru.edit', $item->id_guru) }}" 
-                                                    class="btn btn-warning btn-sm">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <form action="{{ route('admin.guru.destroy', $item->id_guru) }}" 
-                                                        method="POST" 
-                                                        class="d-inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" 
-                                                                class="btn btn-danger btn-sm" 
-                                                                onclick="return confirm('Yakin ingin menghapus data guru ini?')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
+                                                <a href="{{ route('admin.guru.show', $item->id_guru) }}" 
+                                                   class="btn btn-info btn-sm"
+                                                   title="Lihat Detail">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('admin.guru.edit', $item->id_guru) }}" 
+                                                   class="btn btn-warning btn-sm"
+                                                   title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="{{ route('admin.guru.destroy', $item->id_guru) }}" 
+                                                      method="POST" 
+                                                      class="d-inline"
+                                                      onsubmit="return confirm('Yakin ingin menghapus data guru ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" 
+                                                            class="btn btn-danger btn-sm" 
+                                                            title="Hapus">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                         @empty
@@ -189,6 +246,16 @@
                                         @endforelse
                                     </tbody>
                                 </table>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div>
+                                    Menampilkan {{ $guru->firstItem() ?? 0 }} - {{ $guru->lastItem() ?? 0 }} 
+                                    dari {{ $guru->total() }} data
+                                </div>
+                                <div>
+                                    {{ $guru->appends(request()->query())->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>

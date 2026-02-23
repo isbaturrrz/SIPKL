@@ -90,7 +90,7 @@
                         <li class="nav-item">                             
                             <a class="nav-link" href="#">                                 
                                 <span class="mr-2 d-none d-lg-inline text-gray-600">
-                                    Mentor
+                                   Halo {{ Auth::user()->name }}
                                 </span>                             
                             </a>                         
                         </li>
@@ -181,12 +181,14 @@
                                             <td>{{ $item->siswa->nama ?? '-' }}</td>
                                             <td>{{ $item->tgl ? $item->tgl->format('d M Y') : '-' }}</td>
                                             <td>
-                                                @if($item->status_kehadiran == 'hadir')
-                                                    <span class="badge badge-success">Hadir</span>
+                                                @if($item->status_kehadiran == 'wfo')
+                                                    <span class="badge badge-success">WFO</span>
+                                                @elseif($item->status_kehadiran == 'wfh')
+                                                    <span class="badge badge-success">WFH</span>
                                                 @elseif($item->status_kehadiran == 'izin')
-                                                    <span class="badge badge-info">Izin</span>
+                                                    <span class="badge badge-warning">Izin</span>
                                                 @elseif($item->status_kehadiran == 'sakit')
-                                                    <span class="badge badge-warning">Sakit</span>
+                                                    <span class="badge badge-info">Sakit</span>
                                                 @elseif($item->status_kehadiran == 'libur')
                                                     <span class="badge badge-secondary">Libur</span>
                                                 @else

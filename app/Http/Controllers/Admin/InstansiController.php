@@ -13,9 +13,37 @@ use Illuminate\Support\Facades\Log;
 
 class InstansiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $instansi = Instansi::with('mentor', 'siswa', 'guru')->orderBy('created_at', 'desc')->get();
+        $query = Instansi::with('mentor', 'siswa', 'guru');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama_instansi', 'like', '%' . $search . '%')
+                  ->orWhere('pemilik', 'like', '%' . $search . '%')
+                  ->orWhere('alamat', 'like', '%' . $search . '%')
+                  ->orWhere('no_hp', 'like', '%' . $search . '%');
+            });
+        }
+
+        if ($request->filled('jurusan')) {
+            $jurusan = $request->jurusan;
+            $query->where(function($q) use ($jurusan) {
+                $q->where('jurusan_diterima', $jurusan)
+                  ->orWhere('jurusan_diterima', 'like', '%' . $jurusan . '%');
+            });
+        }
+
+        if ($request->filled('sumber')) {
+            if ($request->sumber === 'admin') {
+                $query->where('is_from_submission', 0);
+            } elseif ($request->sumber === 'pengajuan') {
+                $query->where('is_from_submission', 1);
+            }
+        }
+
+        $instansi = $query->orderBy('created_at', 'desc')->paginate(10);
         
         return view('admin.instansi.index', compact('instansi'));
     }
@@ -32,8 +60,8 @@ class InstansiController extends Controller
     public function store(Request $request)
 {
     $validated = $request->validate([
-        'nama_instansi' => 'required|string|max:50',
-        'alamat' => 'required|string|max:50',
+        'nama_instansi' => 'required|string|max:255',
+        'alamat' => 'required|string|max:255',
         'latitude' => 'nullable|numeric',
         'longitude' => 'nullable|numeric',
         'no_hp' => 'required|string|max:13',
@@ -132,8 +160,8 @@ class InstansiController extends Controller
         $oldGuruId = $instansi->id_guru;
 
         $validated = $request->validate([
-            'nama_instansi' => 'required|string|max:50',
-            'alamat' => 'required|string|max:50',
+            'nama_instansi' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
             'no_hp' => 'required|string|max:13',

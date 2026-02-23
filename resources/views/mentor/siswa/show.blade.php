@@ -90,7 +90,7 @@
                         <li class="nav-item">                             
                             <a class="nav-link" href="#">                                 
                                 <span class="mr-2 d-none d-lg-inline text-gray-600">
-                                    Mentor
+                                    Halo {{ Auth::user()->name }}
                                 </span>                             
                             </a>                         
                         </li>

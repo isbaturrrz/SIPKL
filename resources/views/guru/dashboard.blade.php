@@ -12,13 +12,117 @@
     <title>Dashboard - Guru</title>
 
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset ('dist_guru/css/style.css')}}">
     <link href="{{ asset ('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
+
+    <style>
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .stat-card .stat-label {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+        .stat-card .stat-icon {
+            font-size: 28px;
+            opacity: 0.5;
+        }
+        .chart-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+        }
+        .chart-card .chart-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+        .siswa-table {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+        }
+        .siswa-table .table-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+        .siswa-table table {
+            font-size: 13px;
+        }
+        .siswa-table table thead {
+            background-color: #f8f9fa;
+        }
+        .siswa-table table tbody tr:hover {
+            background-color: #f1f3f5;
+        }
+        .badge-hadir {
+            background-color: #1dd1a1;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .badge-alfa {
+            background-color: #e74a3b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .stat-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .stat-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+        .stat-item .stat-item-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 5px;
+        }
+        .stat-item .stat-item-label {
+            font-size: 11px;
+            color: #666;
+            font-weight: 500;
+        }
+    </style>
 
 </head>
 
@@ -103,52 +207,121 @@
                 
                 <div class="container-fluid">
 
-                    <div class="row">
+                    <div class="row mb-4">
 
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Siswa
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-user fa-2x text-gray-300"></i>
-                                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="stat-card">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="stat-label">Total Siswa Dibimbing</div>
+                                        <div class="stat-value">{{ $totalSiswa }}</div>
+                                    </div>
+                                    <div class="stat-icon">
+                                        <i class="fas fa-users"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Instansi
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-user fa-2x text-gray-300"></i>
-                                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="stat-card" style="background: linear-gradient(135deg, #1dd1a1 0%, #10ac84 100%);">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="stat-label">Total Kehadiran</div>
+                                        <div class="stat-value">{{ $kehadiranGlobal['hadir'] }}</div>
+                                    </div>
+                                    <div class="stat-icon">
+                                        <i class="fas fa-calendar-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="stat-card" style="background: linear-gradient(135deg, #e74a3b 0%, #c0392b 100%);">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="stat-label">Total Ketidakhadiran</div>
+                                        <div class="stat-value">{{ $kehadiranGlobal['sakit'] + $kehadiranGlobal['alfa'] + $kehadiranGlobal['izin'] }}</div>
+                                    </div>
+                                    <div class="stat-icon">
+                                        <i class="fas fa-user-times"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="chart-card">
+                                <div class="chart-title">Kehadiran Siswa</div>
+                                <div class="stat-breakdown">
+                                    <div class="stat-item" style="border-left-color: #1dd1a1;">
+                                        <div class="stat-item-label">Hadir</div>
+                                        <div class="stat-item-value">{{ $kehadiranGlobal['hadir'] }}</div>
+                                    </div>
+                                    <div class="stat-item" style="border-left-color: #f6c23e;">
+                                        <div class="stat-item-label">Sakit</div>
+                                        <div class="stat-item-value">{{ $kehadiranGlobal['sakit'] }}</div>
+                                    </div>
+                                    <div class="stat-item" style="border-left-color: #36b9cc;">
+                                        <div class="stat-item-label">Izin</div>
+                                        <div class="stat-item-value">{{ $kehadiranGlobal['izin'] }}</div>
+                                    </div>
+                                    <div class="stat-item" style="border-left-color: #858796;">
+                                        <div class="stat-item-label">Libur</div>
+                                        <div class="stat-item-value">{{ $kehadiranGlobal['libur'] }}</div>
+                                    </div>
+                                    <div class="stat-item" style="border-left-color: #e74a3b;">
+                                        <div class="stat-item-label">Alfa</div>
+                                        <div class="stat-item-value">{{ $kehadiranGlobal['alfa'] }}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="row mb-4">
+                        <div class="col-xl-8">
+                            <div class="chart-card">
+                                <div class="chart-title">Grafik Kehadiran Per Bulan (Hadir vs Alfa)</div>
+                                <canvas id="chartKehadiran" height="80"></canvas>
+                            </div>
+                        </div>
 
-                    <div class="row">
-
-                                               
+                        <div class="col-xl-4">
+                            <div class="siswa-table">
+                                <div class="table-title">5 Siswa Terbaru</div>
+                                <div class="table-responsive">
+                                    <table class="table table-sm mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama</th>
+                                                <th>Hadir</th>
+                                                <th>Alfa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse($siswaList as $siswa)
+                                            <tr>
+                                                <td>{{ $siswa->nama }}</td>
+                                                <td><span class="badge-hadir">{{ $siswa->hadir }}</span></td>
+                                                <td><span class="badge-alfa">{{ $siswa->alfa }}</span></td>
+                                            </tr>
+                                            @empty
+                                            <tr>
+                                                <td colspan="3" class="text-center text-muted">Belum ada siswa</td>
+                                            </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
@@ -169,18 +342,76 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
     <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+    <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
 
-    <script src="{{asset ('vendor/chart.js/Chart.min.js')}}"></script>
-
-    <script src="{{ asset ('js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{ asset ('js/demo/chart-pie-demo.js')}}"></script>
+    <script>
+        var ctx = document.getElementById('chartKehadiran').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'],
+                datasets: [
+                    {
+                        label: 'Hadir',
+                        data: [
+                            @foreach(range(1, 12) as $bulan)
+                                {{ $kehadiranPerBulan['hadir'][$bulan] ?? 0 }},
+                            @endforeach
+                        ],
+                        borderColor: '#1dd1a1',
+                        backgroundColor: 'rgba(29, 209, 161, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#1dd1a1'
+                    },
+                    {
+                        label: 'Tidak Hadir',
+                        data: [
+                            @foreach(range(1, 12) as $bulan)
+                                {{ $kehadiranPerBulan['tidakHadir'][$bulan] ?? 0 }},
+                            @endforeach
+                        ],
+                        borderColor: '#e74a3b',
+                        backgroundColor: 'rgba(231, 74, 59, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#e74a3b'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 50
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 
 </body>
 

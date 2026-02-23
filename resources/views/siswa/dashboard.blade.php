@@ -372,21 +372,21 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('siswa.jurnal.index') }}">
                     <i class="fas fa-history"></i>
                     <span>Riwayat Jurnal</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('siswa.nilai.index') }}">
                     <i class="fas fa-download"></i>
                     <span>Unduh Nilai</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('siswa.instansi.index') }}">
                     <i class="fas fa-building"></i>
                     <span>Pilih Instansi</span>
                 </a>
@@ -476,7 +476,7 @@
                                         <div class="no-instansi-text">
                                             Anda belum memiliki instansi PKL
                                         </div>
-                                        <a href="#" class="btn-catat-jurnal">
+                                        <a href="{{ route('siswa.instansi.index') }}" class="btn-catat-jurnal">
                                             <i class="fas fa-building"></i>
                                             Pilih Instansi
                                         </a>

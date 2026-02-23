@@ -27,16 +27,25 @@
             font-weight: bold;
             margin-right: 5px;
         }
-        .badge-hadir {
+        .badge-wfo {
             background-color: #1cc88a;
             color: white;
+        }
+        .badge-wfh {
+            background-color: #36b9cc;
+            color: white;
+        }
+        .badge-hadir {
+            background-color: #4e73df;
+            color: white;
+            font-weight: bold;
         }
         .badge-izin {
             background-color: #f6c23e;
             color: white;
         }
         .badge-sakit {
-            background-color: #36b9cc;
+            background-color: #ffc107;
             color: white;
         }
         .badge-libur {
@@ -179,11 +188,12 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                            <form method="GET" action="{{ route('guru.siswa.index') }}">
+                            <form id="downloadForm" method="POST" action="{{ route('guru.siswa.download-pdf') }}">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <label for="siswa">Siswa*</label>
-                                        <select name="siswa" id="siswa" class="form-control">
+                                        <label for="siswa">Siswa <span class="text-danger">*</span></label>
+                                        <select name="siswa" id="siswa" class="form-control" required>
                                             <option value="">--Pilih Siswa--</option>
                                             @foreach($siswaList as $siswa)
                                             <option value="{{ $siswa->id_siswa }}">{{ $siswa->nama }}</option>
@@ -191,9 +201,10 @@
                                         </select>
                                     </div>
                                     <div class="col-md-5">
-                                        <label for="rentang_waktu">Rentang Waktu*</label>
-                                        <select name="rentang_waktu" id="rentang_waktu" class="form-control">
+                                        <label for="rentang_waktu">Rentang Waktu <span class="text-danger">*</span></label>
+                                        <select name="rentang_waktu" id="rentang_waktu" class="form-control" required>
                                             <option value="">--Pilih Bulan--</option>
+                                            <option value="semua">Semua Bulan</option>
                                             <option value="januari">Januari</option>
                                             <option value="februari">Februari</option>
                                             <option value="maret">Maret</option>
@@ -209,7 +220,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2 d-flex align-items-end">
-                                        <button type="button" class="btn btn-primary btn-block">
+                                        <button type="submit" class="btn btn-primary btn-block" id="downloadBtn">
                                             <i class="fas fa-download"></i> Unduh Pdf
                                         </button>
                                     </div>
@@ -250,7 +261,7 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $siswa->nama }}</td>
-                                            <td>{{ $siswa->kelas }} {{ $siswa->jurusan }}</td>
+                                            <td>{{ $siswa->kelas_lengkap }}</td>
                                             <td>
                                                 <span class="performance-badge badge-hadir">{{ $siswa->hadir }}</span>
                                             </td>
@@ -274,7 +285,7 @@
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan="9" class="text-center">Tidak ada siswa yang dibimbing</td>
+                                            <td colspan="11" class="text-center">Tidak ada siswa yang dibimbing</td>
                                         </tr>
                                         @endforelse
                                     </tbody>
@@ -370,6 +381,17 @@
             $('#siswaTable tr').filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
+        });
+
+        $('#downloadForm').on('submit', function(e) {
+            var siswa = $('#siswa').val();
+            var rentangWaktu = $('#rentang_waktu').val();
+
+            if (!siswa || !rentangWaktu) {
+                e.preventDefault();
+                alert('Silakan pilih siswa dan rentang waktu terlebih dahulu!');
+                return false;
+            }
         });
 
         setTimeout(function() {

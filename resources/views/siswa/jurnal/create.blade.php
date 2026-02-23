@@ -313,21 +313,21 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('siswa.jurnal.index') }}">
                     <i class="fas fa-history"></i>
                     <span>Riwayat Jurnal</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('siswa.nilai.index')}}">
                     <i class="fas fa-download"></i>
                     <span>Unduh Nilai</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('siswa.instansi.index') }}">
                     <i class="fas fa-building"></i>
                     <span>Pilih Instansi</span>
                 </a>

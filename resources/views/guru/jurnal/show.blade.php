@@ -214,15 +214,13 @@
                                             <p class="detail-label mb-1">Lokasi Kerja</p>
                                             <p class="detail-value">
                                                 @if($jurnal->status_kehadiran == 'wfo')
-                                                    @if($jurnal->wfo)
-                                                        <span class="badge badge-info badge-lg">
-                                                            <i class="fas fa-home"></i> Kantor
-                                                        </span>
-                                                    @else
-                                                        <span class="badge badge-primary badge-lg">
-                                                            <i class="fas fa-building"></i> Rumah
-                                                        </span>
-                                                    @endif
+                                                    <span class="badge badge-info badge-lg">
+                                                        <i class="fas fa-building"></i> Kantor
+                                                    </span>
+                                                @elseif($jurnal->status_kehadiran == 'wfh')
+                                                    <span class="badge badge-primary badge-lg">
+                                                        <i class="fas fa-home"></i> Rumah
+                                                    </span>
                                                 @else
                                                     <span class="badge badge-secondary badge-lg">
                                                         <span>-</span>
@@ -294,17 +292,13 @@
                                         <div class="col-md-3 mb-3">
                                             <p class="detail-label mb-1">Diverifikasi Oleh</p>
                                             <p class="detail-value">
-                                                @if($jurnal->verified_by == 'guru')
-                                                    <span class="badge badge-secondary">
-                                                        <i class="fas fa-chalkboard-teacher"></i> Guru Pembimbing
-                                                    </span>
-                                                @elseif($jurnal->verified_by == 'pembimbing_instansi')
-                                                    <span class="badge badge-primary">
-                                                        <i class="fas fa-user-tie"></i> Pembimbing Instansi
-                                                    </span>
-                                                @else
-                                                    {{ $jurnal->verified_by ?? '-' }}
-                                                @endif
+                                                @if(!$jurnal->verifiedBy)
+                                                Guru Pembimbing
+                                            @elseif($jurnal->verifiedBy->role == 'mentor')
+                                                {{ $jurnal->verifiedBy->name }}
+                                            @else
+                                                Guru Pembimbing
+                                            @endif
                                             </p>
                                         </div>
                                         <div class="col-md-3 mb-3">

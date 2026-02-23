@@ -10,6 +10,9 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+
     /**
      * @var list<string>
      */
@@ -19,7 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'id_instansi',   
+        'id_instansi',
+        'is_active',
     ];
 
     /**
@@ -38,6 +42,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
     }
 

@@ -16,11 +16,24 @@ class SiswaController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
+        $filterInstansi = $request->filter_instansi;
+        $filterStatus = $request->filter_status;
+        $filterJurusan = $request->filter_jurusan;
 
         $siswa = Siswa::with(['guru', 'instansi'])
         ->when($search, function ($query) use ($search) {
             $query->where('nama', 'like', "%{$search}%")
-                  ->orWhere('nipd', 'like', "%{$search}%");
+                  ->orWhere('nipd', 'like', "%{$search}%")
+                  ->orWhere('no_hp', 'like', "%{$search}%");
+        })
+        ->when($filterInstansi, function ($query) use ($filterInstansi) {
+            $query->where('id_instansi', $filterInstansi);
+        })
+        ->when($filterStatus, function ($query) use ($filterStatus) {
+            $query->where('status_penempatan', $filterStatus);
+        })
+        ->when($filterJurusan, function ($query) use ($filterJurusan) {
+            $query->where('jurusan', $filterJurusan);
         })
         ->latest()
         ->paginate(10);
@@ -29,9 +42,24 @@ class SiswaController extends Controller
         $totalInstansi = Instansi::count();
         $totalGuru = Guru::count();
 
-        $siswa->appends(['search' => $search]);
+        // Get instansi list for filter dropdown
+        $instansiList = Instansi::orderBy('nama_instansi')->get();
 
-        return view('admin.siswa.index', compact('siswa', 'totalSiswa', 'totalInstansi', 'totalGuru'));
+        $siswa->appends([
+            'search' => $search,
+            'filter_instansi' => $filterInstansi,
+            'filter_status' => $filterStatus,
+            'filter_jurusan' => $filterJurusan
+        ]);
+
+        return view('admin.siswa.index', compact('siswa', 'totalSiswa', 'totalInstansi', 'totalGuru', 'instansiList'));
+    }
+
+    public function show($id)
+    {
+        $siswa = Siswa::with(['guru', 'instansi'])->findOrFail($id);
+        
+        return view('admin.siswa.show', compact('siswa'));
     }
 
     public function create()

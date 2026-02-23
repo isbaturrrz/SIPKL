@@ -47,10 +47,17 @@
                 </a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.instansi.index') }}">
                     <i class="fas fa-building"></i>
                     <span>Kelola Instansi</span>
+                </a> 
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('admin.pengajuan-instansi.index') }}">
+                    <i class="fas fa-inbox"></i>
+                    <span>Pengajuan Instansi</span>
                 </a> 
             </li>
 
@@ -65,6 +72,13 @@
                 <a class="nav-link" href="{{ route('admin.user.index') }}">
                     <i class="fas fa-users"></i>
                     <span>Kelola User</span>
+                </a>    
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.import.index') }}">
+                    <i class="fas fa-file-import"></i>
+                    <span>Import Data</span>
                 </a>    
             </li>
 
@@ -300,8 +314,7 @@
                                                    id="latitude" 
                                                    name="latitude" 
                                                    value="{{ old('latitude') }}"
-                                                   placeholder=""
-                                                   readonly>
+                                                   placeholder="">
                                             @error('latitude')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -316,8 +329,7 @@
                                                    id="longitude" 
                                                    name="longitude" 
                                                    value="{{ old('longitude') }}"
-                                                   placeholder=""
-                                                   readonly>
+                                                   placeholder="">
                                             @error('longitude')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -329,10 +341,10 @@
                                     <label>Pilih Lokasi Tepat</label>
                                     <div id="map"></div>
                                     <small class="form-text text-muted">
-                                        <i class="fas fa-info-circle"></i> Klik pada peta untuk menandai lokasi instansi
+                                        <i class="fas fa-info-circle"></i> (Opsional) Klik lokasi tepat pada peta
                                     </small>
                                 </div>
-
+                                
                                 <hr>
 
                                 <div class="alert alert-info">

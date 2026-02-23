@@ -46,7 +46,6 @@ class Siswa extends Model
 
     public const KELAS_LIST = ['X', 'XI', 'XII'];
 
-    // Relationships
     public function user()
     {
         return $this->belongsTo(User::class, 'id', 'id');
@@ -101,5 +100,10 @@ class Siswa extends Model
     public function getInstansiAlamat()
     {
         return $this->instansi->alamat ?? 'Alamat belum tersedia';
+    }
+
+    public function pengajuanInstansi()
+    {
+        return $this->hasMany(PengajuanInstansi::class, 'id_siswa', 'id_siswa');
     }
 }

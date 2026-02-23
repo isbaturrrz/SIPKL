@@ -54,9 +54,15 @@
             <div id="content">
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600">Mentor</span>
+                        @auth
+                        <li class="nav-item">                             
+                            <a class="nav-link" href="#">                                 
+                                <span class="mr-2 d-none d-lg-inline text-gray-600">
+                                   Halo {{ Auth::user()->name }}
+                                </span>                             
+                            </a>                         
                         </li>
+                        @endauth
                     </ul>
                 </nav>
 
@@ -83,12 +89,16 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="font-weight-bold text-dark">Nilai Keaktifan</label>
-                                            <input type="number" name="nilai_keaktifan" class="form-control" value="{{ $siswa->penilaian->nilai_keaktifan }}" min="0" max="100" required>
+                                            <label class="font-weight-bold text-dark">Nilai Tanggung Jawab</label>
+                                            <input type="number" name="nilai_tanggung_jawab" class="form-control" value="{{ $siswa->penilaian->nilai_tanggung_jawab }}" min="0" max="100" required>
                                         </div>
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Nilai Kerjasama</label>
                                             <input type="number" name="nilai_kerjasama" class="form-control" value="{{ $siswa->penilaian->nilai_kerjasama }}" min="0" max="100" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="font-weight-bold text-dark">Nilai Komunikasi</label>
+                                            <input type="number" name="nilai_komunikasi" class="form-control" value="{{ $siswa->penilaian->nilai_komunikasi }}" min="0" max="100" required>
                                         </div>
                                     </div>
                                 </div>

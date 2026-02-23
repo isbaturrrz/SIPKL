@@ -65,12 +65,16 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600">Mentor</span>
-                            </a>
+                   <ul class="navbar-nav ml-auto">
+                        @auth
+                        <li class="nav-item">                             
+                            <a class="nav-link" href="#">                                 
+                                <span class="mr-2 d-none d-lg-inline text-gray-600">
+                                   Halo {{ Auth::user()->name }}
+                                </span>                             
+                            </a>                         
                         </li>
+                        @endauth
                     </ul>
                 </nav>
 
@@ -101,16 +105,18 @@
                                         <tr>
                                             <th>Kedisiplinan</th>
                                             <th>Kreativitas</th>
-                                            <th>Keaktifan</th>
+                                            <th>Tanggung Jawab</th>
                                             <th>Kerjasama</th>
+                                            <th>Komunikasi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td class="h4 font-weight-bold">{{ $siswa->penilaian->nilai_kedisiplinan }}</td>
                                             <td class="h4 font-weight-bold">{{ $siswa->penilaian->nilai_kreatifitas }}</td>
-                                            <td class="h4 font-weight-bold">{{ $siswa->penilaian->nilai_keaktifan }}</td>
+                                            <td class="h4 font-weight-bold">{{ $siswa->penilaian->nilai_tanggung_jawab }}</td>
                                             <td class="h4 font-weight-bold">{{ $siswa->penilaian->nilai_kerjasama }}</td>
+                                            <td class="h4 font-weight-bold">{{ $siswa->penilaian->nilai_komunikasi }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

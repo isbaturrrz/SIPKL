@@ -11,6 +11,92 @@
     <link rel="stylesheet" href="{{ asset('dist_mentor/css/style.css')}}">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
+
+    <style>
+        .chart-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+        }
+        .chart-card .chart-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4e73df;
+        }
+        .siswa-table {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+        }
+        .siswa-table .table-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4e73df;
+        }
+        .siswa-table table {
+            font-size: 13px;
+        }
+        .siswa-table table thead {
+            background-color: #f8f9fa;
+        }
+        .siswa-table table tbody tr:hover {
+            background-color: #f1f3f5;
+        }
+        .badge-verified {
+            background-color: #1dd1a1;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .badge-pending {
+            background-color: #f6c23e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .stat-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #ecf0f1;
+        }
+        .stat-item .stat-item-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4e73df;
+            margin-top: 8px;
+        }
+        .stat-item .stat-item-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+        .stat-item .stat-item-percent {
+            font-size: 11px;
+            color: #999;
+            margin-top: 3px;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -164,6 +250,94 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row mt-4">
+                        <div class="col-xl-6">
+                            <div class="chart-card">
+                                <div class="chart-title">Statistik Verifikasi Jurnal</div>
+                                <div class="stat-breakdown">
+                                    <div class="stat-item">
+                                        <i class="fas fa-check-circle" style="color: #1dd1a1; font-size: 24px;"></i>
+                                        <div class="stat-item-label">Sudah Verifikasi</div>
+                                        <div class="stat-item-value">{{ $sudahVerifikasi }}</div>
+                                        <div class="stat-item-percent">{{ $persentaseVerifikasi }}%</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-clock" style="color: #f6c23e; font-size: 24px;"></i>
+                                        <div class="stat-item-label">Menunggu</div>
+                                        <div class="stat-item-value">{{ $menungguVerifikasi }}</div>
+                                        <div class="stat-item-percent">{{ $persentasePending }}%</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-times-circle" style="color: #e74a3b; font-size: 24px;"></i>
+                                        <div class="stat-item-label">Ditolak</div>
+                                        <div class="stat-item-value">{{ $ditolak }}</div>
+                                        <div class="stat-item-percent">{{ $persentaseDitolak }}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="chart-card">
+                                <div class="chart-title">Presentase Jurnal</div>
+                                <canvas id="chartPresentas" height="80"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-xl-12">
+                            <div class="chart-card">
+                                <div class="chart-title">Trend Jurnal Per Bulan</div>
+                                <canvas id="chartTrend" height="80"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-xl-12">
+                            <div class="siswa-table">
+                                <div class="table-title">10 Siswa dengan Aktivitas Terbaru</div>
+                                <div class="table-responsive">
+                                    <table class="table table-sm mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nama Siswa</th>
+                                                <th>Total Jurnal</th>
+                                                <th>Verified</th>
+                                                <th>Pending</th>
+                                                <th>Progress</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse($siswaList as $index => $siswa)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $siswa->nama }}</td>
+                                                <td>{{ $siswa->totalJurnal }}</td>
+                                                <td><span class="badge-verified">{{ $siswa->jurnalVerified }}</span></td>
+                                                <td><span class="badge-pending">{{ $siswa->jurnalPending }}</span></td>
+                                                <td>
+                                                    <div class="progress" style="height: 20px;">
+                                                        @php
+                                                            $persentase = $siswa->totalJurnal > 0 ? round(($siswa->jurnalVerified / $siswa->totalJurnal) * 100) : 0;
+                                                        @endphp
+                                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ $persentase }}%;" aria-valuenow="{{ $persentase }}" aria-valuemin="0" aria-valuemax="100">{{ $persentase }}%</div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center text-muted">Belum ada siswa</td>
+                                            </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -185,5 +359,79 @@
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+    <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
+
+    <script>
+        var ctx1 = document.getElementById('chartPresentas').getContext('2d');
+        var chartPresentas = new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+                labels: ['Sudah Verifikasi', 'Menunggu Verifikasi', 'Ditolak'],
+                datasets: [{
+                    data: [{{ $sudahVerifikasi }}, {{ $menungguVerifikasi }}, {{ $ditolak }}],
+                    backgroundColor: ['#1dd1a1', '#f6c23e', '#e74a3b'],
+                    borderColor: ['#10ac84', '#dda516', '#c0392b'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        var ctx2 = document.getElementById('chartTrend').getContext('2d');
+        var chartTrend = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'],
+                datasets: [{
+                    label: 'Jurnal',
+                    data: [
+                        @foreach(range(1, 12) as $bulan)
+                            {{ $jurnalPerBulan[$bulan] ?? 0 }},
+                        @endforeach
+                    ],
+                    backgroundColor: '#4e73df',
+                    borderColor: '#2e59d9',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 10
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

@@ -13,9 +13,30 @@ use Illuminate\Support\Facades\Log;
 
 class GuruController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $guru = Guru::with('instansi')->get();
+        $query = Guru::with('instansi');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%')
+                  ->orWhere('no_hp', 'like', '%' . $search . '%')
+                  ->orWhere('tempat_lahir', 'like', '%' . $search . '%');
+            });
+        }
+
+        if ($request->filled('instansi')) {
+            if ($request->instansi === 'ada') {
+                $query->whereNotNull('id_instansi');
+            } elseif ($request->instansi === 'kosong') {
+                $query->whereNull('id_instansi');
+            }
+        }
+
+        $guru = $query->orderBy('nama', 'asc')->paginate(10);
+        
         return view('admin.guru.index', compact('guru'));
     }
 
@@ -107,6 +128,12 @@ class GuruController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        $guru = Guru::with(['instansi', 'siswa.user'])->findOrFail($id);
+        return view('admin.guru.show', compact('guru'));
+    }
+
     public function edit($id)
     {
         $guru = Guru::findOrFail($id);
@@ -156,11 +183,18 @@ class GuruController extends Controller
 
             $user = User::find($guru->id);
             if ($user) {
-                $user->update([
+                $userUpdateData = [
                     'name' => $request->nama,
                     'username' => $request->email,
                     'email' => $request->email,
-                ]);
+                ];
+
+                if ($guru->tgl_lahir != $request->tgl_lahir) {
+                    $userUpdateData['password'] = Hash::make($request->tgl_lahir);
+                    Log::info('Password diupdate karena tgl_lahir berubah', ['guru_id' => $guru->id]);
+                }
+
+                $user->update($userUpdateData);
             }
 
             if ($oldInstansiId && $oldInstansiId != $request->id_instansi) {

@@ -56,6 +56,13 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.pengajuan-instansi.index') }}">
+                        <i class="fas fa-inbox"></i>
+                        <span>Pengajuan Instansi</span>
+                    </a> 
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.guru.index') }}">
                         <i class="fas fa-chalkboard-teacher"></i>
                         <span>Kelola Guru</span>
@@ -68,6 +75,13 @@
                         <span>Kelola User</span>
                     </a>    
                 </li>
+
+                <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.import.index') }}">
+                    <i class="fas fa-file-import"></i>
+                    <span>Import Data</span>
+                </a>    
+            </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.sistem.index') }}">
