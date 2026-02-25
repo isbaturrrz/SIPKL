@@ -99,88 +99,87 @@
                 </nav>
             
                 <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Riwayat Jurnal</h1>
+                    </div>
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Filter Riwayat Jurnal</h6>
+                        </div>
+                        <div class="card-body">
+                            <form method="GET" action="{{ route('mentor.riwayat.index') }}">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <input type="text" 
+                                               name="search" 
+                                               class="form-control" 
+                                               placeholder="Cari nama siswa..."
+                                               value="{{ request('search') }}">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label>Filter Tanggal</label>
+                                        <input type="date" 
+                                               name="tanggal" 
+                                               class="form-control"
+                                               value="{{ request('tanggal') }}">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Status Kehadiran</label>
+                                        <select name="kehadiran" class="form-control">
+                                            <option value="">-- Semua Status --</option>
+                                            <option value="wfo" {{ request('kehadiran') == 'wfo' ? 'selected' : '' }}>WFO</option>
+                                            <option value="wfh" {{ request('kehadiran') == 'wfh' ? 'selected' : '' }}>WFH</option>
+                                            <option value="izin" {{ request('kehadiran') == 'izin' ? 'selected' : '' }}>Izin</option>
+                                            <option value="sakit" {{ request('kehadiran') == 'sakit' ? 'selected' : '' }}>Sakit</option>
+                                            <option value="libur" {{ request('kehadiran') == 'libur' ? 'selected' : '' }}>Libur</option>
+                                            <option value="alfa" {{ request('kehadiran') == 'alfa' ? 'selected' : '' }}>Alfa</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i> Cari
+                                        </button>
+                                        <a href="{{ route('mentor.riwayat.index') }}" class="btn btn-secondary">
+                                            <i class="fas fa-sync"></i> Reset
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Riwayat Jurnal Terverifikasi</h6>
                         </div>
                         <div class="card-body">
-                            <form method="GET" action="{{ route('mentor.riwayat.index') }}" class="mb-4">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="search">Cari Nama Siswa</label>
-                                            <input type="text" 
-                                                   id="search"
-                                                   name="search" 
-                                                   class="form-control" 
-                                                   placeholder="Nama siswa..."
-                                                   value="{{ request('search') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="tanggal">Filter Tanggal</label>
-                                            <input type="date" 
-                                                   id="tanggal"
-                                                   name="tanggal" 
-                                                   class="form-control"
-                                                   value="{{ request('tanggal') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="kehadiran">Status Kehadiran</label>
-                                            <select name="kehadiran" id="kehadiran" class="form-control">
-                                                <option value="">Semua</option>
-                                                <option value="hadir" {{ request('kehadiran') == 'hadir' ? 'selected' : '' }}>Hadir</option>
-                                                <option value="izin" {{ request('kehadiran') == 'izin' ? 'selected' : '' }}>Izin</option>
-                                                <option value="sakit" {{ request('kehadiran') == 'sakit' ? 'selected' : '' }}>Sakit</option>
-                                                <option value="alfa" {{ request('kehadiran') == 'alfa' ? 'selected' : '' }}>Alfa</option>
-                                                <option value="libur" {{ request('kehadiran') == 'libur' ? 'selected' : '' }}>Libur</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>&nbsp;</label>
-                                            <div>
-                                                <button class="btn btn-primary btn-block" type="submit">
-                                                    <i class="fas fa-search"></i> Cari
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @if(request()->hasAny(['search', 'tanggal', 'kehadiran']))
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <a href="{{ route('mentor.riwayat.index') }}" class="btn btn-secondary btn-sm">
-                                            <i class="fas fa-redo"></i> Reset Filter
-                                        </a>
-                                    </div>
-                                </div>
-                                @endif
-                            </form>
-
                             <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead>
+                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama Siswa</th>
-                                            <th>Tanggal</th>
-                                            <th>Kehadiran</th>
-                                            <th>Diverifikasi Oleh</th>
-                                            <th>Aksi</th>
+                                            <th width="5%">No</th>
+                                            <th width="25%">Nama Siswa</th>
+                                            <th width="15%">Tanggal</th>
+                                            <th width="15%">Kehadiran</th>
+                                            <th width="25%">Diverifikasi Oleh</th>
+                                            <th width="15%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($jurnal as $index => $item)
                                         <tr>
-                                            <td>{{ ($jurnal->currentPage() - 1) * $jurnal->perPage() + $index + 1 }}</td>
+                                            <td class="text-center">{{ $jurnal->firstItem() + $index }}</td>
                                             <td>{{ $item->siswa->nama ?? '-' }}</td>
                                             <td>{{ $item->tgl ? $item->tgl->format('d M Y') : '-' }}</td>
-                                            <td>
+                                            <td class="text-center">
                                                 @if($item->status_kehadiran == 'wfo')
                                                     <span class="badge badge-success">WFO</span>
                                                 @elseif($item->status_kehadiran == 'wfh')
@@ -204,29 +203,35 @@
                                                     Guru Pembimbing
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <a href="{{ route('mentor.riwayat.show', $item->id_jurnal) }}" 
                                                    class="btn btn-info btn-sm"
-                                                   title="Detail">
+                                                   title="Lihat Detail">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan="6" class="text-center">Tidak ada riwayat jurnal</td>
+                                            <td colspan="6" class="text-center">
+                                                <div class="py-4">
+                                                    <i class="fas fa-inbox fa-3x text-gray-300 mb-3"></i>
+                                                    <p class="text-gray-500">Tidak ada riwayat jurnal</p>
+                                                </div>
+                                            </td>
                                         </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
                             </div>
 
-                            <div class="mt-3 d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center mt-3">
                                 <div>
-                                    Menampilkan {{ $jurnal->firstItem() ?? 0 }} - {{ $jurnal->lastItem() ?? 0 }} dari {{ $jurnal->total() }} data
+                                    Menampilkan {{ $jurnal->firstItem() ?? 0 }} - {{ $jurnal->lastItem() ?? 0 }} 
+                                    dari {{ $jurnal->total() }} data
                                 </div>
                                 <div>
-                                    {{ $jurnal->links() }}
+                                    {{ $jurnal->appends(request()->query())->links() }}
                                 </div>
                             </div>
                         </div>

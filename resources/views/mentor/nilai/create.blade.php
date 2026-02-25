@@ -71,7 +71,6 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <span class="ml-3 font-weight-bold text-primary">Input Nilai Siswa</span>
                     <ul class="navbar-nav ml-auto">
                         @auth
                         <li class="nav-item">                             
@@ -86,6 +85,9 @@
                 </nav>
 
                 <div class="container-fluid">
+                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Input Nilai Siswa</h1>
+                    </div>
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="row">
@@ -96,8 +98,8 @@
                                             <td class="font-weight-bold">: {{ $siswa->nama }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Jurusan</td>
-                                            <td class="font-weight-bold">: {{ $siswa->jurusan }}</td>
+                                            <td>Kelas</td>
+                                            <td class="font-weight-bold">: {{ $siswa->kelas_lengkap }}</td>
                                         </tr>
                                     </table>
                                 </div>

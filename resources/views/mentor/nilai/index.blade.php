@@ -19,38 +19,46 @@
                     <img src="{{asset('dist_mentor/img/')}}" alt="">
                 </div>
             </a>
+
             <hr class="sidebar-divider my-0">
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('mentor.dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
             </li>   
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('mentor.siswa.index') }}">
                     <i class="fas fa-users"></i>
                     <span>Daftar Siswa</span>
                 </a> 
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('mentor.jurnal.index') }}">
                     <i class="fas fa-clipboard-check"></i>
                     <span>Verifikasi Jurnal</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('mentor.riwayat.index') }}">
                     <i class="fas fa-history"></i>
                     <span>Riwayat Jurnal</span>
                 </a>
             </li>
+
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('mentor.nilai.index') }}">
                     <i class="fas fa-star"></i>
                     <span>Nilai Siswa</span>
                 </a>    
             </li>
+
             <hr class="sidebar-divider d-none d-md-block">
+
             <li class="nav-item">
                 <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt"></i>
@@ -60,11 +68,21 @@
                     @csrf
                 </form>
             </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
         </ul>
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
                     <ul class="navbar-nav ml-auto">
                         @auth
                         <li class="nav-item">                             
@@ -79,81 +97,113 @@
                 </nav>
 
                 <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Nilai Siswa</h1>
+                    </div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Daftar Nilai Siswa</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa</h6>
                         </div>
                         <div class="card-body">
                             <form method="GET" action="{{ route('mentor.nilai.index') }}" class="mb-4">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <input type="text" name="search" class="form-control" placeholder="Cari Nama Siswa..." value="{{ request('search') }}">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="submit">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                    <div class="col-md-10">
+                                        <input type="text" 
+                                               name="search" 
+                                               class="form-control" 
+                                               placeholder="Cari Nama Siswa..."
+                                               value="{{ request('search') }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary btn-block" type="submit">
+                                            <i class="fas fa-search"></i> Cari
+                                        </button>
                                     </div>
                                 </div>
+                                @if(request('search'))
+                                <div class="row mt-2">
+                                    <div class="col-md-12">
+                                        <a href="{{ route('mentor.nilai.index') }}" class="btn btn-secondary btn-sm">
+                                            <i class="fas fa-redo"></i> Reset
+                                        </a>
+                                    </div>
+                                </div>
+                                @endif
                             </form>
 
                             <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead>
+                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Kelas</th>
-                                            <th>Status</th>
-                                            <th>Aksi</th>
+                                            <th width="5%">No</th>
+                                            <th width="30%">Nama</th>
+                                            <th width="20%">Kelas</th>
+                                            <th width="20%">Status</th>
+                                            <th width="25%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($siswa as $index => $item)
                                         <tr>
-                                            <td>{{ ($siswa->currentPage() - 1) * $siswa->perPage() + $index + 1 }}</td>
+                                            <td class="text-center">{{ $siswa->firstItem() + $index }}</td>
                                             <td>{{ $item->nama }}</td>
-                                            <td>{{ $item->kelas_lengkap}}</td>
-                                            <td>
+                                            <td>{{ $item->kelas_lengkap }}</td>
+                                            <td class="text-center">
                                                 @if($item->penilaian)
                                                     <span class="badge badge-success">Sudah Dinilai</span>
                                                 @else
                                                     <span class="badge badge-danger">Belum Dinilai</span>
                                                 @endif
                                             </td>
-                                           <td>
-                                                <a href="{{ route('mentor.nilai.create', ['id_siswa' => $item->id_siswa]) }}" class="btn btn-success btn-sm">
-                                                    <i class="fas fa-plus"></i>
-                                                </a>
-
+                                            <td class="text-center">
                                                 @if($item->penilaian)
-                                                <a href="{{ route('mentor.nilai.show', $item->id_siswa) }}" class="btn btn-info btn-sm">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-
-                                                <a href="{{ route('mentor.nilai.edit', $item->id_siswa) }}" class="btn btn-warning btn-sm">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
+                                                    <a href="{{ route('mentor.nilai.show', $item->id_siswa) }}" 
+                                                       class="btn btn-info btn-sm"
+                                                       title="Lihat Detail">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <a href="{{ route('mentor.nilai.edit', $item->id_siswa) }}" 
+                                                       class="btn btn-warning btn-sm"
+                                                       title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('mentor.nilai.create', ['id_siswa' => $item->id_siswa]) }}" 
+                                                       class="btn btn-success btn-sm"
+                                                       title="Tambah Nilai">
+                                                        <i class="fas fa-plus"></i> Tambah Nilai
+                                                    </a>
                                                 @endif
                                             </td>
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan="5" class="text-center">Data tidak ditemukan</td>
+                                            <td colspan="5" class="text-center">
+                                                <div class="py-4">
+                                                    <i class="fas fa-inbox fa-3x text-gray-300 mb-3"></i>
+                                                    <p class="text-gray-500">Data tidak ditemukan</p>
+                                                </div>
+                                            </td>
                                         </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="mt-3">
-                                {{ $siswa->links() }}
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div>
+                                    Menampilkan {{ $siswa->firstItem() ?? 0 }} - {{ $siswa->lastItem() ?? 0 }} 
+                                    dari {{ $siswa->total() }} data
+                                </div>
+                                <div>
+                                    {{ $siswa->appends(request()->query())->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -163,8 +213,14 @@
             </footer>
         </div>
     </div>
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 </body>
 </html>

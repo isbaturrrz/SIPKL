@@ -41,6 +41,15 @@
         .sidebar-brand-icon img {
             max-width: 120px;
             height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
         }
 
         #content {
@@ -249,7 +258,109 @@
             margin: 0;
         }
 
+        .swal2-popup {
+            border-radius: 16px !important;
+            padding: 0 !important;
+            width: 85% !important;
+            max-width: 450px !important;
+        }
+
+        .swal2-icon {
+            width: 60px !important;
+            height: 60px !important;
+            margin: 1.5rem auto 1rem !important;
+            border-width: 3px !important;
+        }
+
+        .swal2-icon.swal2-warning {
+            border-color: #f59e0b !important;
+            color: #f59e0b !important;
+        }
+
+        .swal2-icon .swal2-icon-content {
+            font-size: 2.5rem !important;
+        }
+
+        .swal2-title {
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            color: #1a1a1a !important;
+            padding: 0 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+            line-height: 1.3 !important;
+        }
+
+        .swal2-html-container {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            font-size: 0.9rem !important;
+            color: #64748b !important;
+            line-height: 1.5 !important;
+        }
+
+        .swal2-actions {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            gap: 0.75rem !important;
+            display: flex !important;
+            width: 100% !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, #1e4179 0%, #2c5aa0 100%) !important;
+            color: #fff !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(30, 65, 121, 0.3) !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .swal2-confirm:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(30, 65, 121, 0.4) !important;
+        }
+
+        .swal2-cancel {
+            background: #fff !important;
+            color: #64748b !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            border: 2px solid #e2e8f0 !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .swal2-cancel:hover {
+            background: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            color: #475569 !important;
+        }
+
+        .swal2-styled:focus {
+            box-shadow: none !important;
+        }
+
         @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
             .time-input-group {
                 grid-template-columns: 1fr;
             }
@@ -261,6 +372,92 @@
             .btn-action {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .swal2-popup {
+                width: 90% !important;
+                max-width: 380px !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .swal2-popup {
+                width: 92% !important;
+                max-width: 340px !important;
+            }
+            
+            .swal2-icon {
+                width: 56px !important;
+                height: 56px !important;
+                margin: 1.25rem auto 0.75rem !important;
+            }
+            
+            .swal2-title {
+                font-size: 1.1rem !important;
+                padding: 0 1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            .swal2-html-container {
+                padding: 0 1rem 1.25rem !important;
+                font-size: 0.85rem !important;
+            }
+            
+            .swal2-actions {
+                padding: 0 1rem 1.25rem !important;
+                gap: 0.5rem !important;
+            }
+            
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.6rem 1.25rem !important;
+                font-size: 0.85rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .swal2-popup {
+                width: 95% !important;
+                max-width: 300px !important;
+            }
+            
+            .swal2-icon {
+                width: 48px !important;
+                height: 48px !important;
+                margin: 1rem auto 0.5rem !important;
+            }
+            
+            .swal2-title {
+                font-size: 1rem !important;
+                padding: 0 0.75rem !important;
+            }
+            
+            .swal2-html-container {
+                padding: 0 0.75rem 1rem !important;
+                font-size: 0.8rem !important;
+            }
+            
+            .swal2-actions {
+                padding: 0 0.75rem 1rem !important;
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+            }
+            
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.55rem 1rem !important;
+                font-size: 0.8rem !important;
+                width: 100% !important;
             }
         }
     </style>
@@ -340,7 +537,6 @@
 
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <span class="nav-link text-gray-600 font-weight-bold">Siswa</span>
                         </li>
                     </ul>
                 </nav>
@@ -451,7 +647,7 @@
                                         <i class="fas fa-arrow-left"></i>
                                         Kembali
                                     </a>
-                                    <button type="submit" class="btn-action btn-primary-custom">
+                                    <button type="button" id="btnUpdate" class="btn-action btn-primary-custom">
                                         <i class="fas fa-save"></i>
                                         Update
                                     </button>
@@ -516,6 +712,7 @@
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/gps-helper.js') }}"></script>
 
     <script>
@@ -676,6 +873,17 @@
             }
         }
 
+        function getStatusLabel(status) {
+            const statusLabels = {
+                'wfo': 'WFO',
+                'wfh': 'WFH',
+                'sakit': 'Sakit',
+                'izin': 'Izin',
+                'libur': 'Libur'
+            };
+            return statusLabels[status] || status;
+        }
+
         $(document).ready(function() {
             initMap();
 
@@ -684,16 +892,27 @@
             const initialStatus = $('input[name="status_kehadiran"]:checked').val();
             toggleFields();
 
-            $('#jurnalForm').on('submit', function(e) {
-                const status = $('input[name="status_kehadiran"]:checked').val();
+            $('#btnUpdate').on('click', function(e) {
+                e.preventDefault();
                 
+                const status = $('input[name="status_kehadiran"]:checked').val();
+                const tanggal = "{{ $jurnal->tgl->format('d/m/Y') }}";
+                const jamMulai = $('#jam_mulai').val();
+                const jamSelesai = $('#jam_selesai').val();
+                const kegiatan = $('#kegiatan').val();
+
                 if (status === 'wfo') {
                     const lat = parseFloat($('#latitude').val());
                     const lng = parseFloat($('#longitude').val());
                     
                     if (!lat || !lng) {
-                        e.preventDefault();
-                        alert('Lokasi GPS belum terdeteksi. Harap tunggu atau refresh halaman.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lokasi Belum Terdeteksi',
+                            text: 'Lokasi GPS belum terdeteksi. Harap tunggu atau refresh halaman.',
+                            confirmButtonText: 'OK',
+                            buttonsStyling: true
+                        });
                         return false;
                     }
                     
@@ -701,12 +920,70 @@
                         const result = GPSHelper.checkRadius(lat, lng, instansiLat, instansiLng, MAX_DISTANCE);
                         
                         if (!result.isWithinRadius) {
-                            e.preventDefault();
-                            alert('Anda berada di luar radius instansi PKL ('+result.distance+' meter). Maksimal '+MAX_DISTANCE+' meter.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Di Luar Radius',
+                                text: 'Anda berada di luar radius instansi PKL ('+result.distance+' meter). Maksimal '+MAX_DISTANCE+' meter.',
+                                confirmButtonText: 'OK',
+                                buttonsStyling: true
+                            });
                             return false;
                         }
                     }
                 }
+
+                const confirmHTML = `
+                    <div style="padding: 0.5rem 0;">
+                        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <i class="fas fa-edit" style="font-size: 1.75rem; color: #f59e0b;"></i>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Konfirmasi Update Jurnal</h3>
+                        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Apakah Anda yakin ingin mengupdate jurnal berikut?</p>
+                        
+                        <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left;">
+                            <table style="width: 100%; font-size: 0.85rem;">
+                                <tr>
+                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600; width: 35%;">Tanggal:</td>
+                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${tanggal}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Status:</td>
+                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${getStatusLabel(status)}</td>
+                                </tr>
+                                ${(status === 'wfo' || status === 'wfh') ? `
+                                <tr>
+                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Jam:</td>
+                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${jamMulai} - ${jamSelesai}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Kegiatan:</td>
+                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${kegiatan.substring(0, 40)}${kegiatan.length > 40 ? '...' : ''}</td>
+                                </tr>
+                                ` : ''}
+                            </table>
+                        </div>
+                        
+                        <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
+                            <p style="font-size: 0.8rem; color: #92400e; margin: 0; font-weight: 600;">
+                                <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
+                                Data jurnal akan diperbarui
+                            </p>
+                        </div>
+                    </div>
+                `;
+
+                Swal.fire({
+                    html: confirmHTML,
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="fas fa-save" style="margin-right: 0.5rem;"></i>Ya, Update',
+                    cancelButtonText: '<i class="fas fa-times" style="margin-right: 0.5rem;"></i>Batal',
+                    reverseButtons: true,
+                    buttonsStyling: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#jurnalForm').submit();
+                    }
+                });
             });
         });
     </script>

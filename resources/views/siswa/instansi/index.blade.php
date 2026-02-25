@@ -367,6 +367,60 @@
             font-size: 0.95rem;
         }
 
+        .swal2-popup {
+            border-radius: 16px !important;
+            padding: 0 !important;
+            width: 90% !important;
+            max-width: 500px !important;
+        }
+
+        .swal2-html-container {
+            margin: 0 !important;
+            padding: 1rem 1.5rem !important;
+        }
+
+        .swal2-actions {
+            margin: 0 !important;
+            padding: 1rem 1.5rem 1.5rem !important;
+            gap: 0.75rem !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+            color: #fff !important;
+            padding: 0.75rem 2rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.95rem !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+            margin: 0 !important;
+            flex: 1 !important;
+        }
+
+        .swal2-confirm:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4) !important;
+        }
+
+        .swal2-cancel {
+            background: #fff !important;
+            color: #64748b !important;
+            padding: 0.75rem 2rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.95rem !important;
+            border: 2px solid #e2e8f0 !important;
+            margin: 0 !important;
+            flex: 1 !important;
+        }
+
+        .swal2-cancel:hover {
+            background: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            color: #475569 !important;
+        }
+
         @media (max-width: 768px) {
             .instansi-card {
                 flex-direction: column;
@@ -399,6 +453,36 @@
 
             .search-box {
                 max-width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .swal2-popup {
+                width: 95% !important;
+            }
+
+            .swal2-html-container {
+                padding: 1.5rem 1rem !important;
+            }
+
+            .swal2-actions {
+                flex-direction: column !important;
+                padding: 1rem !important;
+            }
+
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.65rem 1.5rem !important;
+                font-size: 0.9rem !important;
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.6rem 1.25rem !important;
+                font-size: 0.85rem !important;
             }
         }
     </style>
@@ -527,7 +611,7 @@
 
                     @if($hasInstansi)
                     <div class="alert-info-custom">
-                        <i class="fas fa-info-circle"></i>
+                        <i class="fas fa-info-circle ml-1"></i>
                         <span>Anda sudah memiliki instansi PKL. Tidak dapat memilih instansi lagi.</span>
                     </div>
                     @endif
@@ -649,15 +733,24 @@
     <script>
         function confirmPilih(id, nama) {
             Swal.fire({
-                title: 'Konfirmasi Pilih Instansi',
-                html: `Apakah Anda yakin ingin memilih instansi:<br><strong>${nama}</strong>?<br><br><small class="text-danger">Anda hanya bisa memilih instansi 1 kali!</small>`,
-                icon: 'question',
+                html: `
+                    <div style="padding: 1rem 0;">
+                        <h3 style="font-size: 1.5rem; font-weight: 800; color: #1a1a1a; margin-bottom: 0.75rem;">Pilih Instansi?</h3>
+                        <p style="font-size: 1rem; color: #64748b; margin-bottom: 1rem;">Anda akan memilih instansi:</p>
+                        <p style="font-size: 1.1rem; font-weight: 700; color: #1e4179; margin-bottom: 1rem;">${nama}</p>
+                        <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 0.75rem 1rem; border-radius: 8px; margin-top: 1.5rem;">
+                            <p style="font-size: 0.875rem; color: #92400e; margin: 0; font-weight: 600;">
+                                <i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>
+                                Anda hanya bisa memilih instansi 1 kali!
+                            </p>
+                        </div>
+                    </div>
+                `,
                 showCancelButton: true,
-                confirmButtonColor: '#3b82f6',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Ya, Pilih!',
-                cancelButtonText: 'Batal',
-                reverseButtons: true
+                confirmButtonText: '<i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>Ya, Pilih',
+                cancelButtonText: '<i class="fas fa-times-circle" style="margin-right: 0.5rem;"></i>Batal',
+                reverseButtons: true,
+                buttonsStyling: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     const form = document.getElementById('form-pilih-instansi');

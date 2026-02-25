@@ -45,6 +45,15 @@
         .sidebar-brand-icon img {
             max-width: 120px;
             height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
         }
 
         #content {
@@ -206,6 +215,18 @@
         }
 
         @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
             .info-row {
                 flex-direction: column;
             }
@@ -228,12 +249,21 @@
                 padding: 0.75rem 0.5rem;
             }
         }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+        }
     </style>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <!-- Sidebar -->
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('siswa.dashboard') }}">
                 <div class="sidebar-brand-icon">
@@ -297,10 +327,8 @@
             </div>
         </ul>
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
@@ -308,12 +336,10 @@
 
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <span class="nav-link text-gray-600 font-weight-bold">Siswa</span>
                         </li>
                     </ul>
                 </nav>
 
-                <!-- Page Content -->
                 <div class="container-fluid">
                     @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -335,7 +361,6 @@
 
                     @if($penilaian)
                     <div class="row">
-                        <!-- Informasi Siswa -->
                         <div class="col-lg-6">
                             <div class="info-card">
                                 <h5>INFORMASI SISWA</h5>
@@ -352,12 +377,11 @@
                                 <div class="info-row">
                                     <div class="info-label">Kelas</div>
                                     <div class="info-separator">:</div>
-                                    <div class="info-value">{{ $siswa->kelas }}</div>
+                                    <div class="info-value">{{ $siswa->kelas_lengkap }}</div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Informasi PKL -->
                         <div class="col-lg-6">
                             <div class="info-card">
                                 <h5>INFORMASI PKL</h5>
@@ -374,13 +398,12 @@
                                 <div class="info-row">
                                     <div class="info-label">Pembimbing</div>
                                     <div class="info-separator">:</div>
-                                    <div class="info-value">{{ $penilaian->instansi->pembimbing ?? '-' }}</div>
+                                    <div class="info-value">{{ $penilaian->instansi->pemilik ?? '-' }}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tabel Nilai Akhir -->
                     <div class="nilai-table-card">
                         <div class="nilai-table-header">
                             NILAI AKHIR
@@ -412,7 +435,6 @@
                         </table>
                     </div>
 
-                    <!-- Tabel Detail Aspek Penilaian -->
                     <div class="nilai-table-card">
                         <div class="nilai-table-header">
                             DETAIL ASPEK PENILAIAN
@@ -501,7 +523,6 @@
                         </table>
                     </div>
 
-                    <!-- Button Unduh PDF -->
                     <div class="text-right mb-4">
                         <a href="{{ route('siswa.nilai.download') }}" class="btn-download">
                             <i class="fas fa-file-pdf"></i>
@@ -521,7 +542,6 @@
                 </div>
             </div>
 
-            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">

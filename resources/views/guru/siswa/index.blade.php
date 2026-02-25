@@ -19,6 +19,66 @@
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
     
     <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item .nav-link:hover,
+        .sidebar .nav-item.active .nav-link {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-item .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem !important;
+        }
+
+        .sidebar-brand-icon img {
+            max-width: 120px;
+            height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
+        }
+
+        .topbar {
+            height: 4.375rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+
+        .topbar .nav-item .nav-link {
+            height: 4.375rem;
+            display: flex;
+            align-items: center;
+        }
+
+        #content {
+            background-color: #e8eef7;
+            min-height: 100vh;
+        }
+
         .performance-badge {
             display: inline-block;
             padding: 5px 10px;
@@ -27,35 +87,43 @@
             font-weight: bold;
             margin-right: 5px;
         }
+
         .badge-wfo {
             background-color: #1cc88a;
             color: white;
         }
+
         .badge-wfh {
             background-color: #36b9cc;
             color: white;
         }
+
         .badge-hadir {
             background-color: #4e73df;
             color: white;
             font-weight: bold;
         }
+
         .badge-izin {
             background-color: #f6c23e;
             color: white;
         }
+
         .badge-sakit {
             background-color: #ffc107;
             color: white;
         }
+
         .badge-libur {
             background-color: #858796;
             color: white;
         }
+
         .badge-alfa {
             background-color: #e74a3b;
             color: white;
         }
+
         .action-btn {
             padding: 5px 15px;
             border-radius: 5px;
@@ -64,8 +132,37 @@
             font-size: 14px;
             transition: all 0.3s;
         }
+
         .action-btn:hover {
             transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .container-fluid {
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
         }
     </style>
 </head>
@@ -74,11 +171,11 @@
 
     <div id="wrapper">
 
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('guru.dashboard') }}">
                 <div class="sidebar-brand-icon main-logo">
-                    <img src="{{ asset('dist_guru/img/') }}" alt="">
+                    <img src="{{ asset('dist_guru/img/logo.png') }}" alt="IPKL">
                 </div>
             </a>
 
@@ -86,21 +183,21 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('guru.dashboard') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-th-large"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('guru.siswa.index') }}">
-                    <i class="fas fa-cart-plus"></i>
+                    <i class="fas fa-users"></i>
                     <span>Kelola Siswa</span>
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('guru.jurnal.index') }}">
-                    <i class="fas fa-cart-arrow-down"></i>
+                    <i class="fas fa-book"></i>
                     <span>Jurnal Siswa</span>
                 </a>
             </li>
@@ -153,6 +250,10 @@
                 </nav>
                
                 <div class="container-fluid">
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-3 mb-sm-0 text-gray-800">Kelola Siswa</h1>
+                    </div>
 
                     @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -363,9 +464,7 @@
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
     <script>

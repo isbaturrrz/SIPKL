@@ -46,6 +46,15 @@
         .sidebar-brand-icon img {
             max-width: 120px;
             height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
         }
 
         #content {
@@ -264,7 +273,155 @@
             z-index: 10;
         }
 
+        .swal2-popup {
+            border-radius: 16px !important;
+            padding: 0 !important;
+            width: 85% !important;
+            max-width: 450px !important;
+        }
+
+        .swal2-icon {
+            width: 60px !important;
+            height: 60px !important;
+            margin: 1.5rem auto 1rem !important;
+            border-width: 3px !important;
+        }
+
+        .swal2-icon.swal2-error {
+            border-color: #ef4444 !important;
+        }
+
+        .swal2-icon.swal2-error .swal2-x-mark {
+            display: block !important;
+        }
+
+        .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+            display: block !important;
+            position: absolute !important;
+            height: 3px !important;
+            width: 30px !important;
+            background-color: #ef4444 !important;
+            border-radius: 2px !important;
+        }
+
+        .swal2-icon.swal2-error .swal2-x-mark-line-left {
+            top: 28px !important;
+            left: 15px !important;
+            transform: rotate(45deg) !important;
+        }
+
+        .swal2-icon.swal2-error .swal2-x-mark-line-right {
+            top: 28px !important;
+            right: 15px !important;
+            transform: rotate(-45deg) !important;
+        }
+
+        .swal2-icon.swal2-warning {
+            border-color: #f59e0b !important;
+            color: #f59e0b !important;
+        }
+
+        .swal2-icon.swal2-info {
+            border-color: #3b82f6 !important;
+            color: #3b82f6 !important;
+        }
+
+        .swal2-icon.swal2-success {
+            border-color: #10b981 !important;
+        }
+
+        .swal2-icon.swal2-success [class^='swal2-success-line'] {
+            background-color: #10b981 !important;
+        }
+
+        .swal2-icon.swal2-success .swal2-success-ring {
+            border-color: rgba(16, 185, 129, 0.3) !important;
+        }
+
+        .swal2-icon .swal2-icon-content {
+            font-size: 2.5rem !important;
+        }
+
+        .swal2-title {
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            color: #1a1a1a !important;
+            padding: 0 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+            line-height: 1.3 !important;
+        }
+
+        .swal2-html-container {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            font-size: 0.9rem !important;
+            color: #64748b !important;
+            line-height: 1.5 !important;
+        }
+
+        .swal2-actions {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            gap: 0.75rem !important;
+            display: flex !important;
+            width: 100% !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, #1e4179 0%, #2c5aa0 100%) !important;
+            color: #fff !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(30, 65, 121, 0.3) !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .swal2-confirm:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(30, 65, 121, 0.4) !important;
+        }
+
+        .swal2-cancel {
+            background: #fff !important;
+            color: #64748b !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            border: 2px solid #e2e8f0 !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .swal2-cancel:hover {
+            background: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            color: #475569 !important;
+        }
+
+        .swal2-styled:focus {
+            box-shadow: none !important;
+        }
+
         @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
             .time-input-group {
                 grid-template-columns: 1fr;
             }
@@ -277,11 +434,123 @@
                 width: 100%;
                 justify-content: center;
             }
+
+            .swal2-popup {
+                width: 90% !important;
+                max-width: 380px !important;
+            }
         }
 
         @media (max-width: 576px) {
             .radio-group {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .swal2-popup {
+                width: 92% !important;
+                max-width: 340px !important;
+            }
+
+            .swal2-icon {
+                width: 56px !important;
+                height: 56px !important;
+                margin: 1.25rem auto 0.75rem !important;
+            }
+
+            .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+                width: 26px !important;
+            }
+
+            .swal2-icon.swal2-error .swal2-x-mark-line-left {
+                top: 26px !important;
+                left: 13px !important;
+            }
+
+            .swal2-icon.swal2-error .swal2-x-mark-line-right {
+                top: 26px !important;
+                right: 13px !important;
+            }
+
+            .swal2-title {
+                font-size: 1.1rem !important;
+                padding: 0 1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            .swal2-html-container {
+                padding: 0 1rem 1.25rem !important;
+                font-size: 0.85rem !important;
+            }
+
+            .swal2-actions {
+                padding: 0 1rem 1.25rem !important;
+                gap: 0.5rem !important;
+            }
+
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.6rem 1.25rem !important;
+                font-size: 0.85rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .swal2-popup {
+                width: 95% !important;
+                max-width: 300px !important;
+            }
+
+            .swal2-icon {
+                width: 48px !important;
+                height: 48px !important;
+                margin: 1rem auto 0.5rem !important;
+            }
+
+            .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+                width: 22px !important;
+            }
+
+            .swal2-icon.swal2-error .swal2-x-mark-line-left {
+                top: 22px !important;
+                left: 11px !important;
+            }
+
+            .swal2-icon.swal2-error .swal2-x-mark-line-right {
+                top: 22px !important;
+                right: 11px !important;
+            }
+
+            .swal2-title {
+                font-size: 1rem !important;
+                padding: 0 0.75rem !important;
+            }
+
+            .swal2-html-container {
+                padding: 0 0.75rem 1rem !important;
+                font-size: 0.8rem !important;
+            }
+
+            .swal2-actions {
+                padding: 0 0.75rem 1rem !important;
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+            }
+
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.55rem 1rem !important;
+                font-size: 0.8rem !important;
+                width: 100% !important;
             }
         }
     </style>
@@ -367,12 +636,6 @@
                 </nav>
 
                 <div class="container-fluid">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div>
-                            <h1 class="h4 mb-0 text-gray-800 font-weight-bold">Catat Jurnal</h1>
-                            <p class="text-muted mb-0">Nama: <strong>{{ $siswa->nama }}</strong></p>
-                        </div>
-                    </div>
 
                     @if(session('error'))
                     <div class="alert alert-danger alert-custom">
@@ -474,7 +737,7 @@
                                         <i class="fas fa-arrow-left"></i>
                                         Kembali
                                     </a>
-                                    <button type="submit" class="btn btn-primary-custom btn-action" id="submitBtn">
+                                    <button type="button" class="btn btn-primary-custom btn-action" id="submitBtn" onclick="confirmSubmitJurnal()">
                                         <i class="fas fa-save"></i>
                                         Simpan
                                     </button>
@@ -540,6 +803,7 @@
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="{{ asset('js/gps-helper.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         let map;
@@ -547,10 +811,168 @@
         let instansiMarker;
         let radiusCircle;
         let watchId = null;
+        let locationPermissionGranted = false;
         
         const instansiLat = {{ $siswa->instansi->latitude ?? 0 }};
         const instansiLng = {{ $siswa->instansi->longitude ?? 0 }};
         const MAX_DISTANCE = 100;
+
+        function showValidationAlert(title, message, icon = 'warning') {
+            Swal.fire({
+                icon: icon,
+                title: title,
+                html: `<p style="color: #64748b; margin: 0;">${message}</p>`,
+                confirmButtonText: '<i class="fas fa-check"></i> Mengerti',
+                buttonsStyling: true
+            });
+        }
+
+        function showLocationPermissionAlert() {
+            Swal.fire({
+                icon: 'info',
+                title: 'Izin Akses Lokasi',
+                html: `
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; color: #2c5aa0; margin: 1rem 0;">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <p style="color: #64748b; margin: 0;">
+                            Aplikasi memerlukan akses lokasi untuk memverifikasi kehadiran di tempat PKL.
+                        </p>
+                        <p style="color: #475569; margin-top: 1rem; font-weight: 600; font-size: 0.85rem;">
+                            Silakan izinkan akses lokasi pada browser Anda.
+                        </p>
+                    </div>
+                `,
+                confirmButtonText: '<i class="fas fa-check"></i> Mengerti',
+                allowOutsideClick: false,
+                buttonsStyling: true
+            });
+        }
+
+        function showLocationLoadingAlert() {
+            Swal.fire({
+                title: 'Mengambil Lokasi',
+                html: `
+                    <div style="text-align: center; padding: 1rem 0;">
+                        <div style="font-size: 3rem; color: #2c5aa0; margin-bottom: 1rem;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                        <p style="color: #64748b; margin: 0;">
+                            Mohon tunggu, sedang mendapatkan lokasi Anda...
+                        </p>
+                    </div>
+                `,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                buttonsStyling: true
+            });
+        }
+
+        function confirmSubmitJurnal() {
+            const status = document.querySelector('input[name="status_kehadiran"]:checked')?.value;
+            const tanggal = document.getElementById('tgl').value;
+            const jamMulai = document.getElementById('jam_mulai').value;
+            const jamSelesai = document.getElementById('jam_selesai').value;
+            const kegiatan = document.getElementById('kegiatan').value.trim();
+            const manfaat = document.getElementById('manfaat').value.trim();
+
+            if (!status) {
+                showValidationAlert('Status Kehadiran Belum Dipilih', 'Silakan pilih status kehadiran terlebih dahulu.');
+                return;
+            }
+
+            if (status === 'wfo' || status === 'wfh') {
+                if (!jamMulai || !jamSelesai) {
+                    showValidationAlert('Data Tidak Lengkap', 'Jam masuk dan jam pulang harus diisi untuk status WFO/WFH.');
+                    return;
+                }
+                if (!kegiatan || !manfaat) {
+                    showValidationAlert('Data Tidak Lengkap', 'Kegiatan dan manfaat harus diisi untuk status WFO/WFH.');
+                    return;
+                }
+            }
+
+            if (status === 'wfo') {
+                const lat = parseFloat(document.getElementById('latitude').value);
+                const lng = parseFloat(document.getElementById('longitude').value);
+                
+                if (!lat || !lng) {
+                    showValidationAlert('Lokasi Belum Terdeteksi', 'Lokasi GPS belum terdeteksi. Harap tunggu sebentar atau refresh halaman.', 'error');
+                    return;
+                }
+                
+                if (instansiLat && instansiLng) {
+                    const result = GPSHelper.checkRadius(lat, lng, instansiLat, instansiLng, MAX_DISTANCE);
+                    
+                    if (!result.isWithinRadius) {
+                        showValidationAlert('Di Luar Radius', 'Anda berada di luar radius instansi PKL ('+result.distance+' meter). Maksimal '+MAX_DISTANCE+' meter.', 'error');
+                        return;
+                    }
+                }
+            }
+
+            const statusLabel = {
+                'wfo': 'WFO (Work From Office)',
+                'wfh': 'WFH (Work From Home)',
+                'sakit': 'Sakit',
+                'izin': 'Izin',
+                'libur': 'Libur'
+            };
+
+            let summaryHTML = `
+                <div style="padding: 0.5rem 0;">
+                    <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #e8eef7 0%, #d1dce8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <i class="fas fa-pen-square" style="font-size: 1.75rem; color: #1e4179;"></i>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Konfirmasi Jurnal</h3>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Periksa kembali data jurnal Anda:</p>
+                    
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left;">
+                        <table style="width: 100%; font-size: 0.85rem;">
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Tanggal:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${tanggal}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Status:</td>
+                                <td style="padding: 0.4rem 0; color: #1e4179; font-weight: 700;">${statusLabel[status]}</td>
+                            </tr>`;
+
+            if (status === 'wfo' || status === 'wfh') {
+                summaryHTML += `
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Jam:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${jamMulai} - ${jamSelesai}</td>
+                            </tr>`;
+            }
+
+            summaryHTML += `
+                        </table>
+                    </div>
+                    
+                    <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <p style="font-size: 0.8rem; color: #1e40af; margin: 0; font-weight: 600;">
+                            <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
+                            Data yang sudah disimpan tidak dapat diubah
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            Swal.fire({
+                html: summaryHTML,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>Ya, Simpan',
+                cancelButtonText: '<i class="fas fa-times-circle" style="margin-right: 0.5rem;"></i>Batal',
+                reverseButtons: true,
+                buttonsStyling: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('jurnalForm').submit();
+                }
+            });
+        }
 
         function updateClock() {
             const now = new Date();
@@ -586,7 +1008,7 @@
                 const maxDate = new Date(todayStr);
                 
                 if (selectedDate < minDate || selectedDate > maxDate) {
-                    alert('Tanggal hanya bisa dipilih hari ini atau kemarin');
+                    showValidationAlert('Tanggal Tidak Valid', 'Tanggal hanya bisa dipilih hari ini atau kemarin.');
                     this.value = todayStr;
                 }
             });
@@ -627,16 +1049,23 @@
 
         async function getUserLocation() {
             const mapLoading = document.getElementById('mapLoading');
+            
+            if (!locationPermissionGranted) {
+                showLocationPermissionAlert();
+            }
+            
             mapLoading.style.display = 'flex';
 
             try {
                 const position = await GPSHelper.getCurrentPosition();
+                locationPermissionGranted = true;
                 updateUserLocation(position.latitude, position.longitude);
                 mapLoading.style.display = 'none';
+                Swal.close();
             } catch (error) {
                 console.error('Error getting location:', error);
-                alert(error.message + '. Pastikan lokasi/GPS aktif dan izin diberikan.');
                 mapLoading.style.display = 'none';
+                showValidationAlert('Gagal Mengambil Lokasi', error.message + '. Pastikan lokasi/GPS aktif dan izin diberikan.', 'error');
             }
         }
 
@@ -748,31 +1177,6 @@
             } else {
                 toggleFields();
             }
-
-            $('#jurnalForm').on('submit', function(e) {
-                const status = $('input[name="status_kehadiran"]:checked').val();
-                
-                if (status === 'wfo') {
-                    const lat = parseFloat($('#latitude').val());
-                    const lng = parseFloat($('#longitude').val());
-                    
-                    if (!lat || !lng) {
-                        e.preventDefault();
-                        alert('Lokasi GPS belum terdeteksi. Harap tunggu atau refresh halaman.');
-                        return false;
-                    }
-                    
-                    if (instansiLat && instansiLng) {
-                        const result = GPSHelper.checkRadius(lat, lng, instansiLat, instansiLng, MAX_DISTANCE);
-                        
-                        if (!result.isWithinRadius) {
-                            e.preventDefault();
-                            alert('Anda berada di luar radius instansi PKL ('+result.distance+' meter). Maksimal '+MAX_DISTANCE+' meter.');
-                            return false;
-                        }
-                    }
-                }
-            });
         });
     </script>
 </body>

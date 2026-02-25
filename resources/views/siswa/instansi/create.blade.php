@@ -328,8 +328,8 @@
 
                     <div class="form-card">
                         <div class="form-header">
-                            <div class="form-header-icon">
-                                <i class="fas fa-building"></i>
+                            <div class="form-header-icon" style="background: linear-gradient(135deg, #e8eef7 0%, #d1dce8 100%);">
+                                <i class="fas fa-building" style="color: #1e4179;" ></i>
                             </div>
                             <div class="form-header-text">
                                 <h4>Ajukan Instansi PKL</h4>
@@ -361,7 +361,7 @@
                                        name="nama_perusahaan" 
                                        value="{{ old('nama_perusahaan') }}"
                                        placeholder="Contoh: PT. Teknologi Indonesia"
-                                       maxlength="50"
+                                       maxlength="255"
                                        required>
                                 @error('nama_perusahaan')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -436,7 +436,7 @@
 
                                 <div class="form-group">
                                     <label for="pemilik">
-                                        Nama Pemilik/PIC <span class="required">*</span>
+                                        Nama Pemilik <span class="required">*</span>
                                     </label>
                                     <input type="text" 
                                            class="form-control @error('pemilik') is-invalid @enderror" 
@@ -460,9 +460,8 @@
                                        class="form-control @error('kuota_siswa') is-invalid @enderror" 
                                        id="kuota_siswa" 
                                        name="kuota_siswa" 
-                                       value="{{ old('kuota_siswa', 1) }}"
                                        placeholder="Contoh: 5"
-                                       min="1"
+                                       value="{{ old('kuota_siswa') }}"
                                        max="50"
                                        required>
                                 <small class="form-text text-muted">
@@ -480,6 +479,7 @@
                                 <select class="form-control @error('jurusan_diterima') is-invalid @enderror" 
                                         id="jurusan_diterima" 
                                         name="jurusan_diterima" 
+                                        style="padding: 0" 
                                         required>
                                     <option value="">-- Pilih Jurusan --</option>
                                     <option value="PPLG" {{ old('jurusan_diterima') == 'PPLG' ? 'selected' : '' }}>PPLG</option>
@@ -538,7 +538,6 @@
         });
 
         document.getElementById('kuota_siswa').addEventListener('input', function(e) {
-            if (this.value < 1) this.value = 1;
             if (this.value > 50) this.value = 50;
         });
     </script>

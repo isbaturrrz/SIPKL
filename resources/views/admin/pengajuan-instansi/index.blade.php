@@ -135,6 +135,11 @@
                 </nav>
 
                 <div class="container-fluid">
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-3 mb-sm-0 text-gray-800">Pengajuan Instansi</h1>
+                    </div>
+
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-primary">Pengajuan Instansi dari Siswa</h6>

@@ -82,14 +82,16 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-primary">Detail Nilai: {{ $siswa->nama }}</h6>
-                            <a href="{{ route('mentor.nilai.index') }}" class="btn btn-secondary btn-sm">Kembali</a>
+                            <a href="{{ route('mentor.nilai.edit', $siswa->id_siswa) }}" class="btn btn-warning">
+                                <i class="fas fa-edit mr-1"></i> Edit Nilai
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <h5 class="font-weight-bold">Informasi Siswa</h5>
                                     <p class="mb-1 text-dark">Nama: <strong>{{ $siswa->nama }}</strong></p>
-                                    <p class="text-dark">Kelas: <strong>{{ $siswa->kelas }}</strong></p>
+                                    <p class="text-dark">Kelas: <strong>{{ $siswa->kelas_lengkap }}</strong></p>
                                 </div>
                                 <div class="col-md-6 text-md-right">
                                     <div class="bg-light p-3 border rounded shadow-sm">
@@ -129,10 +131,8 @@
                                 </p>
                             </div>
 
-                            <div class="mt-4 text-right">
-                                <a href="{{ route('mentor.nilai.edit', $siswa->id_siswa) }}" class="btn btn-warning">
-                                    <i class="fas fa-edit mr-1"></i> Edit Nilai
-                                </a>
+                            <div class="mt-4 text-right">                                
+                                <a href="{{ route('mentor.nilai.index') }}" class="btn btn-secondary btn-sm">Kembali</a>
                             </div>
                         </div>
                     </div>

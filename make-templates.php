@@ -59,14 +59,15 @@ $sheet->setCellValue('I2', 'PPLG');
 $sheet->setCellValue('J2', '2024-02-21');
 $sheet->setCellValue('K2', '2024-05-21');
 
-$sheet->setCellValue('A4', 'KETERANGAN:');
+$sheet->setCellValue('A4', 'BACA KETERANGAN!!! :');
 $sheet->getStyle('A4')->getFont()->setBold(true);
 $sheet->setCellValue('A5', '- nipd: Username (wajib, unique, max 9)');
 $sheet->setCellValue('A6', '- tgl_lahir: Password format YYYY-MM-DD (wajib)');
 $sheet->setCellValue('A7', '- kelas: X, XI, XII (wajib)');
 $sheet->setCellValue('A8', '- jurusan: PPLG, BRP, DKV (wajib)');
 $sheet->setCellValue('A9', '- Hapus baris 2 sebelum import!');
-$sheet->setCellValue('A10', '- Disarankan menggunakan spreadsheet dibanding excel');
+$sheet->setCellValue('A10', '- Disarankan menggunakan SPREADSHEET');
+$sheet->setCellValue('A11', '- !!!(FORMAT SEMUA COLUMN MENJADI TEKS BIASA)');
 
 $writer = new Xlsx($spreadsheet);
 $writer->save('public/templates/template_siswa.xlsx');
@@ -100,12 +101,13 @@ $sheet->setCellValue('E2', '0227654321');
 $sheet->setCellValue('F2', 'Bpk. M.Tafirhan');
 $sheet->setCellValue('G2', '10');
 
-$sheet->setCellValue('A4', 'KETERANGAN:');
+$sheet->setCellValue('A4', 'BACA KETERANGAN!!! :');
 $sheet->getStyle('A4')->getFont()->setBold(true);
-$sheet->setCellValue('A5', '- nama_instansi: Wajib, max 50 karakter');
+$sheet->setCellValue('A5', '- nama_instansi: Wajib, max 255 karakter');
 $sheet->setCellValue('A6', '- Auto create Mentor (password: @mentor123)');
 $sheet->setCellValue('A7', '- Hapus baris 2 sebelum import!');
-$sheet->setCellValue('A8', '- Disarankan menggunakan spreadsheet dibanding excel');
+$sheet->setCellValue('A8', '- Disarankan menggunakan SPREADSHEET');
+$sheet->setCellValue('A9', '- !!!(FORMAT SEMUA COLUMN MENJADI TEKS BIASA)');
 
 $writer = new Xlsx($spreadsheet);
 $writer->save('public/templates/template_instansi.xlsx');
@@ -137,12 +139,13 @@ $sheet->setCellValue('C2', 'Jakarta');
 $sheet->setCellValue('D2', '1985-05-20');
 $sheet->setCellValue('E2', '081298765432');
 
-$sheet->setCellValue('A4', 'KETERANGAN:');
+$sheet->setCellValue('A4', 'BACA KETERANGAN !!!:');
 $sheet->getStyle('A4')->getFont()->setBold(true);
 $sheet->setCellValue('A5', '- email: Username (wajib, unique)');
 $sheet->setCellValue('A6', '- tgl_lahir: Password format YYYY-MM-DD (wajib)');
 $sheet->setCellValue('A7', '- Hapus baris 2 sebelum import!');
-$sheet->setCellValue('A8', '- Disarankan menggunakan spreadsheet dibanding excel');
+$sheet->setCellValue('A8', '- Disarankan menggunakan SPEADSHEET');
+$sheet->setCellValue('A9', '- !!!(FORMAT COLUMN MENJADI TEKS BIASA)');
 
 $writer = new Xlsx($spreadsheet);
 $writer->save('public/templates/template_guru.xlsx');

@@ -99,9 +99,13 @@
                 </nav>
             
                 <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Verifikasi Jurnal</h1>
+                    </div>
+
                     @if(session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
+                            <i class="fas fa-check-circle"></i> {{ session('success') }}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -110,7 +114,7 @@
 
                     @if(session('error'))
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            {{ session('error') }}
+                            <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -129,73 +133,68 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Verifikasi Jurnal</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Filter Jurnal</h6>
                         </div>
                         <div class="card-body">
-                            <form method="GET" action="{{ route('mentor.jurnal.index') }}" class="mb-4">
+                            <form method="GET" action="{{ route('mentor.jurnal.index') }}">
                                 <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label for="search">Cari Nama Siswa</label>
-                                            <input type="text" 
-                                                   id="search"
-                                                   name="search" 
-                                                   class="form-control" 
-                                                   placeholder="Cari Nama Siswa..."
-                                                   value="{{ request('search') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="tanggal">Filter Tanggal</label>
-                                            <input type="date" 
-                                                   id="tanggal"
-                                                   name="tanggal" 
-                                                   class="form-control"
-                                                   value="{{ request('tanggal') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>&nbsp;</label>
-                                            <div>
-                                                <button class="btn btn-primary btn-block" type="submit">
-                                                    <i class="fas fa-search"></i> Cari
-                                                </button>
-                                            </div>
-                                        </div>
+                                    <div class="col-md-12 mb-3">
+                                        <input type="text" 
+                                               name="search" 
+                                               class="form-control" 
+                                               placeholder="Cari nama siswa..."
+                                               value="{{ request('search') }}">
                                     </div>
                                 </div>
-                                @if(request('search') || request('tanggal'))
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label>Filter Tanggal</label>
+                                        <input type="date" 
+                                               name="tanggal" 
+                                               class="form-control"
+                                               value="{{ request('tanggal') }}">
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <a href="{{ route('mentor.jurnal.index') }}" class="btn btn-secondary btn-sm">
-                                            <i class="fas fa-redo"></i> Reset Filter
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i> Cari
+                                        </button>
+                                        <a href="{{ route('mentor.jurnal.index') }}" class="btn btn-secondary">
+                                            <i class="fas fa-sync"></i> Reset
                                         </a>
                                     </div>
                                 </div>
-                                @endif
                             </form>
+                        </div>
+                    </div>
 
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Daftar Jurnal Pending</h6>
+                        </div>
+                        <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead>
+                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Tanggal</th>
-                                            <th>Kehadiran</th>
-                                            <th>Status</th>
-                                            <th>Aksi</th>
+                                            <th width="5%">No</th>
+                                            <th width="25%">Nama</th>
+                                            <th width="15%">Tanggal</th>
+                                            <th width="15%">Kehadiran</th>
+                                            <th width="15%">Status</th>
+                                            <th width="15%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($jurnal as $index => $item)
                                         <tr>
-                                            <td>{{ $index + 1 }}</td>
+                                            <td class="text-center">{{ $index + 1 }}</td>
                                             <td>{{ $item->siswa->nama ?? '-' }}</td>
                                             <td>{{ $item->tgl ? $item->tgl->format('d M Y') : '-' }}</td>
-                                            <td>
+                                            <td class="text-center">
                                                 @if($item->status_kehadiran == 'wfo')
                                                     <span class="badge badge-success">WFO</span>
                                                 @elseif($item->status_kehadiran == 'wfh')
@@ -210,20 +209,25 @@
                                                     <span class="badge badge-danger">Alfa</span>
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <span class="badge badge-warning">Pending</span>
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <a href="{{ route('mentor.jurnal.show', $item->id_jurnal) }}" 
                                                    class="btn btn-primary btn-sm"
-                                                   title="Detail">
-                                                    <i class="fas fa-eye"></i>
+                                                   title="Verifikasi">
+                                                    <i class="fas fa-eye"></i> Verifikasi
                                                 </a>
                                             </td>
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan="6" class="text-center">Tidak ada jurnal yang perlu diverifikasi</td>
+                                            <td colspan="6" class="text-center">
+                                                <div class="py-4">
+                                                    <i class="fas fa-inbox fa-3x text-gray-300 mb-3"></i>
+                                                    <p class="text-gray-500">Tidak ada jurnal yang perlu diverifikasi</p>
+                                                </div>
+                                            </td>
                                         </tr>
                                         @endforelse
                                     </tbody>

@@ -11,11 +11,226 @@
     <link rel="stylesheet" href="{{ asset ('dist_admin/css/style.css')}}">
     <link href="{{ asset ('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
+    
+    <style>
+        .swal2-popup {
+            border-radius: 16px !important;
+            padding: 0 !important;
+            width: 85% !important;
+            max-width: 450px !important;
+        }
+
+        .swal2-icon {
+            width: 60px !important;
+            height: 60px !important;
+            margin: 1.5rem auto 1rem !important;
+            border-width: 3px !important;
+        }
+
+        .swal2-icon.swal2-error {
+            border-color: #ef4444 !important;
+        }
+
+        .swal2-icon.swal2-error .swal2-x-mark {
+            display: block !important;
+        }
+
+        .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+            display: block !important;
+            position: absolute !important;
+            height: 3px !important;
+            width: 30px !important;
+            background-color: #ef4444 !important;
+            border-radius: 2px !important;
+        }
+
+        .swal2-icon.swal2-error .swal2-x-mark-line-left {
+            top: 28px !important;
+            left: 15px !important;
+            transform: rotate(45deg) !important;
+        }
+
+        .swal2-icon.swal2-error .swal2-x-mark-line-right {
+            top: 28px !important;
+            right: 15px !important;
+            transform: rotate(-45deg) !important;
+        }
+
+        .swal2-icon.swal2-warning {
+            border-color: #f59e0b !important;
+            color: #f59e0b !important;
+        }
+
+        .swal2-icon.swal2-info {
+            border-color: #3b82f6 !important;
+            color: #3b82f6 !important;
+        }
+
+        .swal2-icon.swal2-success {
+            border-color: #10b981 !important;
+        }
+
+        .swal2-icon.swal2-success [class^='swal2-success-line'] {
+            background-color: #10b981 !important;
+        }
+
+        .swal2-icon.swal2-success .swal2-success-ring {
+            border-color: rgba(16, 185, 129, 0.3) !important;
+        }
+
+        .swal2-icon .swal2-icon-content {
+            font-size: 2.5rem !important;
+        }
+
+        .swal2-title {
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            color: #1a1a1a !important;
+            padding: 0 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+            line-height: 1.3 !important;
+        }
+
+        .swal2-html-container {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            font-size: 0.9rem !important;
+            color: #64748b !important;
+            line-height: 1.5 !important;
+        }
+
+        .swal2-actions {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            gap: 0.75rem !important;
+            display: flex !important;
+            width: 100% !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
+            color: #fff !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .swal2-confirm:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4) !important;
+        }
+
+        .swal2-cancel {
+            background: #fff !important;
+            color: #64748b !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            border: 2px solid #e2e8f0 !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .swal2-cancel:hover {
+            background: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            color: #475569 !important;
+        }
+
+        .swal2-styled:focus {
+            box-shadow: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .swal2-popup {
+                width: 90% !important;
+                max-width: 380px !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .swal2-popup {
+                width: 92% !important;
+                max-width: 340px !important;
+            }
+            
+            .swal2-icon {
+                width: 56px !important;
+                height: 56px !important;
+                margin: 1.25rem auto 0.75rem !important;
+            }
+            
+            .swal2-title {
+                font-size: 1.1rem !important;
+                padding: 0 1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            .swal2-html-container {
+                padding: 0 1rem 1.25rem !important;
+                font-size: 0.85rem !important;
+            }
+            
+            .swal2-actions {
+                padding: 0 1rem 1.25rem !important;
+                gap: 0.5rem !important;
+            }
+            
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.6rem 1.25rem !important;
+                font-size: 0.85rem !important;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .swal2-popup {
+                width: 95% !important;
+                max-width: 300px !important;
+            }
+            
+            .swal2-icon {
+                width: 48px !important;
+                height: 48px !important;
+                margin: 1rem auto 0.5rem !important;
+            }
+            
+            .swal2-title {
+                font-size: 1rem !important;
+                padding: 0 0.75rem !important;
+            }
+            
+            .swal2-html-container {
+                padding: 0 0.75rem 1rem !important;
+                font-size: 0.8rem !important;
+            }
+            
+            .swal2-actions {
+                padding: 0 0.75rem 1rem !important;
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+            }
+            
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.55rem 1rem !important;
+                font-size: 0.8rem !important;
+                width: 100% !important;
+            }
+        }
+    </style>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon main-logo">
@@ -100,10 +315,8 @@
             </div>
         </ul>
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
@@ -122,7 +335,6 @@
                     </ul>
                 </nav>
 
-                <!-- Page Content -->
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Data Siswa</h1>
@@ -214,7 +426,6 @@
                         </div>
                     </div>
 
-                    <!-- Data Table -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa</h6>
@@ -260,11 +471,13 @@
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <form action="{{ route('admin.siswa.destroy', $s->id_siswa) }}" 
-                                                      method="POST" class="d-inline"
-                                                      onsubmit="return confirm('Yakin ingin menghapus data siswa {{ $s->nama }}?')">
+                                                      method="POST" class="d-inline delete-form"
+                                                      data-nama="{{ $s->nama }}"
+                                                      data-nipd="{{ $s->nipd }}"
+                                                      data-kelas="{{ $s->kelas }} {{ $s->jurusan }} {{ $s->rombel }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
+                                                    <button type="button" class="btn btn-danger btn-sm btn-delete" title="Hapus">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
@@ -279,7 +492,6 @@
                                 </table>
                             </div>
 
-                            <!-- Pagination -->
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <div>
                                     Menampilkan {{ $siswa->firstItem() ?? 0 }} - {{ $siswa->lastItem() ?? 0 }} 
@@ -294,7 +506,6 @@
                 </div>
             </div>
 
-            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -313,5 +524,66 @@
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.querySelectorAll('.btn-delete').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const form = this.closest('.delete-form');
+                const nama = form.getAttribute('data-nama');
+                const nipd = form.getAttribute('data-nipd');
+                const kelas = form.getAttribute('data-kelas');
+
+                const confirmHTML = `
+                    <div style="padding: 0.5rem 0;">
+                        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <i class="fas fa-trash-alt" style="font-size: 1.75rem; color: #dc2626;"></i>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Konfirmasi Hapus Data</h3>
+                        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Apakah Anda yakin ingin menghapus data siswa berikut?</p>
+                        
+                        <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left;">
+                            <table style="width: 100%; font-size: 0.85rem;">
+                                <tr>
+                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Nama:</td>
+                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${nama}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">NIPD:</td>
+                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${nipd}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Kelas:</td>
+                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${kelas}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
+                            <p style="font-size: 0.8rem; color: #991b1b; margin: 0; font-weight: 600;">
+                                <i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>
+                                Data yang dihapus tidak dapat dikembalikan
+                            </p>
+                        </div>
+                    </div>
+                `;
+
+                Swal.fire({
+                    html: confirmHTML,
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="fas fa-trash-alt" style="margin-right: 0.5rem;"></i>Ya, Hapus',
+                    cancelButtonText: '<i class="fas fa-times" style="margin-right: 0.5rem;"></i>Batal',
+                    reverseButtons: true,
+                    buttonsStyling: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -147,7 +147,7 @@
 
                 <div class="container-fluid">
                     <h1 class="h3 mb-4 text-gray-800">
-                        <i class="fas fa-file-import"></i> Import Data via Excel
+                        Import Data
                     </h1>
 
                     @if(session('success'))

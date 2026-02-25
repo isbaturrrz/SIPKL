@@ -48,6 +48,15 @@
         .sidebar-brand-icon img {
             max-width: 120px;
             height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
         }
 
         .topbar {
@@ -273,6 +282,18 @@
                 padding: 1rem 1.5rem;
             }
 
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
             .hero-card {
                 padding: 1.5rem 1.75rem;
             }
@@ -331,6 +352,14 @@
         }
 
         @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+
             .hero-name {
                 font-size: 1.25rem;
             }
@@ -419,15 +448,10 @@
                     </button>
 
                     <ul class="navbar-nav ml-auto">
-                        @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 font-weight-bold">
-                                    Siswa
-                                </span>
+                            <a class="nav-item">
                             </a>
                         </li>
-                        @endauth
                     </ul>
                 </nav>
 
