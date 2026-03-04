@@ -11,14 +11,130 @@
     <link rel="stylesheet" href="{{ asset('dist_mentor/css/style.css')}}">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item .nav-link:hover,
+        .sidebar .nav-item.active .nav-link {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-item .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem !important;
+        }
+
+        .sidebar-brand-icon img {
+            max-width: 120px;
+            height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
+        }
+
+        .border-left-success,
+        .border-left-info,
+        .border-left-warning,
+        .border-left-danger {
+            border-left: 4px solid #6495ed !important;
+        }
+
+        .card-custom {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+        }
+
+        .card-custom .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-custom .label-text {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        .card-custom .main-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-top: 5px;
+        }
+
+        .card-custom small {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .card-custom .progress {
+            height: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .card-custom .progress-bar {
+            background: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+        }
+    </style>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('mentor.dashboard') }}">
                 <div class="sidebar-brand-icon main-logo">
-                    <img src="{{asset('dist_mentor/img/')}}" alt="">
+                    <img src="{{asset('dist_mentor/img/logo.png')}}" alt="IPKL">
                 </div>
             </a>
 
@@ -293,18 +409,17 @@
 
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
-                                            <div class="card border-left-primary shadow h-100 py-2">
+                                            <div class="card card-custom shadow h-100 py-2">
                                                 <div class="card-body">
-                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
-                                                        Persentase Kehadiran
+                                                    <div class="label-text">
+                                                        Presentasi Kehadiran
                                                     </div>
-                                                    <div class="h3 mb-0 font-weight-bold text-gray-800">
+                                                    <div class="main-value">
                                                         {{ $siswa->persentase_kehadiran }}%
                                                     </div>
                                                     <div class="progress mt-2">
-                                                        <div class="progress-bar bg-primary" 
-                                                             role="progressbar" 
-                                                             style="width: {{ $siswa->persentase_kehadiran }}%">
+                                                        <div class="progress-bar"
+                                                            style="width: {{ $siswa->persentase_kehadiran }}%">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -312,12 +427,12 @@
                                         </div>
 
                                         <div class="col-md-4 mb-3">
-                                            <div class="card border-left-success shadow h-100 py-2">
+                                            <div class="card card-custom shadow h-100 py-2">
                                                 <div class="card-body">
-                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-2">
+                                                    <div class="label-text">
                                                         Predikat
                                                     </div>
-                                                    <div class="h1 mb-0 font-weight-bold text-gray-800">
+                                                    <div class="main-value">
                                                         {{ $siswa->predikat }}
                                                     </div>
                                                 </div>
@@ -325,17 +440,17 @@
                                         </div>
 
                                         <div class="col-md-4 mb-3">
-                                            <div class="card border-left-info shadow h-100 py-2">
+                                            <div class="card card-custom shadow h-100 py-2">
                                                 <div class="card-body">
-                                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-2">
+                                                    <div class="label-text">
                                                         Total Jurnal
                                                     </div>
-                                                    <div class="h3 mb-0 font-weight-bold text-gray-800">
+                                                    <div class="main-value">
                                                         {{ $siswa->total_jurnal_all }}
                                                     </div>
-                                                    <small class="text-muted">
-                                                        Verified: {{ $siswa->total_jurnal_verified }} | 
-                                                        Pending: {{ $siswa->total_jurnal_pending }} | 
+                                                    <small>
+                                                        Verified: {{ $siswa->total_jurnal_verified }} |
+                                                        Pending: {{ $siswa->total_jurnal_pending }} |
                                                         Rejected: {{ $siswa->total_jurnal_rejected }}
                                                     </small>
                                                 </div>

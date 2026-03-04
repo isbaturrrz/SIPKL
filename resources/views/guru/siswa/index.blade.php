@@ -79,62 +79,186 @@
             min-height: 100vh;
         }
 
-        .performance-badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-right: 5px;
+        .table-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
         }
 
-        .badge-wfo {
-            background-color: #1cc88a;
-            color: white;
+        .table-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e3e6f0;
         }
 
-        .badge-wfh {
-            background-color: #36b9cc;
-            color: white;
+        .table-header h5 {
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+            font-size: 1.1rem;
         }
 
-        .badge-hadir {
-            background-color: #4e73df;
-            color: white;
-            font-weight: bold;
-        }
-
-        .badge-izin {
-            background-color: #f6c23e;
-            color: white;
-        }
-
-        .badge-sakit {
-            background-color: #ffc107;
-            color: white;
-        }
-
-        .badge-libur {
-            background-color: #858796;
-            color: white;
-        }
-
-        .badge-alfa {
-            background-color: #e74a3b;
-            color: white;
-        }
-
-        .action-btn {
-            padding: 5px 15px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
+        .search-box input,
+        .search-box select {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            width: 100%;
             transition: all 0.3s;
         }
 
-        .action-btn:hover {
-            transform: scale(1.05);
+        .search-box input:focus,
+        .search-box select:focus {
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.1);
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(30, 65, 121, 0.3);
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2c5aa0 0%, #3a6bb5 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 65, 121, 0.4);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .jurnal-table {
+            width: 100%;
+            margin: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .jurnal-table thead {
+           background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+        }
+
+        .jurnal-table thead th {
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            border: none;
+        }
+
+        .jurnal-table tbody tr {
+            border-bottom: 1px solid #e3e6f0;
+            transition: all 0.2s;
+        }
+
+        .jurnal-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .jurnal-table tbody td {
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #334155;
+            vertical-align: middle;
+        }
+
+        .jurnal-table tbody td:first-child {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .badge-hadir {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-sakit {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-izin {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-libur {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .badge-alfa {
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h5 {
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
@@ -152,6 +276,15 @@
 
             .container-fluid {
                 padding: 1rem 1.5rem;
+            }
+
+            .jurnal-table {
+                font-size: 0.8rem;
+            }
+
+            .jurnal-table thead th,
+            .jurnal-table tbody td {
+                padding: 0.75rem 0.5rem;
             }
         }
 
@@ -251,25 +384,21 @@
                
                 <div class="container-fluid">
 
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-3 mb-sm-0 text-gray-800">Kelola Siswa</h1>
-                    </div>
-
                     @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {!! session('success') !!}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <i class="fas fa-check-circle"></i> {!! session('success') !!}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
                         </button>
                     </div>
                     @endif
 
                     @if(session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {!! session('error') !!}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>   
+                        <i class="fas fa-exclamation-circle"></i> {!! session('error') !!}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
                     </div>
                     @endif
 
@@ -281,48 +410,59 @@
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
                         </button>
                     </div>
                     @endif
 
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="h3 mb-0 text-gray-800" style="font-weight: 700;">Kelola Siswa</h1>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Unduh Jurnal Siswa</h5>
+                        </div>
+                        <div style="padding: 1.5rem 2rem;">
                             <form id="downloadForm" method="POST" action="{{ route('guru.siswa.download-pdf') }}">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-5">
-                                        <label for="siswa">Siswa <span class="text-danger">*</span></label>
-                                        <select name="siswa" id="siswa" class="form-control" required>
-                                            <option value="">--Pilih Siswa--</option>
-                                            @foreach($siswaList as $siswa)
-                                            <option value="{{ $siswa->id_siswa }}">{{ $siswa->nama }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-md-5 mb-3">
+                                        <label style="font-weight: 600; color: #1a1a1a; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Siswa <span class="text-danger">*</span></label>
+                                        <div class="search-box">
+                                            <select name="siswa" id="siswa" required>
+                                                <option value="">--Pilih Siswa--</option>
+                                                @foreach($siswaList as $siswa)
+                                                <option value="{{ $siswa->id_siswa }}">{{ $siswa->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="col-md-5">
-                                        <label for="rentang_waktu">Rentang Waktu <span class="text-danger">*</span></label>
-                                        <select name="rentang_waktu" id="rentang_waktu" class="form-control" required>
-                                            <option value="">--Pilih Bulan--</option>
-                                            <option value="semua">Semua Bulan</option>
-                                            <option value="januari">Januari</option>
-                                            <option value="februari">Februari</option>
-                                            <option value="maret">Maret</option>
-                                            <option value="april">April</option>
-                                            <option value="mei">Mei</option>
-                                            <option value="juni">Juni</option>
-                                            <option value="juli">Juli</option>
-                                            <option value="agustus">Agustus</option>
-                                            <option value="september">September</option>
-                                            <option value="oktober">Oktober</option>
-                                            <option value="november">November</option>
-                                            <option value="desember">Desember</option>
-                                        </select>
+                                    <div class="col-md-5 mb-3">
+                                        <label style="font-weight: 600; color: #1a1a1a; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Rentang Waktu <span class="text-danger">*</span></label>
+                                        <div class="search-box">
+                                            <select name="rentang_waktu" id="rentang_waktu" required>
+                                                <option value="">--Pilih Bulan--</option>
+                                                <option value="semua">Semua Bulan</option>
+                                                <option value="januari">Januari</option>
+                                                <option value="februari">Februari</option>
+                                                <option value="maret">Maret</option>
+                                                <option value="april">April</option>
+                                                <option value="mei">Mei</option>
+                                                <option value="juni">Juni</option>
+                                                <option value="juli">Juli</option>
+                                                <option value="agustus">Agustus</option>
+                                                <option value="september">September</option>
+                                                <option value="oktober">Oktober</option>
+                                                <option value="november">November</option>
+                                                <option value="desember">Desember</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="col-md-2 d-flex align-items-end">
+                                    <div class="col-md-2 mb-3 d-flex align-items-end">
                                         <button type="submit" class="btn btn-primary btn-block" id="downloadBtn">
-                                            <i class="fas fa-download"></i> Unduh Pdf
+                                            <i class="fas fa-download"></i> Unduh PDF
                                         </button>
                                     </div>
                                 </div>
@@ -330,68 +470,75 @@
                         </div>
                     </div>
 
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input type="text" id="searchInput" class="form-control" placeholder="Cari siswa...">
-                                </div>
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Cari Siswa</h5>
+                        </div>
+                        <div style="padding: 1.5rem 2rem;">
+                            <div class="search-box">
+                                <input type="text" id="searchInput" placeholder="Cari siswa...">
                             </div>
                         </div>
                     </div>
 
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead style="background-color: #4e73df; color: white;">
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Nama</th>
-                                            <th>Kelas</th>
-                                            <th>Hadir</th>
-                                            <th>Sakit</th>
-                                            <th>Izin</th>
-                                            <th>Libur</th>
-                                            <th>Alfa</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="siswaTable">
-                                        @forelse($siswaList as $index => $siswa)
-                                        <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ $siswa->nama }}</td>
-                                            <td>{{ $siswa->kelas_lengkap }}</td>
-                                            <td>
-                                                <span class="performance-badge badge-hadir">{{ $siswa->hadir }}</span>
-                                            </td>
-                                            <td>
-                                                <span class="performance-badge badge-sakit">{{ $siswa->sakit }}</span>
-                                            </td>
-                                            <td>
-                                                <span class="performance-badge badge-izin">{{ $siswa->izin }}</span>
-                                            </td>
-                                            <td>
-                                                <span class="performance-badge badge-libur">{{ $siswa->libur }}</span>
-                                            </td>
-                                            <td>
-                                                <span class="performance-badge badge-alfa">{{ $siswa->alfa }}</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-sm btn-danger" onclick="showDetailModal({{ $siswa->id_siswa }}, '{{ $siswa->nama }}')">
-                                                    <i class="fas fa-calendar-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="11" class="text-center">Tidak ada siswa yang dibimbing</td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Daftar Siswa</h5>
+                        </div>
+
+                        <div class="table-responsive">
+                            @if($siswaList->count() > 0)
+                            <table class="jurnal-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Kelas</th>
+                                        <th>Hadir</th>
+                                        <th>Sakit</th>
+                                        <th>Izin</th>
+                                        <th>Libur</th>
+                                        <th>Alfa</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="siswaTable">
+                                    @foreach($siswaList as $index => $siswa)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $siswa->nama }}</td>
+                                        <td>{{ $siswa->kelas_lengkap }}</td>
+                                        <td>
+                                            <span class="status-badge badge-hadir">{{ $siswa->hadir }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="status-badge badge-sakit">{{ $siswa->sakit }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="status-badge badge-izin">{{ $siswa->izin }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="status-badge badge-libur">{{ $siswa->libur }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="status-badge badge-alfa">{{ $siswa->alfa }}</span>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-action btn-danger" onclick="showDetailModal({{ $siswa->id_siswa }}, '{{ $siswa->nama }}')">
+                                                <i class="fas fa-calendar-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @else
+                            <div class="empty-state">
+                                <i class="fas fa-users"></i>
+                                <h5>Tidak Ada Siswa</h5>
+                                <p>Tidak ada siswa yang dibimbing</p>
                             </div>
+                            @endif
                         </div>
                     </div>
 

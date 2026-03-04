@@ -191,6 +191,8 @@
             transition: all 0.3s;
             border: none;
             text-decoration: none;
+            margin-right: 8px;
+            margin-bottom: 20px;
         }
 
         .btn-secondary-custom {
@@ -204,7 +206,7 @@
         }
 
         .btn-edit-custom {
-            background: #f59e0b;
+           background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
             color: #fff;
         }
 

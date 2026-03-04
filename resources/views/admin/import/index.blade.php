@@ -13,38 +13,293 @@
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
 
     <style>
-        .import-card {
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item .nav-link:hover,
+        .sidebar .nav-item.active .nav-link {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-item .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem !important;
+        }
+
+        .sidebar-brand-icon img {
+            max-width: 120px;
+            height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
+        }
+
+        #content {
+            background-color: #e8eef7;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background-color: #fff;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+
+        .table-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
             transition: transform 0.2s;
         }
-        .import-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+
+        .table-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
         }
-        .custom-file-label::after {
-            content: "Browse";
+
+        .table-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e3e6f0;
         }
+
+        .table-header h5 {
+            font-weight: 700;
+            color: #1a1a1a;
+            display: flex;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .card-header-primary {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e4179 100%);
+        }
+
+        .card-header-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .card-header-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .card-header-info {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        .card-header-primary h5,
+        .card-header-success h5,
+        .card-header-warning h5,
+        .card-header-info h5 {
+            color: #fff;
+        }
+
+        .btn-template {
+            background: #fff;
+            color: #334155;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-template:hover {
+            background: #f8fafc;
+            color: #1a1a1a;
+            transform: translateY(-1px);
+        }
+
         .info-box {
-            background: #f8f9fc;
-            border-left: 4px solid #4e73df;
-            padding: 15px;
-            margin-bottom: 20px;
+            background: #f8fafc;
+            border-left: 4px solid #2c5aa0;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
         }
+
         .info-box ul {
             margin-bottom: 0;
-            padding-left: 20px;
+            padding-left: 1.25rem;
         }
+
         .info-box li {
-            margin-bottom: 5px;
+            margin-bottom: 0.35rem;
+            font-size: 0.85rem;
+            color: #334155;
+        }
+
+        .info-box code {
+            background: #e2e8f0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #1e4179;
+            font-weight: 600;
+        }
+
+        .custom-file-input:focus ~ .custom-file-label {
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.1);
+        }
+
+        .custom-file-label {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .custom-file-label::after {
+            background: #e8eef7;
+            border-left: 2px solid #e2e8f0;
+            border-radius: 0 6px 6px 0;
+            padding: 0.6rem 1rem;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1e4179 0%, #2c5aa0 100%);
+            border: none;
+            color: #fff;
+            padding: 0.65rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(30, 65, 121, 0.3);
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2c5aa0 0%, #3a6bb5 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 65, 121, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            border: none;
+            color: #fff;
+            padding: 0.65rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+            transition: all 0.3s;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+            border: none;
+            color: #fff;
+            padding: 0.65rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
+            transition: all 0.3s;
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+        }
+
+        .alert {
+            border-radius: 8px;
+            border: none;
+            padding: 0.85rem 1.25rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
         }
     </style>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
                 <div class="sidebar-brand-icon main-logo">
-                    <img src="{{asset('dist_admin/img/')}}" alt="">
+                    <img src="{{asset('dist_admin/img/logo.png')}}" alt="IPKL">
                 </div>
             </a>
 
@@ -146,9 +401,9 @@
                 </nav>
 
                 <div class="container-fluid">
-                    <h1 class="h3 mb-4 text-gray-800">
-                        Import Data
-                    </h1>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="h3 mb-0 text-gray-800" style="font-weight: 700;">Import Data</h1>
+                    </div>
 
                     @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -179,28 +434,18 @@
 
                     <div class="row">
                         <div class="col-lg-4 mb-4">
-                            <div class="card shadow import-card h-100">
-                                <div class="card-header py-3 d-flex justify-content-between align-items-center bg-primary text-white">
-                                    <h6 class="m-0 font-weight-bold">
-                                        <i class="fas fa-user-graduate"></i> Import Siswa
-                                    </h6>
-                                    <a href="{{ route('admin.import.template.siswa') }}" class="btn btn-light btn-sm">
+                            <div class="table-card h-100">
+                                <div class="table-header card-header-primary d-flex justify-content-between align-items-center">
+                                    <h5>
+                                        <span>Import Siswa</span>
+                                    </h5>
+                                    <a href="{{ route('admin.import.template.siswa') }}" class="btn-template">
                                         <i class="fas fa-download"></i> Template
                                     </a>
                                 </div>
-                                <div class="card-body">
-                                    <div class="info-box">
-                                        <strong><i class="fas fa-info-circle"></i> Kolom Wajib:</strong>
-                                        <ul class="mt-2 small">
-                                            <li><code>nipd</code> → Username</li>
-                                            <li><code>nama</code></li>
-                                            <li><code>tgl_lahir</code> → Password</li>
-                                            <li><code>kelas</code> (X, XI, XII)</li>
-                                            <li><code>jurusan</code> (PPLG, BRP, DKV)</li>
-                                        </ul>
-                                    </div>
+                                <div style="padding: 1.5rem 2rem;">
 
-                                    <div class="alert alert-info small">
+                                    <div class="alert alert-info">
                                         <strong><i class="fas fa-key"></i> Login:</strong><br>
                                         Username = <strong>NIPD</strong><br>
                                         Password = <strong>YYYY-MM-DD</strong>
@@ -226,35 +471,18 @@
                         </div>
 
                         <div class="col-lg-4 mb-4">
-                            <div class="card shadow import-card h-100">
-                                <div class="card-header py-3 d-flex justify-content-between align-items-center bg-success text-white">
-                                    <h6 class="m-0 font-weight-bold">
-                                        <i class="fas fa-building"></i> Import Instansi
-                                    </h6>
-                                    <a href="{{ route('admin.import.template.instansi') }}" class="btn btn-light btn-sm">
+                            <div class="table-card h-100">
+                                <div class="table-header card-header-success d-flex justify-content-between align-items-center">
+                                    <h5>
+                                        <span>Import Instansi</span>
+                                    </h5>
+                                    <a href="{{ route('admin.import.template.instansi') }}" class="btn-template">
                                         <i class="fas fa-download"></i> Template
                                     </a>
                                 </div>
-                                <div class="card-body">
-                                    <div class="info-box">
-                                        <strong><i class="fas fa-info-circle"></i> Kolom Wajib:</strong>
-                                        <ul class="mt-2 small">
-                                            <li><code>nama_instansi</code></li>
-                                        </ul>
-                                        <strong class="mt-2 d-block">Kolom Opsional:</strong>
-                                        <ul class="small">
-                                            <li><code>alamat</code></li>
-                                            <li><code>latitude</code></li>
-                                            <li><code>longitude</code></li>
-                                            <li><code>no_hp</code></li>
-                                            <li><code>pemilik</code></li>
-                                            <li><code>kuota_siswa</code></li>
-                                            <li><code>jurusan_diterima</code></li>
-                                            <li><code>id_guru</code></li>
-                                        </ul>
-                                    </div>
+                                <div style="padding: 1.5rem 2rem;">
 
-                                    <div class="alert alert-warning small">
+                                    <div class="alert alert-warning">
                                         <strong><i class="fas fa-user-tie"></i> Auto Create Mentor:</strong><br>
                                         Username = <strong>nama_instansi</strong><br>
                                         Password = <strong>@mentor123</strong>
@@ -280,32 +508,18 @@
                         </div>
 
                         <div class="col-lg-4 mb-4">
-                            <div class="card shadow import-card h-100">
-                                <div class="card-header py-3 d-flex justify-content-between align-items-center bg-warning text-white">
-                                    <h6 class="m-0 font-weight-bold">
-                                        <i class="fas fa-chalkboard-teacher"></i> Import Guru
-                                    </h6>
-                                    <a href="{{ route('admin.import.template.guru') }}" class="btn btn-light btn-sm">
+                            <div class="table-card h-100">
+                                <div class="table-header card-header-warning d-flex justify-content-between align-items-center">
+                                    <h5>
+                                        <span>Import Guru</span>
+                                    </h5>
+                                    <a href="{{ route('admin.import.template.guru') }}" class="btn-template">
                                         <i class="fas fa-download"></i> Template
                                     </a>
                                 </div>
-                                <div class="card-body">
-                                    <div class="info-box">
-                                        <strong><i class="fas fa-info-circle"></i> Kolom Wajib:</strong>
-                                        <ul class="mt-2 small">
-                                            <li><code>nama</code></li>
-                                            <li><code>email</code> → Username</li>
-                                            <li><code>tgl_lahir</code> → Password</li>
-                                        </ul>
-                                        <strong class="mt-2 d-block">Kolom Opsional:</strong>
-                                        <ul class="small">
-                                            <li><code>tempat_lahir</code></li>
-                                            <li><code>no_hp</code></li>
-                                            <li><code>id_instansi</code></li>
-                                        </ul>
-                                    </div>
+                                <div style="padding: 1.5rem 2rem;">
 
-                                    <div class="alert alert-info small">
+                                    <div class="alert alert-info">
                                         <strong><i class="fas fa-key"></i> Login:</strong><br>
                                         Username = <strong>Email</strong><br>
                                         Password = <strong>YYYY-MM-DD</strong>
@@ -322,7 +536,7 @@
                                                 Format: .xlsx, .xls, .csv (Max: 5MB)
                                             </small>
                                         </div>
-                                        <button type="submit" class="btn btn-warning btn-block text-white" id="btn-import-guru">
+                                        <button type="submit" class="btn btn-warning btn-block" id="btn-import-guru">
                                             <i class="fas fa-upload"></i> Import Guru
                                         </button>
                                     </form>
@@ -331,30 +545,30 @@
                         </div>
                     </div>
 
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3 bg-info text-white">
-                            <h6 class="m-0 font-weight-bold">
+                    <div class="table-card">
+                        <div class="table-header card-header-info">
+                            <h5>
                                 <i class="fas fa-book"></i> Panduan Import Data
-                            </h6>
+                            </h5>
                         </div>
-                        <div class="card-body">
+                        <div style="padding: 1.5rem 2rem;">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h6 class="font-weight-bold text-primary">Langkah-langkah Import:</h6>
-                                    <ol>
+                                    <h6 class="font-weight-bold" style="color: #2c5aa0;">Langkah-langkah Import:</h6>
+                                    <ol style="font-size: 0.9rem; color: #334155; line-height: 1.8;">
                                         <li>Klik tombol <strong>"Template"</strong> untuk download template Excel</li>
                                         <li>Buka file template dengan Microsoft Excel atau Google Sheets</li>
                                         <li>Isi data sesuai format yang sudah ditentukan</li>
                                         <li>Pastikan <strong>tidak ada kolom wajib yang kosong</strong></li>
                                         <li>Hapus baris contoh setelah selesai mengisi data</li>
-                                        <li>Simpan file dalam format <code>.xlsx</code></li>
+                                        <li>Simpan file dalam format <code style="background: #e2e8f0; padding: 0.2rem 0.5rem; border-radius: 4px;">.xlsx</code></li>
                                         <li>Upload file dan klik tombol <strong>"Import"</strong></li>
                                         <li>Tunggu proses import selesai dan periksa notifikasi</li>
                                     </ol>
                                 </div>
                                 <div class="col-md-6">
-                                    <h6 class="font-weight-bold text-danger">Hal Penting:</h6>
-                                    <ul>
+                                    <h6 class="font-weight-bold" style="color: #dc2626;">Hal Penting:</h6>
+                                    <ul style="font-size: 0.9rem; color: #334155; line-height: 1.8;">
                                         <li><strong>Siswa:</strong>
                                             <ul>
                                                 <li>NIPD harus unique (tidak boleh sama)</li>

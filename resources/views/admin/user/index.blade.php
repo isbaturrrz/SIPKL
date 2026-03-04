@@ -13,6 +13,427 @@
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
 
     <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item .nav-link:hover,
+        .sidebar .nav-item.active .nav-link {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-item .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem !important;
+        }
+
+        .sidebar-brand-icon img {
+            max-width: 120px;
+            height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
+        }
+
+        #content {
+            background-color: #e8eef7;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background-color: #fff;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+
+        .table-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e3e6f0;
+        }
+
+        .table-header h5 {
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 350px;
+        }
+
+        .search-box input {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            padding-right: 3rem;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.1);
+            outline: none;
+        }
+
+        .search-box select {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .search-box select:focus {
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.1);
+            outline: none;
+        }
+
+        .search-box button {
+             background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .search-box button:hover {
+            background: #2c5aa0;
+        }
+
+        .btn-reset {
+            background: #6c757d;
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-reset:hover {
+            background: #5a6268;
+            color: #fff;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(30, 65, 121, 0.3);
+        }
+
+        .btn-add:hover {
+            background: linear-gradient(135deg, #2c5aa0 0%, #3a6bb5 100%);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 65, 121, 0.4);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .jurnal-table {
+            width: 100%;
+            margin: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .jurnal-table thead {
+             background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+        }
+
+        .jurnal-table thead th {
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            border: none;
+        }
+
+        .jurnal-table tbody tr {
+            border-bottom: 1px solid #e3e6f0;
+            transition: all 0.2s;
+        }
+
+        .jurnal-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .jurnal-table tbody td {
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #334155;
+            vertical-align: middle;
+        }
+
+        .jurnal-table tbody td:first-child {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 0 0.15rem;
+        }
+
+        .btn-info {
+            background: #4f46e5;
+            color: #fff;
+        }
+
+        .btn-info:hover {
+            background: #4338ca;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: #fff;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: #fff;
+            margin-top: 8px;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #9ca3af;
+            color: #fff;
+            margin-top: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: #6b7280;
+            color: #fff;
+        }
+
+        .pagination-wrapper {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pagination-info {
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0;
+        }
+
+        .page-item .page-link {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e2e8f0;
+            background: #fff;
+            color: #64748b;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            padding: 0;
+        }
+
+        .page-item .page-link:hover {
+            border-color: #2c5aa0;
+            color: #2c5aa0;
+            background: #f8fafc;
+        }
+
+        .page-item.active .page-link {
+            background: #2c5aa0;
+            color: #fff;
+            border-color: #2c5aa0;
+        }
+
+        .page-item.disabled .page-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h5 {
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .table-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .jurnal-table {
+                font-size: 0.8rem;
+            }
+
+            .jurnal-table thead th,
+            .jurnal-table tbody td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+        }
+
         .swal2-popup {
             border-radius: 16px !important;
             padding: 0 !important;
@@ -149,6 +570,15 @@
             box-shadow: none !important;
         }
 
+        .swal2-confirm.swal2-confirm-single {
+            background: linear-gradient(135deg, #1e4179 0%, #2c5aa0 100%) !important;
+            box-shadow: 0 4px 12px rgba(30, 65, 121, 0.3) !important;
+        }
+
+        .swal2-confirm.swal2-confirm-single:hover {
+            box-shadow: 0 6px 16px rgba(30, 65, 121, 0.4) !important;
+        }
+
         @media (max-width: 768px) {
             .swal2-popup {
                 width: 90% !important;
@@ -231,11 +661,10 @@
 
 <body id="page-top">
     <div id="wrapper">
-        
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
                 <div class="sidebar-brand-icon main-logo">
-                    <img src="{{asset('dist_admin/img/')}}" alt="">
+                    <img src="{{asset('dist_admin/img/logo.png')}}" alt="IPKL">
                 </div>
             </a>
 
@@ -316,10 +745,8 @@
             </div>
         </ul>
 
-       
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
@@ -338,150 +765,147 @@
                     </ul>
                 </nav>
 
-                
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Data User</h1>
-                        <a href="{{ route('admin.user.create') }}" class="btn btn-primary">
+                    @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle"></i> {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    @endif
+
+                    @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    @endif
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="h3 mb-0 text-gray-800" style="font-weight: 700;">Data User</h1>
+                        <a href="{{ route('admin.user.create') }}" class="btn-add">
                             <i class="fas fa-plus"></i> Tambah User
                         </a>
                     </div>
 
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="fas fa-check-circle"></i> {{ session('success') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Cari User</h5>
                         </div>
-                    @endif
-
-                    @if (session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    @endif
-
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Cari User</h6>
-                        </div>
-                        <div class="card-body">
-                            <form action="{{ route('admin.user.index') }}" method="GET">
+                        <div style="padding: 1.5rem 2rem;">
+                            <form method="GET" action="{{ route('admin.user.index') }}">
                                 <div class="row">
                                     <div class="col-md-8 mb-3">
-                                        <input type="text" class="form-control" name="search" 
-                                               placeholder="Cari nama, username, email..." 
-                                               value="{{ request('search') }}">
+                                        <div class="search-box" style="max-width: 100%;">
+                                            <input type="text" name="search" placeholder="Cari nama, username, email..." value="{{ request('search') }}">
+                                        </div>
                                     </div>
 
                                     <div class="col-md-4 mb-3">
-                                        <select class="form-control" name="filter_role">
-                                            <option value="">-- Semua Role --</option>
-                                            <option value="admin" {{ request('filter_role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                            <option value="guru" {{ request('filter_role') == 'guru' ? 'selected' : '' }}>Guru</option>
-                                            <option value="mentor" {{ request('filter_role') == 'mentor' ? 'selected' : '' }}>Mentor</option>
-                                        </select>
+                                        <div class="search-box" style="max-width: 100%;">
+                                            <select name="filter_role">
+                                                <option value="">-- Semua Role --</option>
+                                                <option value="admin" {{ request('filter_role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                                <option value="guru" {{ request('filter_role') == 'guru' ? 'selected' : '' }}>Guru</option>
+                                                <option value="mentor" {{ request('filter_role') == 'mentor' ? 'selected' : '' }}>Mentor</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-search"></i> Cari
-                                        </button>
-                                        <a href="{{ route('admin.user.index') }}" class="btn btn-secondary">
-                                            <i class="fas fa-sync"></i> Reset
-                                        </a>
+                                        <div class="search-box" style="max-width: 100%; display: flex; gap: 0.75rem;">
+                                            <button type="submit">
+                                                <i class="fas fa-search"></i> Cari
+                                            </button>
+                                            <a href="{{ route('admin.user.index') }}" class="btn-reset">
+                                                <i class="fas fa-sync"></i> Reset
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
 
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Daftar User</h6>
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Daftar User</h5>
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th width="5%">No</th>
-                                            <th>Nama</th>
-                                            <th>Username</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th width="15%">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($users as $index => $user)
-                                        <tr>
-                                            <td class="text-center">{{ $index + 1 }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->username }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>
-                                                @if($user->role == 'admin')
-                                                    <span class="badge badge-danger">Admin</span>
-                                                @elseif($user->role == 'guru')
-                                                    <span class="badge badge-success">Guru</span>
-                                                @elseif($user->role == 'mentor') 
-                                                    <span class="badge badge-warning">Mentor</span>
-                                                @else
-                                                    <span class="badge badge-info">Siswa</span>
-                                                @endif
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="{{ route('admin.user.show', $user->id) }}" 
-                                                   class="btn btn-info btn-sm" 
-                                                   title="Lihat Detail">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ route('admin.user.edit', $user->id) }}" 
-                                                   class="btn btn-warning btn-sm" 
-                                                   title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                
-                                                @if($user->id != auth()->id())
-                                                <form action="{{ route('admin.user.destroy', $user->id) }}" 
-                                                      method="POST" 
-                                                      class="d-inline delete-form"
-                                                      data-nama="{{ $user->name }}"
-                                                      data-username="{{ $user->username }}"
-                                                      data-email="{{ $user->email }}"
-                                                      data-role="{{ $user->role }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" 
-                                                            class="btn btn-danger btn-sm btn-delete" 
-                                                            title="Hapus">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                                @else
-                                                <button class="btn btn-secondary btn-sm" 
-                                                        title="Tidak bisa hapus akun sendiri" 
-                                                        disabled>
+
+                        <div class="table-responsive">
+                            @if($users->count() > 0)
+                            <table class="jurnal-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($users as $index => $user)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->username }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>
+                                            @if($user->role == 'admin')
+                                                <span class="status-badge badge-danger">Admin</span>
+                                            @elseif($user->role == 'guru')
+                                                <span class="status-badge badge-success">Guru</span>
+                                            @elseif($user->role == 'mentor')
+                                                <span class="status-badge badge-warning">Mentor</span>
+                                            @else
+                                                <span class="status-badge badge-info">Siswa</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.user.show', $user->id) }}" class="btn-action btn-info">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="{{ route('admin.user.edit', $user->id) }}" class="btn-action btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            @if($user->id != auth()->id())
+                                            <form action="{{ route('admin.user.destroy', $user->id) }}" 
+                                                  method="POST" 
+                                                  class="d-inline delete-form"
+                                                  data-nama="{{ $user->name }}"
+                                                  data-username="{{ $user->username }}"
+                                                  data-email="{{ $user->email }}"
+                                                  data-role="{{ $user->role }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn-action btn-danger btn-delete">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center">Tidak ada data user</td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                                            </form>
+                                            @else
+                                            <button class="btn-action btn-secondary" disabled>
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @else
+                            <div class="empty-state">
+                                <i class="fas fa-users"></i>
+                                <h5>Belum Ada Data User</h5>
+                                <p>Belum ada user yang terdaftar dalam sistem.</p>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -518,26 +942,21 @@
                 const email = form.getAttribute('data-email');
                 const role = form.getAttribute('data-role');
 
-                let roleLabel = '';
                 let roleBadge = '';
                 if (role === 'admin') {
-                    roleLabel = 'Admin';
-                    roleBadge = '<span style="background: #dc2626; color: #fff; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">Admin</span>';
+                    roleBadge = '<span style="background: #fee2e2; color: #dc2626; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">Admin</span>';
                 } else if (role === 'guru') {
-                    roleLabel = 'Guru';
-                    roleBadge = '<span style="background: #10b981; color: #fff; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">Guru</span>';
+                    roleBadge = '<span style="background: #d1fae5; color: #065f46; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">Guru</span>';
                 } else if (role === 'mentor') {
-                    roleLabel = 'Mentor';
-                    roleBadge = '<span style="background: #f59e0b; color: #fff; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">Mentor</span>';
+                    roleBadge = '<span style="background: #fef3c7; color: #d97706; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">Mentor</span>';
                 } else {
-                    roleLabel = 'Siswa';
-                    roleBadge = '<span style="background: #3b82f6; color: #fff; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">Siswa</span>';
+                    roleBadge = '<span style="background: #dbeafe; color: #1e40af; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">Siswa</span>';
                 }
 
                 const confirmHTML = `
                     <div style="padding: 0.5rem 0;">
                         <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                            <i class="fas fa-user-times" style="font-size: 1.75rem; color: #dc2626;"></i>
+                            <i class="fas fa-users" style="font-size: 1.75rem; color: #dc2626;"></i>
                         </div>
                         <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Konfirmasi Hapus User</h3>
                         <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Apakah Anda yakin ingin menghapus user berikut?</p>

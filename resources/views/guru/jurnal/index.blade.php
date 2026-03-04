@@ -78,6 +78,356 @@
             min-height: 100vh;
         }
 
+        .stat-card {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            max-width: 350px;   
+        
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .stat-card .stat-icon {
+            font-size: 28px;
+            opacity: 0.5;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #1e3a6e;
+        }
+
+        .table-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e3e6f0;
+        }
+
+        .table-header h5 {
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(30, 65, 121, 0.3);
+        }
+
+        .btn-add:hover {
+            background: linear-gradient(135deg, #2c5aa0 0%, #3a6bb5 100%);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 65, 121, 0.4);
+        }
+
+        .search-box select,
+        .search-box input {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .search-box select:focus,
+        .search-box input:focus {
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.1);
+            outline: none;
+        }
+
+        .search-box button {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .search-box button:hover {
+            background: #2c5aa0;
+        }
+
+        .btn-reset {
+            background: #6c757d;
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-reset:hover {
+            background: #5a6268;
+            color: #fff;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .jurnal-table {
+            width: 100%;
+            margin: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .jurnal-table thead {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+        }
+
+        .jurnal-table thead th {
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            border: none;
+        }
+
+        .jurnal-table tbody tr {
+            border-bottom: 1px solid #e3e6f0;
+            transition: all 0.2s;
+        }
+
+        .jurnal-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .jurnal-table tbody td {
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #334155;
+            vertical-align: middle;
+        }
+
+        .jurnal-table tbody td:first-child {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .badge-danger {
+            background: #fecaca;
+            color: #991b1b;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 0 0.15rem;
+        }
+
+        .btn-info {
+            background: #4f46e5;
+            color: #fff;
+        }
+
+        .btn-info:hover {
+            background: #4338ca;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: #fff;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: #fff;
+            margin-top: 5px;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .pagination-wrapper {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pagination-info {
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0;
+        }
+
+        .page-item .page-link {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e2e8f0;
+            background: #fff;
+            color: #64748b;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            padding: 0;
+        }
+
+        .page-item .page-link:hover {
+            border-color: #2c5aa0;
+            color: #2c5aa0;
+            background: #f8fafc;
+        }
+
+        .page-item.active .page-link {
+            background: #2c5aa0;
+            color: #fff;
+            border-color: #2c5aa0;
+        }
+
+        .page-item.disabled .page-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h5 {
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
         .swal2-popup {
             border-radius: 16px !important;
             padding: 0 !important;
@@ -122,7 +472,7 @@
         }
 
         .swal2-icon.swal2-warning {
-            border-color: #f59e0b !important;
+            border-color: #6495ed  !important;
             color: #f59e0b !important;
         }
 
@@ -243,6 +593,15 @@
             .swal2-popup {
                 width: 90% !important;
                 max-width: 380px !important;
+            }
+
+            .jurnal-table {
+                font-size: 0.8rem;
+            }
+
+            .jurnal-table thead th,
+            .jurnal-table tbody td {
+                padding: 0.75rem 0.5rem;
             }
         }
 
@@ -413,290 +772,346 @@
             
                 <div class="container-fluid">
 
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-3 mb-sm-0 text-gray-800">Jurnal Siswa</h1>
-                        <a href="{{ route('guru.jurnal.create') }}" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Tambah Jurnal
-                        </a>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Total Jurnal Terverifikasi
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                {{ $jurnalsVerified->total() }}
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Total Jurnal Belum Terverifikasi
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                {{ $jurnalsUnverified->total() }}
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <i class="fas fa-check-circle"></i> {{ session('success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
                         </button>
                     </div>
                     @endif
 
                     @if(session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
                         </button>
                     </div>
                     @endif
 
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Filter Jurnal</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="h3 mb-0 text-gray-800" style="font-weight: 700;">Jurnal Siswa</h1>
+                        <a href="{{ route('guru.jurnal.create') }}" class="btn-add">
+                            <i class="fas fa-plus"></i> Tambah Jurnal
+                        </a>
+                    </div>
+
+                     <div class="row mb-4">
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="stat-card">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="stat-label">Total Jurnal Terverifikasi</div>
+                                        <div class="stat-value">{{ $jurnalsVerified->total() }}</div>
+                                    </div>
+                                    <div class="stat-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="stat-card">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="stat-label">Total Jurnal Belum Terverifikasi</div>
+                                        <div class="stat-value">{{ $jurnalsUnverified->total() }}</div>
+                                    </div>
+                                    <div class="stat-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Filter Jurnal</h5>
+                        </div>
+                        <div style="padding: 1.5rem 2rem;">
                             <form method="GET" action="{{ route('guru.jurnal.index') }}">
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
-                                        <label>Filter Siswa</label>
-                                        <select name="siswa_id" class="form-control">
-                                            <option value="">-- Semua Siswa --</option>
-                                            @foreach($siswaList as $siswa)
-                                            <option value="{{ $siswa->id_siswa }}" {{ request('siswa_id') == $siswa->id_siswa ? 'selected' : '' }}>
-                                                {{ $siswa->nama }}
-                                            </option>
-                                            @endforeach
-                                        </select>
+                                        <label style="font-weight: 600; color: #1a1a1a; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Filter Siswa</label>
+                                        <div class="search-box">
+                                            <select name="siswa_id">
+                                                <option value="">-- Semua Siswa --</option>
+                                                @foreach($siswaList as $siswa)
+                                                <option value="{{ $siswa->id_siswa }}" {{ request('siswa_id') == $siswa->id_siswa ? 'selected' : '' }}>
+                                                    {{ $siswa->nama }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class="col-md-4 mb-3">
-                                        <label>Filter Tanggal</label>
-                                        <input type="date" name="tanggal" class="form-control" value="{{ request('tanggal') }}">
+                                        <label style="font-weight: 600; color: #1a1a1a; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Filter Tanggal</label>
+                                        <div class="search-box">
+                                            <input type="date" name="tanggal" value="{{ request('tanggal') }}">
+                                        </div>
                                     </div>
 
                                     <div class="col-md-4 mb-3">
-                                        <label>Filter Bulan</label>
-                                        <input type="month" name="bulan" class="form-control" value="{{ request('bulan') }}">
+                                        <label style="font-weight: 600; color: #1a1a1a; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Filter Bulan</label>
+                                        <div class="search-box">
+                                            <input type="month" name="bulan" value="{{ request('bulan') }}">
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-search"></i> Cari
-                                        </button>
-                                        <a href="{{ route('guru.jurnal.index') }}" class="btn btn-secondary">
-                                            <i class="fas fa-sync"></i> Reset
-                                        </a>
+                                        <div class="search-box" style="max-width: 100%; display: flex; gap: 0.75rem;">
+                                            <button type="submit">
+                                                <i class="fas fa-search"></i> Cari
+                                            </button>
+                                            <a href="{{ route('guru.jurnal.index') }}" class="btn-reset">
+                                                <i class="fas fa-sync"></i> Reset
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
 
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-warning">Data Jurnal Siswa (Belum Terverifikasi)</h6>
+                    <div class="table-card">
+                        <div class="table-header" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                            <h5 style="color: #fff;">Data Jurnal Siswa (Belum Terverifikasi)</h5>
                         </div>
-                        <div class="card-body">
 
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th width="5%">No</th>
-                                            <th width="10%">Tanggal</th>
-                                            <th width="18%">Nama Siswa</th>
-                                            <th width="12%">Jam</th>
-                                            <th width="10%">Kehadiran</th>
-                                            <th width="20%">Kegiatan</th>
-                                            <th width="10%">Status</th>
-                                            <th width="10%">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($jurnalsUnverified as $index => $jurnal)
-                                        <tr>
-                                            <td class="text-center">{{ $jurnalsUnverified->firstItem() + $index }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($jurnal->tgl)->format('d/m/Y') }}</td>
-                                            <td>{{ $jurnal->siswa->nama }}</td>
-                                            <td class="text-center">{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}</td>
-                                            <td class="text-center">
-                                                @if($jurnal->status_kehadiran == 'wfo')
-                                                    <span class="badge badge-success">WFO</span>
-                                                @elseif($jurnal->status_kehadiran == 'wfh')
-                                                    <span class="badge badge-success">WFH</span>
-                                                @elseif($jurnal->status_kehadiran == 'izin')
-                                                    <span class="badge badge-warning">Izin</span>
-                                                @elseif($jurnal->status_kehadiran == 'sakit')
-                                                    <span class="badge badge-info">Sakit</span>
-                                                @elseif($jurnal->status_kehadiran == 'libur')
-                                                    <span class="badge badge-secondary">Libur</span>
-                                                @else
-                                                    <span class="badge badge-danger">Alfa</span>
-                                                @endif
-                                            </td>
-                                            <td>{{ Str::limit($jurnal->kegiatan, 50) }}</td>
-                                            <td class="text-center">
-                                                <span class="badge badge-warning">Pending</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="{{ route('guru.jurnal.edit', $jurnal->id_jurnal) }}" class="btn btn-sm btn-warning" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form action="{{ route('guru.jurnal.destroy', $jurnal->id_jurnal) }}" method="POST" class="d-inline delete-form"
-                                                      data-tanggal="{{ \Carbon\Carbon::parse($jurnal->tgl)->format('d/m/Y') }}"
-                                                      data-siswa="{{ $jurnal->siswa->nama }}"
-                                                      data-jam="{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}"
-                                                      data-kegiatan="{{ Str::limit($jurnal->kegiatan, 60) }}"
-                                                      data-status="Belum Terverifikasi">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-sm btn-danger btn-delete" title="Hapus">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="8" class="text-center">
-                                                <div class="py-4">
-                                                    <i class="fas fa-inbox fa-3x text-gray-300 mb-3"></i>
-                                                    <p class="text-gray-500">Tidak ada data jurnal yang belum terverifikasi</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                        <div class="table-responsive">
+                            @if($jurnalsUnverified->count() > 0)
+                            <table class="jurnal-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal</th>
+                                        <th>Nama Siswa</th>
+                                        <th>Jam</th>
+                                        <th>Kehadiran</th>
+                                        <th>Kegiatan</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($jurnalsUnverified as $index => $jurnal)
+                                    <tr>
+                                        <td>{{ $jurnalsUnverified->firstItem() + $index }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($jurnal->tgl)->format('d/m/Y') }}</td>
+                                        <td>{{ $jurnal->siswa->nama }}</td>
+                                        <td>{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}</td>
+                                        <td>
+                                            @if($jurnal->status_kehadiran == 'wfo')
+                                                <span class="status-badge badge-success">WFO</span>
+                                            @elseif($jurnal->status_kehadiran == 'wfh')
+                                                <span class="status-badge badge-success">WFH</span>
+                                            @elseif($jurnal->status_kehadiran == 'izin')
+                                                <span class="status-badge badge-warning">Izin</span>
+                                            @elseif($jurnal->status_kehadiran == 'sakit')
+                                                <span class="status-badge badge-info">Sakit</span>
+                                            @elseif($jurnal->status_kehadiran == 'libur')
+                                                <span class="status-badge badge-secondary">Libur</span>
+                                            @else
+                                                <span class="status-badge badge-danger">Alfa</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ Str::limit($jurnal->kegiatan, 50) }}</td>
+                                        <td>
+                                            <span class="status-badge badge-warning">Pending</span>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('guru.jurnal.edit', $jurnal->id_jurnal) }}" class="btn-action btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form action="{{ route('guru.jurnal.destroy', $jurnal->id_jurnal) }}" method="POST" class="d-inline delete-form"
+                                                  data-tanggal="{{ \Carbon\Carbon::parse($jurnal->tgl)->format('d/m/Y') }}"
+                                                  data-siswa="{{ $jurnal->siswa->nama }}"
+                                                  data-jam="{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}"
+                                                  data-kegiatan="{{ Str::limit($jurnal->kegiatan, 60) }}"
+                                                  data-status="Belum Terverifikasi">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn-action btn-danger btn-delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @else
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <h5>Tidak Ada Data</h5>
+                                <p>Tidak ada data jurnal yang belum terverifikasi</p>
                             </div>
-                            
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    Menampilkan {{ $jurnalsUnverified->firstItem() ?? 0 }} - {{ $jurnalsUnverified->lastItem() ?? 0 }} 
-                                    dari {{ $jurnalsUnverified->total() }} data
-                                </div>
-                                <div>
-                                    {{ $jurnalsUnverified->appends(request()->query())->links() }}
-                                </div>
+                            @endif
+                        </div>
+                        
+                        @if($jurnalsUnverified->hasPages())
+                        <div class="pagination-wrapper">
+                            <div class="pagination-info">
+                                Menampilkan {{ $jurnalsUnverified->firstItem() ?? 0 }} - {{ $jurnalsUnverified->lastItem() ?? 0 }} dari {{ $jurnalsUnverified->total() }} data
+                            </div>
+                            <div class="pagination">
+                                @if($jurnalsUnverified->onFirstPage())
+                                <span class="page-item disabled">
+                                    <span class="page-link">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                </span>
+                                @else
+                                <span class="page-item">
+                                    <a href="{{ $jurnalsUnverified->previousPageUrl() }}" class="page-link">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </span>
+                                @endif
+
+                                @foreach($jurnalsUnverified->getUrlRange(1, $jurnalsUnverified->lastPage()) as $page => $url)
+                                <span class="page-item {{ $page == $jurnalsUnverified->currentPage() ? 'active' : '' }}">
+                                    <a href="{{ $url }}" class="page-link">{{ $page }}</a>
+                                </span>
+                                @endforeach
+
+                                @if($jurnalsUnverified->hasMorePages())
+                                <span class="page-item">
+                                    <a href="{{ $jurnalsUnverified->nextPageUrl() }}" class="page-link">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </span>
+                                @else
+                                <span class="page-item disabled">
+                                    <span class="page-link">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </span>
+                                @endif
                             </div>
                         </div>
+                        @endif
                     </div>
 
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-success">Data Jurnal Siswa (Terverifikasi Pembimbing Instansi)</h6>
+                    <div class="table-card">
+                        <div class="table-header" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                            <h5 style="color: #fff;">Data Jurnal Siswa (Terverifikasi Pembimbing Instansi)</h5>
                         </div>
-                        <div class="card-body">
-                            
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th width="5%">No</th>
-                                            <th width="10%">Tanggal</th>
-                                            <th width="18%">Nama Siswa</th>
-                                            <th width="12%">Jam</th>
-                                            <th width="10%">Kehadiran</th>
-                                            <th width="18%">Kegiatan</th>
-                                            <th width="10%">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($jurnalsVerified as $index => $jurnal)
-                                        <tr>
-                                            <td class="text-center">{{ $jurnalsVerified->firstItem() + $index }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($jurnal->tgl)->format('d/m/Y') }}</td>
-                                            <td>{{ $jurnal->siswa->nama }}</td>
-                                            <td class="text-center">{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}</td>
-                                            <td class="text-center">
-                                                @if($jurnal->status_kehadiran == 'wfo')
-                                                    <span class="badge badge-success">WFO</span>
-                                                @elseif($jurnal->status_kehadiran == 'wfh')
-                                                    <span class="badge badge-success">WFH</span>
-                                                @elseif($jurnal->status_kehadiran == 'izin')
-                                                    <span class="badge badge-warning">Izin</span>
-                                                @elseif($jurnal->status_kehadiran == 'sakit')
-                                                    <span class="badge badge-info">Sakit</span>
-                                                @elseif($jurnal->status_kehadiran == 'libur')
-                                                    <span class="badge badge-secondary">Libur</span>
-                                                @else
-                                                    <span class="badge badge-danger">Alfa</span>
-                                                @endif
-                                            </td>
-                                            <td>{{ Str::limit($jurnal->kegiatan, 50) }}</td>
-                                            <td class="text-center">
-                                                <a href="{{ route('guru.jurnal.show', $jurnal->id_jurnal) }}" class="btn btn-sm btn-info" title="Lihat Detail">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <form action="{{ route('guru.jurnal.destroy', $jurnal->id_jurnal) }}" method="POST" class="d-inline delete-form"
-                                                      data-tanggal="{{ \Carbon\Carbon::parse($jurnal->tgl)->format('d/m/Y') }}"
-                                                      data-siswa="{{ $jurnal->siswa->nama }}"
-                                                      data-jam="{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}"
-                                                      data-kegiatan="{{ Str::limit($jurnal->kegiatan, 60) }}"
-                                                      data-status="Terverifikasi">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-sm btn-danger btn-delete" title="Hapus">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="7" class="text-center">
-                                                <div class="py-4">
-                                                    <i class="fas fa-inbox fa-3x text-gray-300 mb-3"></i>
-                                                    <p class="text-gray-500">Tidak ada data jurnal yang terverifikasi</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+
+                        <div class="table-responsive">
+                            @if($jurnalsVerified->count() > 0)
+                            <table class="jurnal-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal</th>
+                                        <th>Nama Siswa</th>
+                                        <th>Jam</th>
+                                        <th>Kehadiran</th>
+                                        <th>Kegiatan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($jurnalsVerified as $index => $jurnal)
+                                    <tr>
+                                        <td>{{ $jurnalsVerified->firstItem() + $index }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($jurnal->tgl)->format('d/m/Y') }}</td>
+                                        <td>{{ $jurnal->siswa->nama }}</td>
+                                        <td>{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}</td>
+                                        <td>
+                                            @if($jurnal->status_kehadiran == 'wfo')
+                                                <span class="status-badge badge-success">WFO</span>
+                                            @elseif($jurnal->status_kehadiran == 'wfh')
+                                                <span class="status-badge badge-success">WFH</span>
+                                            @elseif($jurnal->status_kehadiran == 'izin')
+                                                <span class="status-badge badge-warning">Izin</span>
+                                            @elseif($jurnal->status_kehadiran == 'sakit')
+                                                <span class="status-badge badge-info">Sakit</span>
+                                            @elseif($jurnal->status_kehadiran == 'libur')
+                                                <span class="status-badge badge-secondary">Libur</span>
+                                            @else
+                                                <span class="status-badge badge-danger">Alfa</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ Str::limit($jurnal->kegiatan, 50) }}</td>
+                                        <td>
+                                            <a href="{{ route('guru.jurnal.show', $jurnal->id_jurnal) }}" class="btn-action btn-info">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <form action="{{ route('guru.jurnal.destroy', $jurnal->id_jurnal) }}" method="POST" class="d-inline delete-form"
+                                                  data-tanggal="{{ \Carbon\Carbon::parse($jurnal->tgl)->format('d/m/Y') }}"
+                                                  data-siswa="{{ $jurnal->siswa->nama }}"
+                                                  data-jam="{{ $jurnal->jam_mulai }} - {{ $jurnal->jam_selesai }}"
+                                                  data-kegiatan="{{ Str::limit($jurnal->kegiatan, 60) }}"
+                                                  data-status="Terverifikasi">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn-action btn-danger btn-delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @else
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <h5>Tidak Ada Data</h5>
+                                <p>Tidak ada data jurnal yang terverifikasi</p>
                             </div>
-                            
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    Menampilkan {{ $jurnalsVerified->firstItem() ?? 0 }} - {{ $jurnalsVerified->lastItem() ?? 0 }} 
-                                    dari {{ $jurnalsVerified->total() }} data
-                                </div>
-                                <div>
-                                    {{ $jurnalsVerified->appends(request()->query())->links() }}
-                                </div>
+                            @endif
+                        </div>
+                        
+                        @if($jurnalsVerified->hasPages())
+                        <div class="pagination-wrapper">
+                            <div class="pagination-info">
+                                Menampilkan {{ $jurnalsVerified->firstItem() ?? 0 }} - {{ $jurnalsVerified->lastItem() ?? 0 }} dari {{ $jurnalsVerified->total() }} data
+                            </div>
+                            <div class="pagination">
+                                @if($jurnalsVerified->onFirstPage())
+                                <span class="page-item disabled">
+                                    <span class="page-link">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                </span>
+                                @else
+                                <span class="page-item">
+                                    <a href="{{ $jurnalsVerified->previousPageUrl() }}" class="page-link">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </span>
+                                @endif
+
+                                @foreach($jurnalsVerified->getUrlRange(1, $jurnalsVerified->lastPage()) as $page => $url)
+                                <span class="page-item {{ $page == $jurnalsVerified->currentPage() ? 'active' : '' }}">
+                                    <a href="{{ $url }}" class="page-link">{{ $page }}</a>
+                                </span>
+                                @endforeach
+
+                                @if($jurnalsVerified->hasMorePages())
+                                <span class="page-item">
+                                    <a href="{{ $jurnalsVerified->nextPageUrl() }}" class="page-link">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </span>
+                                @else
+                                <span class="page-item disabled">
+                                    <span class="page-link">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </span>
+                                @endif
                             </div>
                         </div>
+                        @endif
                     </div>
 
                 </div>

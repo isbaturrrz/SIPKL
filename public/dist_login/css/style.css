@@ -1,6 +1,12 @@
 
 body {
-    background-image:url('/dist_login/img/login.webp');
+    background: radial-gradient(
+        circle at center,
+        #2bb3ff 10%,
+        #0f4c9c 40%,
+        #071a3a 75%,
+        #000814 100%
+    );
     min-height: 100vh;
     background-size: cover;
     background-position: center;
@@ -30,10 +36,13 @@ body {
 }
 
 .btn-primary-custom {
-    background: linear-gradient(45deg, #0167FF, #b6d3ff);
     color: white;
     border: none;
     border-radius: 14px;
+}
+
+.btn {
+    background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
 }
 
 @media (max-width: 426px){

@@ -196,10 +196,12 @@
             font-size: 0.95rem;
             transition: all 0.3s;
             border: none;
+            margin-right: 8px; 
+            margin-bottom: 20px;
         }
 
         .btn-primary-custom {
-            background: linear-gradient(135deg, #1e4179 0%, #2c5aa0 100%);
+           background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
             color: #fff;
             box-shadow: 0 4px 12px rgba(30, 65, 121, 0.3);
         }

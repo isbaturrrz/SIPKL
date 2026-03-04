@@ -13,27 +13,484 @@
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
 
     <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item .nav-link:hover,
+        .sidebar .nav-item.active .nav-link {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-item .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem !important;
+        }
+
+        .sidebar-brand-icon img {
+            max-width: 120px;
+            height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
+        }
+
+        #content {
+            background-color: #e8eef7;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background-color: #fff;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+
+        .table-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e3e6f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .table-header h5 {
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-box input {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            width: 250px;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.1);
+            outline: none;
+        }
+
+        .search-box button {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .search-box button:hover {
+            background: #2c5aa0;
+        }
+
+        .btn-reset {
+            background: #6c757d;
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-reset:hover {
+            background: #5a6268;
+            color: #fff;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .jurnal-table {
+            width: 100%;
+            margin: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .jurnal-table thead {
+             background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+        }
+
+        .jurnal-table thead th {
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .jurnal-table tbody tr {
+            border-bottom: 1px solid #e3e6f0;
+            transition: all 0.2s;
+        }
+
+        .jurnal-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .jurnal-table tbody td {
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #334155;
+            vertical-align: middle;
+        }
+
+        .jurnal-table tbody td:first-child {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
         .badge-pending {
-            background-color: #ffc107;
-            color: #000;
+            background: #fef3c7;
+            color: #d97706;
         }
+
         .badge-approved {
-            background-color: #28a745;
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-rejected {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 0 0.15rem;
+        }
+
+        .btn-info {
+            background: #4f46e5;
             color: #fff;
         }
-        .badge-rejected {
-            background-color: #dc3545;
+
+        .btn-info:hover {
+            background: #4338ca;
             color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .pagination-wrapper {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pagination-info {
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0;
+        }
+
+        .page-item .page-link {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e2e8f0;
+            background: #fff;
+            color: #64748b;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            padding: 0;
+        }
+
+        .page-item .page-link:hover {
+            border-color: #2c5aa0;
+            color: #2c5aa0;
+            background: #f8fafc;
+        }
+
+        .page-item.active .page-link {
+            background: #2c5aa0;
+            color: #fff;
+            border-color: #2c5aa0;
+        }
+
+        .page-item.disabled .page-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h5 {
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .jurnal-table {
+                font-size: 0.8rem;
+            }
+
+            .jurnal-table thead th,
+            .jurnal-table tbody td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+        }
+
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e4179 100%);
+            color: #fff;
+            border-radius: 12px 12px 0 0;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .modal-header .modal-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .modal-header .close {
+            color: #fff;
+            opacity: 0.8;
+            text-shadow: none;
+        }
+
+        .modal-header .close:hover {
+            opacity: 1;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e3e6f0;
+        }
+
+        .swal2-popup {
+            border-radius: 16px !important;
+            padding: 0 !important;
+            width: 85% !important;
+            max-width: 450px !important;
+        }
+
+        .swal2-icon {
+            width: 60px !important;
+            height: 60px !important;
+            margin: 1.5rem auto 1rem !important;
+            border-width: 3px !important;
+        }
+
+        .swal2-title {
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            color: #1a1a1a !important;
+            padding: 0 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+        }
+
+        .swal2-html-container {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            font-size: 0.9rem !important;
+            color: #64748b !important;
+        }
+
+        .swal2-actions {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            gap: 0.75rem !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+        }
+
+        .swal2-cancel {
+            background: #fff !important;
+            color: #64748b !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            border: 2px solid #e2e8f0 !important;
         }
     </style>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
                 <div class="sidebar-brand-icon main-logo">
-                    <img src="{{asset('dist_admin/img/')}}" alt="">
+                    <img src="{{asset('dist_admin/img/logo.png')}}" alt="IPKL">
                 </div>
             </a>
 
@@ -135,148 +592,179 @@
                 </nav>
 
                 <div class="container-fluid">
+                    @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle"></i> {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    @endif
 
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-3 mb-sm-0 text-gray-800">Pengajuan Instansi</h1>
+                    @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    @endif
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="h3 mb-0 text-gray-800" style="font-weight: 700;">Pengajuan Instansi</h1>
                     </div>
 
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Pengajuan Instansi dari Siswa</h6>
-                            <form action="{{ route('admin.pengajuan-instansi.index') }}" method="GET" class="form-inline">
-                                <div class="input-group input-group-sm">
-                                    <input type="text" name="search" class="form-control" placeholder="Cari instansi atau siswa..." value="{{ request('search') }}">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                        @if(request('search'))
-                                            <a href="{{ route('admin.pengajuan-instansi.index') }}" class="btn btn-secondary btn-sm ml-2">Reset</a>
-                                        @endif
-                                    </div>
-                                </div>
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Pengajuan Instansi dari Siswa</h5>
+                            <form action="{{ route('admin.pengajuan-instansi.index') }}" method="GET" class="search-box">
+                                <input type="text" name="search" placeholder="Cari instansi atau siswa..." value="{{ request('search') }}">
+                                <button type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                @if(request('search'))
+                                    <a href="{{ route('admin.pengajuan-instansi.index') }}" class="btn-reset">Reset</a>
+                                @endif
                             </form>
                         </div>
-                        <div class="card-body">
-                            @if(session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ session('success') }}
-                                    <button type="button" class="close" data-dismiss="alert">
-                                        <span>&times;</span>
-                                    </button>
-                                </div>
-                            @endif
 
-                            @if(session('error'))
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    {{ session('error') }}
-                                    <button type="button" class="close" data-dismiss="alert">
-                                        <span>&times;</span>
-                                    </button>
-                                </div>
-                            @endif
-
-                            <div class="table-responsive">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Siswa</th>
-                                            <th>Nama Perusahaan</th>
-                                            <th>Alamat</th>
-                                            <th>No HP</th>
-                                            <th>Pemilik</th>
-                                            <th>Kuota</th>
-                                            <th>Jurusan</th>
-                                            <th>Status</th>
-                                            <th>Tanggal Ajukan</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($pengajuan as $index => $item)
-                                        <tr>
-                                            <td>{{ $pengajuan->firstItem() + $index }}</td>
-                                            <td>
-                                                <strong>{{ $item->siswa->nama }}</strong><br>
-                                                <small class="text-muted">{{ $item->siswa->kelas_lengkap }}</small>
-                                            </td>
-                                            <td>{{ $item->nama_perusahaan }}</td>
-                                            <td>{{ Str::limit($item->alamat, 40) }}</td>
-                                            <td>{{ $item->no_hp }}</td>
-                                            <td>{{ $item->pemilik }}</td>
-                                            <td>{{ $item->kuota_siswa }}</td>
-                                            <td>
-                                                @if($item->jurusan_diterima === 'PPLG-BRP-DKV')
-                                                    <span class="badge badge-success">Semua</span>
-                                                @else
-                                                    @php
-                                                        $jurusan_list = explode('-', $item->jurusan_diterima);
-                                                    @endphp
-                                                    <span class="badge badge-info">{{ implode(', ', $jurusan_list) }}</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($item->status == 'pending')
-                                                    <span class="badge badge-pending">Pending</span>
-                                                @elseif($item->status == 'approved')
-                                                    <span class="badge badge-approved">Approved</span>
-                                                @else
-                                                    <span class="badge badge-rejected">Rejected</span>
-                                                @endif
-                                            </td>
-                                            <td>{{ $item->created_at->format('d M Y') }}</td>
-                                            <td>
-                                                <div class="d-flex gap-1">
-                                                    <a href="{{ route('admin.pengajuan-instansi.show', $item->id_pengajuan) }}" 
-                                                       class="btn btn-info btn-sm" 
-                                                       title="Detail">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    
-                                                    @if($item->status == 'pending')
-                                                    <button type="button" 
-                                                            class="btn btn-success btn-sm" 
-                                                            onclick="confirmApprove({{ $item->id_pengajuan }}, '{{ $item->nama_perusahaan }}')"
-                                                            title="Setujui">
-                                                        <i class="fas fa-check"></i>
-                                                    </button>
-                                                    
-                                                    <button type="button" 
-                                                            class="btn btn-danger btn-sm" 
-                                                            onclick="showRejectModal({{ $item->id_pengajuan }}, '{{ $item->nama_perusahaan }}')"
-                                                            title="Tolak">
-                                                        <i class="fas fa-times"></i>
-                                                    </button>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="10" class="text-center">
-                                                @if(request('search'))
-                                                    Tidak ditemukan pengajuan dengan kata kunci: "{{ request('search') }}"
-                                                @else
-                                                    Belum ada pengajuan instansi
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                        <div class="table-responsive">
+                            @if($pengajuan->count() > 0)
+                            <table class="jurnal-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Siswa</th>
+                                        <th>Nama Perusahaan</th>
+                                        <th>Alamat</th>
+                                        <th>No HP</th>
+                                        <th>Pemilik</th>
+                                        <th>Kuota</th>
+                                        <th>Jurusan</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Ajukan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($pengajuan as $index => $item)
+                                    <tr>
+                                        <td>{{ $pengajuan->firstItem() + $index }}</td>
+                                        <td>
+                                            <strong>{{ $item->siswa->nama }}</strong><br>
+                                            <small style="color: #94a3b8;">{{ $item->siswa->kelas_lengkap }}</small>
+                                        </td>
+                                        <td>{{ $item->nama_perusahaan }}</td>
+                                        <td>{{ Str::limit($item->alamat, 40) }}</td>
+                                        <td>{{ $item->no_hp }}</td>
+                                        <td>{{ $item->pemilik }}</td>
+                                        <td>{{ $item->kuota_siswa }}</td>
+                                        <td>
+                                            @if($item->jurusan_diterima === 'PPLG-BRP-DKV')
+                                                <span class="status-badge badge-success">Semua</span>
+                                            @else
+                                                @php
+                                                    $jurusan_list = explode('-', $item->jurusan_diterima);
+                                                @endphp
+                                                <span class="status-badge badge-info">{{ implode(', ', $jurusan_list) }}</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($item->status == 'pending')
+                                                <span class="status-badge badge-pending">Pending</span>
+                                            @elseif($item->status == 'approved')
+                                                <span class="status-badge badge-approved">Approved</span>
+                                            @else
+                                                <span class="status-badge badge-rejected">Rejected</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $item->created_at->format('d M Y') }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.pengajuan-instansi.show', $item->id_pengajuan) }}" class="btn-action btn-info">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            
+                                            @if($item->status == 'pending')
+                                            <button type="button" 
+                                                    class="btn-action btn-success" 
+                                                    onclick="confirmApprove({{ $item->id_pengajuan }}, '{{ $item->nama_perusahaan }}')">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            
+                                            <button type="button" 
+                                                    class="btn-action btn-danger" 
+                                                    onclick="showRejectModal({{ $item->id_pengajuan }}, '{{ $item->nama_perusahaan }}')">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @else
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <h5>
+                                    @if(request('search'))
+                                        Tidak Ditemukan
+                                    @else
+                                        Belum Ada Pengajuan
+                                    @endif
+                                </h5>
+                                <p>
+                                    @if(request('search'))
+                                        Tidak ditemukan pengajuan dengan kata kunci: "{{ request('search') }}"
+                                    @else
+                                        Belum ada pengajuan instansi dari siswa.
+                                    @endif
+                                </p>
                             </div>
+                            @endif
+                        </div>
 
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div>
-                                    Menampilkan {{ $pengajuan->firstItem() ?? 0 }} sampai {{ $pengajuan->lastItem() ?? 0 }} 
-                                    dari {{ $pengajuan->total() }} data
-                                </div>
-                                <div>
-                                    {{ $pengajuan->links() }}
-                                </div>
+                        @if($pengajuan->hasPages())
+                        <div class="pagination-wrapper">
+                            <div class="pagination-info">
+                                Menampilkan {{ $pengajuan->firstItem() ?? 0 }} - {{ $pengajuan->lastItem() ?? 0 }} dari {{ $pengajuan->total() }} data
+                            </div>
+                            <div class="pagination">
+                                @if($pengajuan->onFirstPage())
+                                <span class="page-item disabled">
+                                    <span class="page-link">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                </span>
+                                @else
+                                <span class="page-item">
+                                    <a href="{{ $pengajuan->previousPageUrl() }}" class="page-link">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </span>
+                                @endif
+
+                                @foreach($pengajuan->getUrlRange(1, $pengajuan->lastPage()) as $page => $url)
+                                <span class="page-item {{ $page == $pengajuan->currentPage() ? 'active' : '' }}">
+                                    <a href="{{ $url }}" class="page-link">{{ $page }}</a>
+                                </span>
+                                @endforeach
+
+                                @if($pengajuan->hasMorePages())
+                                <span class="page-item">
+                                    <a href="{{ $pengajuan->nextPageUrl() }}" class="page-link">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </span>
+                                @else
+                                <span class="page-item disabled">
+                                    <span class="page-link">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </span>
+                                @endif
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -344,7 +832,7 @@
                 html: `Anda akan menyetujui pengajuan instansi:<br><strong>${nama}</strong><br><br><small>Instansi akan dibuat dan siswa akan otomatis ditempatkan</small>`,
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#28a745',
+                confirmButtonColor: '#10b981',
                 cancelButtonColor: '#6c757d',
                 confirmButtonText: 'Ya, Setujui!',
                 cancelButtonText: 'Batal'

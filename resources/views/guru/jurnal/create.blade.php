@@ -172,6 +172,10 @@
             box-shadow: none !important;
         }
 
+         .btn-primary {
+             background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+        }
+
         @media (max-width: 768px) {
             .sidebar-brand {
                 padding: 1rem 0.5rem !important;
@@ -534,12 +538,12 @@
                                 <hr>
 
                                 <div class="form-group mb-0">
-                                    <button type="button" id="btnSimpan" class="btn btn-primary">
-                                        <i class="fas fa-save"></i> Simpan Jurnal
-                                    </button>
                                     <a href="{{ route('guru.jurnal.index') }}" class="btn btn-secondary">
                                         <i class="fas fa-times"></i> Batal
                                     </a>
+                                    <button type="button" id="btnSimpan" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Simpan Jurnal
+                                    </button>
                                 </div>
                             </form>
                         </div>

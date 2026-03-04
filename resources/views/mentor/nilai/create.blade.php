@@ -11,6 +11,78 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
     <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item .nav-link:hover,
+        .sidebar .nav-item.active .nav-link {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-item .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem !important;
+        }
+
+        .sidebar-brand-icon img {
+            max-width: 120px;
+            height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100%);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+        }
+
         .table-nilai th { vertical-align: middle; text-align: center; background-color: #f8f9fc; }
         .box-summary { border: 1px solid #e3e6f0; margin-bottom: 20px; }
         .box-summary .label { background-color: #f8f9fc; font-weight: bold; padding: 10px; border-bottom: 1px solid #e3e6f0; }
@@ -19,44 +91,52 @@
 </head>
 <body id="page-top">
     <div id="wrapper">
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('mentor.dashboard') }}">
                 <div class="sidebar-brand-icon main-logo">
-                    <img src="{{asset('dist_mentor/img/')}}" alt="">
+                    <img src="{{asset('dist_mentor/img/logo.png')}}" alt="IPKL">
                 </div>
             </a>
+
             <hr class="sidebar-divider my-0">
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('mentor.dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
-            </li> 
+            </li>   
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('mentor.siswa.index') }}">
                     <i class="fas fa-users"></i>
                     <span>Daftar Siswa</span>
                 </a> 
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('mentor.jurnal.index') }}">
                     <i class="fas fa-clipboard-check"></i>
                     <span>Verifikasi Jurnal</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('mentor.riwayat.index') }}">
                     <i class="fas fa-history"></i>
                     <span>Riwayat Jurnal</span>
                 </a>
             </li>
+
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('mentor.nilai.index') }}">
                     <i class="fas fa-star"></i>
                     <span>Nilai Siswa</span>
                 </a>    
             </li>
+
             <hr class="sidebar-divider d-none d-md-block">
+
             <li class="nav-item">
                 <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt"></i>
@@ -66,11 +146,21 @@
                     @csrf
                 </form>
             </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
         </ul>
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
                     <ul class="navbar-nav ml-auto">
                         @auth
                         <li class="nav-item">                             
@@ -206,8 +296,13 @@
         </div>
     </div>
 
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
     <script>

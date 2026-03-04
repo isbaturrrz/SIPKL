@@ -11,14 +11,339 @@
     <link rel="stylesheet" href="{{ asset('dist_mentor/css/style.css')}}">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
+    
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item .nav-link:hover,
+        .sidebar .nav-item.active .nav-link {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-item .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem !important;
+        }
+
+        .sidebar-brand-icon img {
+            max-width: 120px;
+            height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
+        }
+
+        #content {
+            background-color: #e8eef7;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background-color: #fff;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+
+        .table-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e3e6f0;
+        }
+
+        .table-header h5 {
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 350px;
+        }
+
+        .search-box input {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            padding-right: 3rem;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.1);
+            outline: none;
+        }
+
+        .search-box button {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .search-box button:hover {
+            background: #2c5aa0;
+        }
+
+        .btn-reset {
+            background: #6c757d;
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-reset:hover {
+            background: #5a6268;
+            color: #fff;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .jurnal-table {
+            width: 100%;
+            margin: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .jurnal-table thead {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+        }
+
+        .jurnal-table thead th {
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            border: none;
+        }
+
+        .jurnal-table tbody tr {
+            border-bottom: 1px solid #e3e6f0;
+            transition: all 0.2s;
+        }
+
+        .jurnal-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .jurnal-table tbody td {
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #334155;
+            vertical-align: middle;
+        }
+
+        .jurnal-table tbody td:first-child {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 0 0.15rem;
+        }
+
+        .btn-info {
+            background: #4f46e5;
+            color: #fff;
+        }
+
+        .btn-info:hover {
+            background: #4338ca;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .alert-custom {
+            background: #fff3cd;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .alert-custom i {
+            font-size: 1.25rem;
+            color: #f59e0b;
+            margin-right: 1rem;
+        }
+
+        .alert-custom strong {
+            color: #92400e;
+            font-weight: 700;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h5 {
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .table-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .jurnal-table {
+                font-size: 0.8rem;
+            }
+
+            .jurnal-table thead th,
+            .jurnal-table tbody td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+        }
+    </style>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('mentor.dashboard') }}">
                 <div class="sidebar-brand-icon main-logo">
-                    <img src="{{asset('dist_mentor/img/')}}" alt="">
+                    <img src="{{asset('dist_mentor/img/logo.png')}}" alt="IPKL">
                 </div>
             </a>
 
@@ -99,140 +424,132 @@
                 </nav>
             
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Verifikasi Jurnal</h1>
-                    </div>
-
                     @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="fas fa-check-circle"></i> {{ session('success') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle"></i> {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
                     @endif
 
                     @if(session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
                     @endif
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="h3 mb-0 text-gray-800" style="font-weight: 700;">Verifikasi Jurnal</h1>
+                    </div>
 
                     @if($jumlahPending > 0)
-                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <strong>Terdapat {{ $jumlahPending }} Jurnal yang Belum di Verifikasi</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                    <div class="alert-custom">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <strong>Terdapat {{ $jumlahPending }} Jurnal yang Belum di Verifikasi</strong>
+                    </div>
                     @endif
 
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Filter Jurnal</h6>
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Filter Jurnal</h5>
                         </div>
-                        <div class="card-body">
+                        <div style="padding: 1.5rem 2rem;">
                             <form method="GET" action="{{ route('mentor.jurnal.index') }}">
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
-                                        <input type="text" 
-                                               name="search" 
-                                               class="form-control" 
-                                               placeholder="Cari nama siswa..."
-                                               value="{{ request('search') }}">
+                                        <div class="search-box" style="max-width: 100%;">
+                                            <input type="text" name="search" placeholder="Cari nama siswa..." value="{{ request('search') }}">
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
-                                        <label>Filter Tanggal</label>
-                                        <input type="date" 
-                                               name="tanggal" 
-                                               class="form-control"
-                                               value="{{ request('tanggal') }}">
+                                        <div class="search-box" style="max-width: 100%;">
+                                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #64748b; font-size: 0.9rem;">Filter Tanggal</label>
+                                            <input type="date" name="tanggal" value="{{ request('tanggal') }}">
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-search"></i> Cari
-                                        </button>
-                                        <a href="{{ route('mentor.jurnal.index') }}" class="btn btn-secondary">
-                                            <i class="fas fa-sync"></i> Reset
-                                        </a>
+                                        <div class="search-box" style="max-width: 100%; display: flex; gap: 0.75rem;">
+                                            <button type="submit">
+                                                <i class="fas fa-search"></i> Cari
+                                            </button>
+                                            <a href="{{ route('mentor.jurnal.index') }}" class="btn-reset">
+                                                <i class="fas fa-sync"></i> Reset
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
 
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Daftar Jurnal Pending</h6>
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Daftar Jurnal Pending</h5>
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th width="5%">No</th>
-                                            <th width="25%">Nama</th>
-                                            <th width="15%">Tanggal</th>
-                                            <th width="15%">Kehadiran</th>
-                                            <th width="15%">Status</th>
-                                            <th width="15%">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($jurnal as $index => $item)
-                                        <tr>
-                                            <td class="text-center">{{ $index + 1 }}</td>
-                                            <td>{{ $item->siswa->nama ?? '-' }}</td>
-                                            <td>{{ $item->tgl ? $item->tgl->format('d M Y') : '-' }}</td>
-                                            <td class="text-center">
-                                                @if($item->status_kehadiran == 'wfo')
-                                                    <span class="badge badge-success">WFO</span>
-                                                @elseif($item->status_kehadiran == 'wfh')
-                                                    <span class="badge badge-success">WFH</span>
-                                                @elseif($item->status_kehadiran == 'izin')
-                                                    <span class="badge badge-info">Izin</span>
-                                                @elseif($item->status_kehadiran == 'sakit')
-                                                    <span class="badge badge-warning">Sakit</span>
-                                                @elseif($item->status_kehadiran == 'libur')
-                                                    <span class="badge badge-secondary">Libur</span>
-                                                @else
-                                                    <span class="badge badge-danger">Alfa</span>
-                                                @endif
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="badge badge-warning">Pending</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="{{ route('mentor.jurnal.show', $item->id_jurnal) }}" 
-                                                   class="btn btn-primary btn-sm"
-                                                   title="Verifikasi">
-                                                    <i class="fas fa-eye"></i> Verifikasi
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center">
-                                                <div class="py-4">
-                                                    <i class="fas fa-inbox fa-3x text-gray-300 mb-3"></i>
-                                                    <p class="text-gray-500">Tidak ada jurnal yang perlu diverifikasi</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+
+                        <div class="table-responsive">
+                            @if($jurnal->count() > 0)
+                            <table class="jurnal-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Tanggal</th>
+                                        <th>Kehadiran</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($jurnal as $index => $item)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $item->siswa->nama ?? '-' }}</td>
+                                        <td>{{ $item->tgl ? $item->tgl->format('d M Y') : '-' }}</td>
+                                        <td>
+                                            @if($item->status_kehadiran == 'wfo')
+                                                <span class="status-badge badge-success">WFO</span>
+                                            @elseif($item->status_kehadiran == 'wfh')
+                                                <span class="status-badge badge-success">WFH</span>
+                                            @elseif($item->status_kehadiran == 'izin')
+                                                <span class="status-badge badge-info">Izin</span>
+                                            @elseif($item->status_kehadiran == 'sakit')
+                                                <span class="status-badge badge-warning">Sakit</span>
+                                            @elseif($item->status_kehadiran == 'libur')
+                                                <span class="status-badge badge-secondary">Libur</span>
+                                            @else
+                                                <span class="status-badge badge-danger">Alfa</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <span class="status-badge badge-warning">Pending</span>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('mentor.jurnal.show', $item->id_jurnal) }}" class="btn-action btn-info">
+                                                <i class="fas fa-eye"></i> Verifikasi
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @else
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <h5>Tidak Ada Jurnal Pending</h5>
+                                <p>Tidak ada jurnal yang perlu diverifikasi</p>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>

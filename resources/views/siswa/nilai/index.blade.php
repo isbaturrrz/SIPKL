@@ -120,7 +120,7 @@
         }
 
         .nilai-table-header {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e4179 100%);
+           background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
             color: #fff;
             padding: 1rem 2rem;
             font-weight: 700;
@@ -172,7 +172,7 @@
         }
 
         .btn-download {
-            background: linear-gradient(135deg, #1e4179 0%, #2c5aa0 100%);
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
             color: #fff;
             padding: 0.75rem 2rem;
             border-radius: 8px;

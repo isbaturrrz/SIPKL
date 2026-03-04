@@ -13,6 +13,100 @@
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
 
     <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item .nav-link:hover,
+        .sidebar .nav-item.active .nav-link {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-item .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem !important;
+        }
+
+        .sidebar-brand-icon img {
+            max-width: 120px;
+            height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100%);
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .stat-card .stat-label {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+        .stat-card .stat-icon {
+            font-size: 28px;
+            opacity: 0.5;
+        }
         .chart-card {
             background: white;
             border-radius: 10px;
@@ -25,7 +119,50 @@
             color: #2c3e50;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #4e73df;
+            border-bottom: 2px solid #667eea;
+        }
+        .info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+        }
+        .info-card .info-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+        .stat-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .stat-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+        .stat-item .stat-item-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 5px;
+        }
+        .stat-item .stat-item-label {
+            font-size: 11px;
+            color: #666;
+            font-weight: 500;
+        }
+        .stat-item .stat-item-percent {
+            font-size: 11px;
+            color: #999;
+            margin-top: 3px;
         }
         .siswa-table {
             background: white;
@@ -39,7 +176,7 @@
             color: #2c3e50;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #4e73df;
+            border-bottom: 2px solid #667eea;
         }
         .siswa-table table {
             font-size: 13px;
@@ -66,45 +203,15 @@
             font-size: 11px;
             font-weight: bold;
         }
-        .stat-breakdown {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .stat-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            border: 2px solid #ecf0f1;
-        }
-        .stat-item .stat-item-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4e73df;
-            margin-top: 8px;
-        }
-        .stat-item .stat-item-label {
-            font-size: 12px;
-            color: #666;
-            font-weight: 500;
-            margin-top: 5px;
-        }
-        .stat-item .stat-item-percent {
-            font-size: 11px;
-            color: #999;
-            margin-top: 3px;
-        }
     </style>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('mentor.dashboard') }}">
                 <div class="sidebar-brand-icon main-logo">
-                    <img src="{{asset('dist_mentor/img/')}}" alt="">
+                    <img src="{{asset('dist_mentor/img/logo.png')}}" alt="IPKL">
                 </div>
             </a>
 
@@ -186,90 +293,72 @@
             
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard Mentor</h1>
+                        <h1 class="h3 mb-3 mb-sm-0 text-gray-800">Dashboard Mentor</h1>
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-4">
                         <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Siswa
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                {{ $totalSiswa }}
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-users fa-2x text-gray-300"></i>
-                                        </div>
+                            <div class="stat-card">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="stat-label">Total Siswa</div>
+                                        <div class="stat-value">{{ $totalSiswa }}</div>
+                                    </div>
+                                    <div class="stat-icon">
+                                        <i class="fas fa-users"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Jurnal Hari Ini
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                {{ $jurnalHariIni }}
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-book fa-2x text-gray-300"></i>
-                                        </div>
+                            <div class="stat-card">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="stat-label">Jurnal Hari Ini</div>
+                                        <div class="stat-value">{{ $jurnalHariIni }}</div>
+                                    </div>
+                                    <div class="stat-icon">
+                                        <i class="fas fa-book"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Menunggu Verifikasi
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                {{ $menungguVerifikasi }}
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
-                                        </div>
+                            <div class="stat-card">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="stat-label">Menunggu Verifikasi</div>
+                                        <div class="stat-value">{{ $menungguVerifikasi }}</div>
+                                    </div>
+                                    <div class="stat-icon">
+                                        <i class="fas fa-clock"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row mt-4">
-                        <div class="col-xl-6">
+                    <div class="row mb-4">
+                        <div class="col-xl-12">
                             <div class="chart-card">
                                 <div class="chart-title">Statistik Verifikasi Jurnal</div>
                                 <div class="stat-breakdown">
                                     <div class="stat-item">
-                                        <i class="fas fa-check-circle" style="color: #1dd1a1; font-size: 24px;"></i>
+                                        <i class="fas fa-check-circle" style="color: #1dd1a1; font-size: 20px;"></i>
                                         <div class="stat-item-label">Sudah Verifikasi</div>
                                         <div class="stat-item-value">{{ $sudahVerifikasi }}</div>
                                         <div class="stat-item-percent">{{ $persentaseVerifikasi }}%</div>
                                     </div>
-                                    <div class="stat-item">
-                                        <i class="fas fa-clock" style="color: #f6c23e; font-size: 24px;"></i>
+                                    <div class="stat-item" style="border-left-color: ##667eea;">
+                                        <i class="fas fa-clock" style="color: #f6c23e; font-size: 20px;"></i>
                                         <div class="stat-item-label">Menunggu</div>
                                         <div class="stat-item-value">{{ $menungguVerifikasi }}</div>
                                         <div class="stat-item-percent">{{ $persentasePending }}%</div>
                                     </div>
-                                    <div class="stat-item">
-                                        <i class="fas fa-times-circle" style="color: #e74a3b; font-size: 24px;"></i>
+                                    <div class="stat-item" style="border-left-color: ##667eea;">
+                                        <i class="fas fa-times-circle" style="color: #e74a3b; font-size: 20px;"></i>
                                         <div class="stat-item-label">Ditolak</div>
                                         <div class="stat-item-value">{{ $ditolak }}</div>
                                         <div class="stat-item-percent">{{ $persentaseDitolak }}%</div>
@@ -277,16 +366,16 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row mb-4">
                         <div class="col-xl-6">
                             <div class="chart-card">
                                 <div class="chart-title">Presentase Jurnal</div>
                                 <canvas id="chartPresentas" height="80"></canvas>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <div class="chart-card">
                                 <div class="chart-title">Trend Jurnal Per Bulan</div>
                                 <canvas id="chartTrend" height="80"></canvas>
@@ -294,7 +383,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-4">
+                    <div class="row">
                         <div class="col-xl-12">
                             <div class="siswa-table">
                                 <div class="table-title">10 Siswa dengan Aktivitas Terbaru</div>
@@ -393,7 +482,7 @@
 
         var ctx2 = document.getElementById('chartTrend').getContext('2d');
         var chartTrend = new Chart(ctx2, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'],
                 datasets: [{
@@ -403,9 +492,13 @@
                             {{ $jurnalPerBulan[$bulan] ?? 0 }},
                         @endforeach
                     ],
-                    backgroundColor: '#4e73df',
-                    borderColor: '#2e59d9',
-                    borderWidth: 1
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#667eea'
                 }]
             },
             options: {
@@ -415,7 +508,7 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 10
+                            stepSize: 20
                         }
                     }
                 },

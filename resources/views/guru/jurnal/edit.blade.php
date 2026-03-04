@@ -230,6 +230,10 @@
             }
         }
 
+         .btn-primary {
+             background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+        }
+
         @media (max-width: 480px) {
             .sidebar-brand-icon img {
                 max-width: 60px;
@@ -535,12 +539,12 @@
                                 <hr>
 
                                 <div class="form-group mb-0">
-                                    <button type="button" id="btnUpdate" class="btn btn-primary">
-                                        <i class="fas fa-save"></i> Simpan Perubahan
-                                    </button>
                                     <a href="{{ route('guru.jurnal.index') }}" class="btn btn-secondary">
                                         <i class="fas fa-times"></i> Batal
                                     </a>
+                                    <button type="button" id="btnUpdate" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Simpan Perubahan
+                                    </button>
                                 </div>
                             </form>
                         </div>

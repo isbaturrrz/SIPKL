@@ -80,7 +80,7 @@
         }
 
         .hero-card {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e4179 100%);
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
             border-radius: 12px;
             padding: 2rem 2.5rem;
             display: flex;
@@ -178,7 +178,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(135deg, #1e4179 0%, #2c5aa0 100%);
+           background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
             color: #fff;
             padding: 0.75rem 1.5rem;
             border-radius: 8px;

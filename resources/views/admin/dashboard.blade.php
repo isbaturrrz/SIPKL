@@ -15,8 +15,76 @@
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
 
     <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item .nav-link:hover,
+        .sidebar .nav-item.active .nav-link {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-item .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem !important;
+        }
+
+        .sidebar-brand-icon img {
+            max-width: 120px;
+            height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+        }
+
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100%);
             border-radius: 10px;
             padding: 20px;
             color: white;
@@ -134,11 +202,11 @@
 
     <div id="wrapper">
 
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon main-logo">
-                    <img src="{{asset('dist_admin/img/')}}" alt="">
+                    <img src="{{asset('dist_admin/img/logo.png')}}" alt="">
                 </div>
             </a>
 
@@ -270,7 +338,7 @@
                         </div>
 
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <div class="stat-card">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div>
                                         <div class="stat-label">Total Guru</div>
@@ -284,7 +352,7 @@
                         </div>
 
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <div class="stat-card">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div>
                                         <div class="stat-label">Total Instansi</div>
@@ -298,7 +366,7 @@
                         </div>
 
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <div class="stat-card">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div>
                                         <div class="stat-label">Total User</div>
@@ -318,22 +386,22 @@
                             <div class="chart-card">
                                 <div class="chart-title">Statistik Penempatan Siswa</div>
                                 <div class="stat-breakdown">
-                                    <div class="stat-item">
+                                    <div class="stat-item" style="border-left-color: #6495ed ;">
                                         <i class="fas fa-check-circle" style="color: #1dd1a1; font-size: 20px;"></i>
                                         <div class="stat-item-label">Sudah Ditempatkan</div>
                                         <div class="stat-item-value">{{ $siswaAktif }}</div>
                                     </div>
-                                    <div class="stat-item" style="border-left-color: #f6c23e;">
+                                    <div class="stat-item" style="border-left-color: #6495ed;">
                                         <i class="fas fa-times-circle" style="color: #f6c23e; font-size: 20px;"></i>
                                         <div class="stat-item-label">Belum Ditempatkan</div>
                                         <div class="stat-item-value">{{ $siswaBeluDitempatkan }}</div>
                                     </div>
-                                    <div class="stat-item" style="border-left-color: #36b9cc;">
+                                    <div class="stat-item" style="border-left-color: #6495ed ;">
                                         <i class="fas fa-scroll" style="color: #36b9cc; font-size: 20px;"></i>
                                         <div class="stat-item-label">Total Jurnal</div>
                                         <div class="stat-item-value">{{ $totalJurnal }}</div>
                                     </div>
-                                    <div class="stat-item" style="border-left-color: #e74a3b;">
+                                    <div class="stat-item" style="border-left-color: #6495ed;">
                                         <i class="fas fa-calendar-today" style="color: #e74a3b; font-size: 20px;"></i>
                                         <div class="stat-item-label">Jurnal Hari Ini</div>
                                         <div class="stat-item-value">{{ $jurnalHariIni }}</div>
@@ -424,7 +492,6 @@
     <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
 
     <script>
-        // Chart Penempatan
         var ctx = document.getElementById('chartPenempatan').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -480,7 +547,6 @@
             }
         });
 
-        // Chart Jurusan
         var ctx2 = document.getElementById('chartJurusan').getContext('2d');
         var chartJurusan = new Chart(ctx2, {
             type: 'doughnut',
@@ -492,8 +558,8 @@
                             {{ $siswaJurusanData[$jurusan] }},
                         @endforeach
                     ],
-                    backgroundColor: ['#667eea', '#f093fb', '#4facfe'],
-                    borderColor: ['#5568d3', '#d876ba', '#2e88e0'],
+                    backgroundColor: ['#fff600 ', '#ff0000', '#4facfe'],
+                    borderColor: ['#efcc00', '#dc143c', '#2e88e0'],
                     borderWidth: 2
                 }]
             },
@@ -514,7 +580,6 @@
             }
         });
 
-        // Chart Trend
         var ctx3 = document.getElementById('chartTrend').getContext('2d');
         var chartTrend = new Chart(ctx3, {
             type: 'line',

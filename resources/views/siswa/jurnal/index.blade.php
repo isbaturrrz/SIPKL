@@ -113,7 +113,7 @@
             right: 0;
             top: 0;
             height: 100%;
-            background: #1e4179;
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
             border: none;
             color: #fff;
             padding: 0 1.25rem;
@@ -138,7 +138,7 @@
         }
 
         .jurnal-table thead {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e4179 100%);
+           background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
         }
 
         .jurnal-table thead th {

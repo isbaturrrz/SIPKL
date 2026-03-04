@@ -80,7 +80,7 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #0d1b3e 0%, #1e3a6e 100%);
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
             border-radius: 10px;
             padding: 20px;
             color: white;
