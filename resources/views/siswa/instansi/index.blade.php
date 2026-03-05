@@ -45,6 +45,15 @@
         .sidebar-brand-icon img {
             max-width: 120px;
             height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
         }
 
         #content {
@@ -422,6 +431,18 @@
         }
 
         @media (max-width: 768px) {
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
             .instansi-card {
                 flex-direction: column;
                 text-align: center;
@@ -475,6 +496,16 @@
                 padding: 0.65rem 1.5rem !important;
                 font-size: 0.9rem !important;
                 width: 100% !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
             }
         }
 
@@ -562,7 +593,7 @@
 
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <span class="nav-link text-gray-600 font-weight-bold">Siswa</span>
+                            <span class="nav-link text-gray-600 font-weight-bold"></span>
                         </li>
                     </ul>
                 </nav>

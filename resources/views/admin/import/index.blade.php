@@ -546,9 +546,9 @@
                     </div>
 
                     <div class="table-card">
-                        <div class="table-header card-header-info">
+                        <div class="table-header card-header-primary">
                             <h5>
-                                <i class="fas fa-book"></i> Panduan Import Data
+                                <span>Panduan Import Data</span>
                             </h5>
                         </div>
                         <div style="padding: 1.5rem 2rem;">

@@ -486,7 +486,7 @@
 
                         <div class="table-responsive">
                             @if($jurnal->count() > 0)
-                            <table class="table-striped jurnal-table">
+                            <table class="jurnal-table">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
