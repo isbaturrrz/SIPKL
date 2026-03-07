@@ -4,14 +4,24 @@ namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Siswa\StoreJurnalRequest;
+use App\Http\Requests\Siswa\UpdateJurnalRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Jurnal;
 use App\Models\Siswa;
 use Carbon\Carbon;
+use App\Services\StreakService;
 
 class JurnalController extends Controller
 {
+    protected $streakService;
+
+    public function __construct(StreakService $streakService)
+    {
+        $this->streakService = $streakService;
+    }
+
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -97,6 +107,13 @@ class JurnalController extends Controller
             return back()->with('error', 'Anda sudah mengisi jurnal untuk tanggal ' . Carbon::parse($validated['tgl'])->format('d/m/Y'))->withInput();
         }
         
+        $fotoPath = null;
+        if ($request->hasFile('foto_kegiatan')) {
+            $file = $request->file('foto_kegiatan');
+            $filename = 'jurnal_' . $siswa->id_siswa . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $fotoPath = $file->storeAs('jurnal_foto', $filename, 'public');
+        }
+        
         $dataJurnal = [
             'id_siswa' => $siswa->id_siswa,
             'tgl' => $validated['tgl'],
@@ -107,14 +124,19 @@ class JurnalController extends Controller
             'manfaat' => $validated['manfaat'] ?? null,
             'latitude' => $validated['latitude'] ?? null,
             'longitude' => $validated['longitude'] ?? null,
+            'foto_kegiatan' => $fotoPath,
             'input_by' => 'siswa',
             'status_verifikasi' => 'pending',
         ];
         
         Jurnal::create($dataJurnal);
-        
+
+        $this->streakService->clearCache($siswa->id_siswa);
+    
+        $totalPoin = $this->streakService->calculateTotalPoin($siswa->id_siswa);
+    
         return redirect()->route('siswa.jurnal.index')
-            ->with('success', 'Jurnal berhasil disimpan dan menunggu verifikasi');
+            ->with('success', "Jurnal berhasil disimpan! Total poin: {$totalPoin} 🔥");     
     }
 
     public function show($id)
@@ -146,7 +168,7 @@ class JurnalController extends Controller
         return view('siswa.jurnal.edit', compact('jurnal', 'siswa'));
     }
 
-    public function update(StoreJurnalRequest $request, $id)
+    public function update(UpdateJurnalRequest $request, $id)
     {
         $user = Auth::user();
         $siswa = Siswa::with('instansi')->where('id', $user->id)->firstOrFail();
@@ -172,6 +194,16 @@ class JurnalController extends Controller
             if ($distance > 100) {
                 return back()->with('error', 'Anda berada terlalu jauh dari lokasi instansi PKL (Jarak: ' . round($distance) . ' meter)')->withInput();
             }
+        }
+        
+        if ($request->hasFile('foto_kegiatan')) {
+            if ($jurnal->foto_kegiatan && Storage::disk('public')->exists($jurnal->foto_kegiatan)) {
+                Storage::disk('public')->delete($jurnal->foto_kegiatan);
+            }
+            
+            $file = $request->file('foto_kegiatan');
+            $filename = 'jurnal_' . $siswa->id_siswa . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $validated['foto_kegiatan'] = $file->storeAs('jurnal_foto', $filename, 'public');
         }
         
         $updateData = $validated;
@@ -201,6 +233,10 @@ class JurnalController extends Controller
         
         if ($jurnal->status_verifikasi !== 'pending') {
             return back()->with('error', 'Jurnal yang sudah diverifikasi tidak dapat dihapus');
+        }
+        
+        if ($jurnal->foto_kegiatan && Storage::disk('public')->exists($jurnal->foto_kegiatan)) {
+            Storage::disk('public')->delete($jurnal->foto_kegiatan);
         }
         
         $jurnal->delete();

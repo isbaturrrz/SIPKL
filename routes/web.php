@@ -72,6 +72,8 @@ Route::middleware(['auth', 'role:siswa'])
         Route::get('/instansi/create', [App\Http\Controllers\Siswa\InstansiController::class, 'create'])->name('instansi.create');
         Route::post('/instansi/store', [App\Http\Controllers\Siswa\InstansiController::class, 'store'])->name('instansi.store');
         Route::post('/instansi/pilih/{id}', [App\Http\Controllers\Siswa\InstansiController::class, 'pilih'])->name('instansi.pilih');
+
+        Route::get('/leaderboard', [App\Http\Controllers\Siswa\LeaderboardController::class, 'index'])->name('leaderboard.index');
     });
 
 

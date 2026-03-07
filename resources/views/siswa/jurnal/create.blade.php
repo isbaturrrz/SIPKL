@@ -214,6 +214,82 @@
             background: #ef4444;
         }
 
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f8fafc;
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-area:hover {
+            border-color: #2c5aa0;
+            background: #f1f5f9;
+        }
+
+        .upload-area.dragover {
+            border-color: #2c5aa0;
+            background: #e0e7ff;
+        }
+
+        .upload-placeholder i {
+            font-size: 3rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+
+        .upload-placeholder p {
+            font-weight: 600;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .image-preview {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-remove-image {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ef4444;
+            color: #fff;
+            border: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-remove-image:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
         .btn-action {
             display: inline-flex;
             align-items: center;
@@ -441,6 +517,19 @@
                 width: 90% !important;
                 max-width: 380px !important;
             }
+
+            .upload-area {
+                padding: 1.5rem;
+                min-height: 180px;
+            }
+
+            .upload-placeholder i {
+                font-size: 2.5rem;
+            }
+
+            .image-preview img {
+                max-height: 250px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -493,6 +582,23 @@
             .swal2-cancel {
                 padding: 0.6rem 1.25rem !important;
                 font-size: 0.85rem !important;
+            }
+
+            .upload-area {
+                padding: 1.25rem;
+                min-height: 160px;
+            }
+
+            .upload-placeholder i {
+                font-size: 2rem;
+            }
+
+            .upload-placeholder p {
+                font-size: 0.9rem;
+            }
+
+            .image-preview img {
+                max-height: 200px;
             }
         }
 
@@ -591,6 +697,13 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('siswa.leaderboard.index') }}">
+                    <i class="fas fa-trophy"></i>
+                    <span>Leaderboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('siswa.nilai.index')}}">
                     <i class="fas fa-download"></i>
                     <span>Unduh Nilai</span>
@@ -662,7 +775,7 @@
                     </div>
                     @endif
 
-                    <form action="{{ route('siswa.jurnal.store') }}" method="POST" id="jurnalForm">
+                    <form action="{{ route('siswa.jurnal.store') }}" method="POST" id="jurnalForm" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row">
@@ -725,13 +838,32 @@
                                 </div>
 
                                 <div class="form-card" id="kegiatanCard">
-                                    <h6>Kegiatan yang Dilakukan :</h6>
+                                    <h6>Kegiatan yang Dilakukan</h6>
                                     <textarea class="form-control" name="kegiatan" id="kegiatan" placeholder="Tuliskan kegiatan yang dilakukan hari ini...">{{ old('kegiatan') }}</textarea>
                                 </div>
 
                                 <div class="form-card" id="manfaatCard">
-                                    <h6>Manfaat yang Didapat :</h6>
+                                    <h6>Manfaat yang Didapat</h6>
                                     <textarea class="form-control" name="manfaat" id="manfaat" placeholder="Tuliskan manfaat yang didapat...">{{ old('manfaat') }}</textarea>
+                                </div>
+
+                                <div class="form-card" id="fotoCard">
+                                    <h6>Bukti Foto Kegiatan <span class="text-danger">*</span></h6>
+                                    <div class="upload-area" id="uploadArea">
+                                        <input type="file" name="foto_kegiatan" id="foto_kegiatan" accept="image/jpeg,image/jpg,image/png" hidden>
+                                        <div class="upload-placeholder" id="uploadPlaceholder">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p class="mb-1">Klik atau drag foto ke sini</p>
+                                            <small class="text-muted">Format: JPG, JPEG, PNG (Max 2MB)</small>
+                                        </div>
+                                        <div class="image-preview" id="imagePreview" style="display: none;">
+                                            <img id="previewImage" src="" alt="Preview">
+                                            <button type="button" class="btn-remove-image" id="removeImage">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="fileError" class="text-danger mt-2" style="display: none; font-size: 0.85rem;"></div>
                                 </div>
 
                                 <div class="d-flex gap-2 flex-wrap">
@@ -878,6 +1010,7 @@
             const jamSelesai = document.getElementById('jam_selesai').value;
             const kegiatan = document.getElementById('kegiatan').value.trim();
             const manfaat = document.getElementById('manfaat').value.trim();
+            const fotoKegiatan = document.getElementById('foto_kegiatan').files.length;
 
             if (!status) {
                 showValidationAlert('Status Kehadiran Belum Dipilih', 'Silakan pilih status kehadiran terlebih dahulu.');
@@ -891,6 +1024,17 @@
                 }
                 if (!kegiatan || !manfaat) {
                     showValidationAlert('Data Tidak Lengkap', 'Kegiatan dan manfaat harus diisi untuk status WFO/WFH.');
+                    return;
+                }
+                if (fotoKegiatan === 0) {
+                    showValidationAlert('Foto Belum Diunggah', 'Foto bukti kegiatan harus diunggah untuk status WFO/WFH.');
+                    return;
+                }
+            }
+
+            if (status === 'izin') {
+                if (!kegiatan) {
+                    showValidationAlert('Data Tidak Lengkap', 'Kegiatan harus diisi untuk status Izin (keterangan alasan izin).');
                     return;
                 }
             }
@@ -946,6 +1090,18 @@
                             <tr>
                                 <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Jam:</td>
                                 <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${jamMulai} - ${jamSelesai}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Foto:</td>
+                                <td style="padding: 0.4rem 0; color: #10b981; font-weight: 700;"><i class="fas fa-check-circle"></i> Terlampir</td>
+                            </tr>`;
+            }
+
+            if (status === 'izin' && kegiatan) {
+                summaryHTML += `
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Keterangan:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${kegiatan.substring(0, 50)}${kegiatan.length > 50 ? '...' : ''}</td>
                             </tr>`;
             }
 
@@ -1112,6 +1268,84 @@
             }
         }
 
+        function initializePhotoUpload() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('foto_kegiatan');
+            const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImage = document.getElementById('previewImage');
+            const removeImage = document.getElementById('removeImage');
+            const fileError = document.getElementById('fileError');
+
+            uploadArea.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-remove-image')) return;
+                fileInput.click();
+            });
+
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    handleFileSelect(files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+
+            removeImage.addEventListener('click', function(e) {
+                e.stopPropagation();
+                fileInput.value = '';
+                uploadPlaceholder.style.display = 'block';
+                imagePreview.style.display = 'none';
+                previewImage.src = '';
+                fileError.style.display = 'none';
+            });
+
+            function handleFileSelect(file) {
+                fileError.style.display = 'none';
+
+                const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                if (!validTypes.includes(file.type)) {
+                    fileError.textContent = 'Format file tidak valid. Gunakan JPG, JPEG, atau PNG';
+                    fileError.style.display = 'block';
+                    fileInput.value = '';
+                    return;
+                }
+
+                const maxSize = 2 * 1024 * 1024;
+                if (file.size > maxSize) {
+                    fileError.textContent = 'Ukuran file terlalu besar. Maksimal 2MB';
+                    fileError.style.display = 'block';
+                    fileInput.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    uploadPlaceholder.style.display = 'none';
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
         function toggleFields() {
             const status = $('input[name="status_kehadiran"]:checked').val();
             
@@ -1120,13 +1354,16 @@
             const jamSelesai = $('#jam_selesai');
             const kegiatanCard = $('#kegiatanCard');
             const manfaatCard = $('#manfaatCard');
+            const fotoCard = $('#fotoCard');
             const mapContainer = $('#mapContainer');
             const kegiatanField = $('#kegiatan');
             const manfaatField = $('#manfaat');
+            const fotoField = $('#foto_kegiatan');
             
             jamContainer.removeClass('field-disabled');
             kegiatanCard.removeClass('field-disabled');
             manfaatCard.removeClass('field-disabled');
+            fotoCard.removeClass('field-disabled');
             mapContainer.removeClass('field-disabled');
             
             if (status === 'wfo') {
@@ -1134,6 +1371,8 @@
                 jamSelesai.prop('required', true);
                 kegiatanField.prop('required', true);
                 manfaatField.prop('required', true);
+                fotoField.prop('required', true);
+                kegiatanField.attr('placeholder', 'Tuliskan kegiatan yang dilakukan hari ini...');
                 mapContainer.removeClass('field-disabled');
                 getUserLocation();
             } 
@@ -1142,22 +1381,48 @@
                 jamSelesai.prop('required', true);
                 kegiatanField.prop('required', true);
                 manfaatField.prop('required', true);
+                fotoField.prop('required', true);
+                kegiatanField.attr('placeholder', 'Tuliskan kegiatan yang dilakukan hari ini...');
                 mapContainer.addClass('field-disabled');
                 
                 if (watchId !== null) {
                     GPSHelper.clearWatch(watchId);
                     watchId = null;
                 }
-            } 
+            }
+            else if (status === 'izin') {
+                jamMulai.prop('required', false);
+                jamSelesai.prop('required', false);
+                kegiatanField.prop('required', true);
+                manfaatField.prop('required', false);
+                fotoField.prop('required', false);
+                
+                kegiatanField.attr('placeholder', 'Tuliskan alasan/keterangan izin...');
+                
+                jamContainer.addClass('field-disabled');
+                kegiatanCard.removeClass('field-disabled');
+                manfaatCard.addClass('field-disabled');
+                fotoCard.addClass('field-disabled');
+                mapContainer.addClass('field-disabled');
+                
+                if (watchId !== null) {
+                    GPSHelper.clearWatch(watchId);
+                    watchId = null;
+                }
+            }
             else {
                 jamMulai.prop('required', false);
                 jamSelesai.prop('required', false);
                 kegiatanField.prop('required', false);
                 manfaatField.prop('required', false);
+                fotoField.prop('required', false);
+                
+                kegiatanField.attr('placeholder', 'Tuliskan kegiatan yang dilakukan hari ini...');
                 
                 jamContainer.addClass('field-disabled');
                 kegiatanCard.addClass('field-disabled');
                 manfaatCard.addClass('field-disabled');
+                fotoCard.addClass('field-disabled');
                 mapContainer.addClass('field-disabled');
                 
                 if (watchId !== null) {
@@ -1170,6 +1435,7 @@
         $(document).ready(function() {
             initializeDateInput();
             initMap();
+            initializePhotoUpload();
 
             $('input[name="status_kehadiran"]').on('change', toggleFields);
             

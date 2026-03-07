@@ -277,6 +277,256 @@
             }
         }
 
+        .streak-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            animation: fadeUp 0.5s ease 0.1s both;
+        }
+
+        .streak-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .streak-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #f38449 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .streak-icon.on {
+            animation: fireFlicker 1.5s ease-in-out infinite;
+        }
+
+        .streak-icon.hot {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+            animation: fireFlicker 1s ease-in-out infinite;
+        }
+
+        .streak-icon.legendary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            animation: fireGlow 1.5s ease-in-out infinite;
+        }
+
+        .streak-icon.off {
+            background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+            opacity: 0.5;
+            animation: none;
+        }
+
+        @keyframes fireFlicker {
+            0%, 100% { 
+                transform: scale(1) rotate(-2deg);
+                opacity: 1;
+            }
+            50% { 
+                transform: scale(1.05) rotate(2deg);
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes fireGlow {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+            }
+            50% { 
+                transform: scale(1.1);
+                box-shadow: 0 4px 30px rgba(245, 87, 108, 0.8);
+            }
+        }
+
+        .streak-title {
+            flex: 1;
+        }
+
+        .streak-title h3 {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .streak-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .streak-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f1f5f9;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .calendar-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f1f5f9;
+        }
+
+        .calendar-label {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .calendar-grid-mini {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day-mini {
+            aspect-ratio: 1;
+            background: #f1f5f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            transition: transform 0.2s ease;
+        }
+
+        .calendar-day-mini.filled {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: #fff;
+        }
+
+        .calendar-day-mini.alfa {
+            background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+            color: #fff;
+            opacity: 0.6;
+        }
+
+        .calendar-day-mini.today {
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+        }
+
+        .calendar-day-mini.today.filled {
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.5);
+        }
+
+        .calendar-day-mini.today.alfa {
+            box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.4);
+        }
+
+        .calendar-day-mini:hover {
+            transform: scale(1.1);
+        }
+
+        .motivation-text {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #475569;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .btn-view-leaderboard {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-view-leaderboard:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+            text-decoration: none;
+        }
+
+        .calendar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .legend-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .legend-box.filled {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+        }
+
+        .legend-box.alfa {
+            background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+            opacity: 0.6;
+        }
+
+        .legend-box.empty {
+            background: #f1f5f9;
+        }
+
         @media (max-width: 768px) {
             .container-fluid {
                 padding: 1rem 1.5rem;
@@ -349,6 +599,33 @@
             .no-instansi-icon {
                 font-size: 3rem;
             }
+
+            .streak-card {
+                padding: 1.5rem;
+            }
+            
+            .streak-number {
+                font-size: 1.5rem;
+            }
+            
+            .calendar-grid-mini {
+                gap: 0.25rem;
+            }
+            
+            .calendar-day-mini {
+                font-size: 0.65rem;
+            }
+            
+            .stat-value {
+                font-size: 1.25rem;
+            }
+
+            .calendar-legend {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+                padding: 0.75rem 1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -404,6 +681,13 @@
                 <a class="nav-link" href="{{ route('siswa.jurnal.index') }}">
                     <i class="fas fa-history"></i>
                     <span>Riwayat Jurnal</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('siswa.leaderboard.index') }}">
+                    <i class="fas fa-trophy"></i>
+                    <span>Leaderboard</span>
                 </a>
             </li>
 
@@ -468,6 +752,82 @@
                                 <div class="hero-time-wrapper">
                                     <div class="hero-time" id="heroTime"></div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="streak-card">
+                                <div class="streak-header">
+                                    @if($streakData['fire_status'] == 'legendary')
+                                        <div class="streak-icon legendary">🏆</div>
+                                    @elseif($streakData['fire_status'] == 'hot')
+                                        <div class="streak-icon hot">🔥🔥</div>
+                                    @elseif($streakData['fire_status'] == 'on')
+                                        <div class="streak-icon on">🔥</div>
+                                    @else
+                                        <div class="streak-icon off">⭕</div>
+                                    @endif
+
+                                    <div class="streak-title">
+                                        <h3>
+                                            @if($streakData['has_journal_today'])
+                                                Jurnal Hari Ini Sudah Terisi!
+                                            @else
+                                                Belum Isi Jurnal Hari Ini
+                                            @endif
+                                        </h3>
+                                        <div class="streak-number">{{ $streakData['total_poin'] }} Poin</div>
+                                    </div>
+                                </div>
+
+                                <div class="calendar-section">
+                                    <div class="calendar-label">7 Hari Terakhir</div>
+                                    <div class="calendar-grid-mini">
+                                        @foreach($calendarData as $day)
+                                        <script>
+                                            console.log('Calendar Data:', @json($calendarData));
+                                        </script>
+                                            <div class="calendar-day-mini 
+                                                @if($day['is_alfa'])
+                                                    alfa
+                                                @elseif($day['has_journal'])
+                                                    filled
+                                                @endif
+                                                @if($day['is_today']) today @endif">
+                                                {{ $day['day_name'] }}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="calendar-legend">
+                                        <div class="legend-item">
+                                            <div class="legend-box filled"></div>
+                                            <span>Hadir</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-box alfa"></div>
+                                            <span>Alfa</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-box empty"></div>
+                                            <span>Kosong</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="motivation-text">
+                                    "{{ $streakData['motivational_message'] }}"
+                                </div>
+
+                                @if($streakData['has_journal_today'])
+                                    <div class="text-center mt-3">
+                                        <a href="{{ route('siswa.leaderboard.index') }}" class="btn-catat-jurnal">
+                                            <i class="fas fa-trophy"></i>
+                                            Lihat Leaderboard
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

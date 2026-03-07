@@ -22,6 +22,7 @@ class Jurnal extends Model
         'manfaat',
         'latitude',
         'longitude',
+        'foto_kegiatan',
         'keterangan_reject',
         'status_verifikasi',
         'verified_by',
@@ -41,7 +42,7 @@ class Jurnal extends Model
         'izin' => 'Izin',
         'libur' => 'Libur',
         'alfa' => 'Alfa'
-        ];
+    ];
     
     public const STATUS_VERIFIKASI = [
         'pending' => 'Menunggu Verifikasi',
@@ -65,6 +66,11 @@ class Jurnal extends Model
     }
     
     public function needsKegiatan()
+    {
+        return in_array($this->status_kehadiran, ['wfo', 'wfh']);
+    }
+
+    public function needsFoto()
     {
         return in_array($this->status_kehadiran, ['wfo', 'wfh']);
     }

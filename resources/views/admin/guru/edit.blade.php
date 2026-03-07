@@ -362,6 +362,9 @@
                 </nav>
 
                 <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Edit Data Guru</h1>
+                    </div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Edit Data Guru</h6>
@@ -449,27 +452,6 @@
                                     @error('no_hp')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="id_instansi">Instansi yang Dibimbing</label>
-                                    <select class="form-control @error('id_instansi') is-invalid @enderror" 
-                                            id="id_instansi" 
-                                            name="id_instansi">
-                                        <option value="">-- Pilih Instansi (Opsional) --</option>
-                                        @foreach($instansi as $inst)
-                                            <option value="{{ $inst->id_instansi }}" 
-                                                {{ old('id_instansi', $guru->id_instansi ?? '') == $inst->id_instansi ? 'selected' : '' }}>
-                                                {{ $inst->nama_instansi }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('id_instansi')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    <small class="form-text text-muted">
-                                        <i class="fas fa-info-circle"></i> Hanya menampilkan instansi yang belum memiliki guru pembimbing
-                                    </small>
                                 </div>
 
                                 <div class="alert alert-warning">

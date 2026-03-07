@@ -838,7 +838,7 @@
                                         <td>{{ $item->no_hp }}</td>
                                         <td>
                                             @if($item->instansi)
-                                                <span class="status-badge badge-success">{{ $item->instansi->nama_instansi }}</span>
+                                                <span class="status-badge badge-success">Sudah Ditugaskan</span>
                                             @else
                                                 <span class="status-badge badge-secondary">Belum Ditugaskan</span>
                                             @endif

@@ -107,8 +107,13 @@
             background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         }
 
+        .card-header-infobox {
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100%);
+            color: #fff; !important
+        }
+
         .card-header-info {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+           background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100%);
         }
 
         .card-header-primary h5,
@@ -546,9 +551,9 @@
                     </div>
 
                     <div class="table-card">
-                        <div class="table-header card-header-primary">
+                        <div class="table-header card-header-infobox">
                             <h5>
-                                <span>Panduan Import Data</span>
+                                <span class="text-white">Panduan Import Data</span>
                             </h5>
                         </div>
                         <div style="padding: 1.5rem 2rem;">

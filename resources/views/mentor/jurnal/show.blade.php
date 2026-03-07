@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('dist_mentor/css/style.css')}}">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -57,34 +59,41 @@
         }
 
         .detail-card {
-            border: 2px solid #4e73df;
+            border: none;
             border-radius: 8px;
             padding: 20px;
             background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
         .detail-header {
-            background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+            background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
             color: white;
             padding: 15px 20px;
             border-radius: 8px 8px 0 0;
             margin: -20px -20px 20px -20px;
         }
+
         .info-row {
             display: flex;
             margin-bottom: 10px;
         }
+
         .info-label {
             font-weight: 600;
             width: 150px;
             flex-shrink: 0;
         }
+
         .info-value {
             flex-grow: 1;
         }
+
         .section-divider {
             border-top: 2px dashed #e3e6f0;
             margin: 20px 0;
         }
+
         .verification-box {
             background: #f8f9fc;
             border: 1px solid #e3e6f0;
@@ -92,6 +101,7 @@
             padding: 20px;
             text-align: center;
         }
+
         .textarea-detail {
             background: #f8f9fc;
             border: 1px solid #d1d3e2;
@@ -99,6 +109,142 @@
             padding: 15px;
             min-height: 100px;
             width: 100%;
+        }
+
+        .foto-kegiatan-box {
+            background: #f8f9fc;
+            border: 1px solid #d1d3e2;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .foto-kegiatan-box img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .foto-kegiatan-box img:hover {
+            transform: scale(1.02);
+        }
+
+        .foto-kegiatan-box small {
+            display: block;
+            margin-top: 10px;
+            color: #6c757d;
+        }
+
+        .modal-foto {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-foto-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 900px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .modal-foto-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .modal-foto-close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
+            transition: color 0.3s;
+        }
+
+        .modal-foto-close:hover,
+        .modal-foto-close:focus {
+            color: #f1f5f9;
+        }
+
+        #map {
+            width: 100%;
+            height: 350px;
+            border-radius: 8px;
+            border: 1px solid #d1d3e2;
+            margin-top: 15px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            border: none;
+            text-decoration: none;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .btn-verify-custom {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-verify-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+            color: #fff;
+        }
+
+        .btn-reject-custom {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
+        .btn-reject-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+            color: #fff;
+        }
+
+        .btn-secondary-custom {
+            background: #64748b;
+            color: #fff;
+        }
+
+        .btn-secondary-custom:hover {
+            background: #475569;
+            color: #fff;
         }
 
         .swal2-popup {
@@ -201,14 +347,14 @@
         }
 
         .swal2-confirm {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
             color: #fff !important;
             padding: 0.65rem 1.5rem !important;
             border-radius: 10px !important;
             font-weight: 700 !important;
             font-size: 0.9rem !important;
             border: none !important;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
             margin: 0 !important;
             flex: 1 !important;
             min-width: 0 !important;
@@ -216,7 +362,7 @@
 
         .swal2-confirm:hover {
             transform: translateY(-2px) !important;
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4) !important;
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4)!important;
         }
 
         .swal2-confirm.swal2-confirm-reject {
@@ -271,6 +417,30 @@
 
             .sidebar.toggled .sidebar-brand-icon img {
                 max-width: 60px;
+            }
+
+            .verification-box {
+                padding: 15px;
+            }
+
+            .btn-action {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .foto-kegiatan-box img {
+                max-width: 100%;
+            }
+
+            .modal-foto-content {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .modal-foto-close {
+                font-size: 30px;
+                top: 5px;
+                right: 15px;
             }
 
             .swal2-popup {
@@ -452,8 +622,8 @@
                         <div class="detail-header">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h5 class="mb-1">{{ $jurnal->tgl ? $jurnal->tgl->format('l, d F Y') : '-' }}</h5>
-                                    <small>{{ $jurnal->jam_mulai ?? '00:00' }} WIB</small>
+                                    <h5 class="mb-1 font-weight-bold">Detail Jurnal Siswa</h5>
+                                    <small>{{ $jurnal->tgl ? $jurnal->tgl->format('l, d F Y') : '-' }}</small>
                                 </div>
                             </div>
                         </div>
@@ -495,8 +665,8 @@
                                 <input type="text" class="form-control" value="{{ $jurnal->siswa->nama ?? '-' }}" readonly>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="font-weight-bold">Tanggal</label>
-                                <input type="text" class="form-control" value="{{ $jurnal->tgl ? $jurnal->tgl->format('d F Y') : '-' }}" readonly>
+                                <label class="font-weight-bold">Waktu</label>
+                                <input type="text" class="form-control" value="{{ $jurnal->verified_at->format('d F Y H:i') }}" readonly>
                             </div>
                         </div>
 
@@ -507,12 +677,38 @@
                             </div>
                         </div>
 
-                        <div class="mb-4">
+                        <div class="mb-3">
                             <label class="font-weight-bold">Manfaat yang Didapat :</label>
                             <div class="textarea-detail">
                                 {{ $jurnal->manfaat ?? '-' }}
                             </div>
                         </div>
+
+                        @if($jurnal->foto_kegiatan)
+                        <div class="mb-3">
+                            <label class="font-weight-bold">Bukti Foto Kegiatan :</label>
+                            <div class="foto-kegiatan-box">
+                                <img src="{{ asset('storage/' . $jurnal->foto_kegiatan) }}" 
+                                     alt="Foto Kegiatan" 
+                                     onclick="openModal()">
+                                <small>
+                                    <i class="fas fa-info-circle"></i> Klik foto untuk memperbesar
+                                </small>
+                            </div>
+                        </div>
+                        @endif
+
+                        @if($jurnal->latitude && $jurnal->longitude)
+                        <div class="mb-4">
+                            <label class="font-weight-bold">Lokasi Presensi :</label>
+                            <div id="map"></div>
+                            <div class="mt-2">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt"></i> Koordinat: {{ $jurnal->latitude }}, {{ $jurnal->longitude }}
+                                </small>
+                            </div>
+                        </div>
+                        @endif
 
                         <div class="verification-box">
                             <h5 class="font-weight-bold mb-3">Verifikasi Jurnal Siswa</h5>
@@ -521,11 +717,11 @@
                                 <div>
                                     <form id="verifyForm" action="{{ route('mentor.jurnal.verify', $jurnal->id_jurnal) }}" method="POST" class="d-inline">
                                         @csrf
-                                        <button type="button" id="btnVerify" class="btn btn-success btn-lg px-5 mr-2">
+                                        <button type="button" id="btnVerify" class="btn-action btn-verify-custom">
                                             <i class="fas fa-check"></i> Verified
                                         </button>
                                     </form>
-                                    <button type="button" id="btnReject" class="btn btn-danger btn-lg px-5">
+                                    <button type="button" id="btnReject" class="btn-action btn-reject-custom">
                                         <i class="fas fa-times"></i> Reject
                                     </button>
                                 </div>
@@ -548,7 +744,7 @@
                         </div>
 
                         <div class="text-center mt-4">
-                            <a href="{{ route('mentor.jurnal.index') }}" class="btn btn-secondary">
+                            <a href="{{ route('mentor.jurnal.index') }}" class="btn-action btn-secondary-custom">
                                 <i class="fas fa-arrow-left"></i> Kembali
                             </a>
                         </div>
@@ -563,6 +759,13 @@
                     </div>
                 </div>
             </footer>
+        </div>
+    </div>
+
+    <div id="modalFoto" class="modal-foto">
+        <span class="modal-foto-close" onclick="closeModal()">&times;</span>
+        <div class="modal-foto-content">
+            <img src="{{ asset('storage/' . ($jurnal->foto_kegiatan ?? '')) }}" alt="Foto Kegiatan">
         </div>
     </div>
 
@@ -611,9 +814,59 @@
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+    
+    @if($jurnal->latitude && $jurnal->longitude)
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const lat = {{ $jurnal->latitude }};
+        const lng = {{ $jurnal->longitude }};
+        
+        const map = L.map('map').setView([lat, lng], 17);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        L.marker([lat, lng], {
+            icon: L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            })
+        }).addTo(map).bindPopup('<b>Lokasi Presensi</b>').openPopup();
+    </script>
+    @endif
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        function openModal() {
+            document.getElementById('modalFoto').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalFoto').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalFoto');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
         document.getElementById('btnVerify')?.addEventListener('click', function(e) {
             e.preventDefault();
             

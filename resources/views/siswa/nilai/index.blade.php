@@ -294,6 +294,13 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('siswa.leaderboard.index') }}">
+                    <i class="fas fa-trophy"></i>
+                    <span>Leaderboard</span>
+                </a>
+            </li>
+
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('siswa.nilai.index') }}">
                     <i class="fas fa-download"></i>

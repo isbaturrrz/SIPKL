@@ -35,11 +35,13 @@ class StoreJurnalRequest extends FormRequest
             $rules['jam_selesai'] = ['required', 'date_format:H:i', 'after:jam_mulai'];
             $rules['kegiatan'] = ['required', 'string', 'max:1000'];
             $rules['manfaat'] = ['required', 'string', 'max:1000'];
+            $rules['foto_kegiatan'] = ['required', 'image', 'mimes:jpeg,jpg,png', 'max:2048'];
         } else {
             $rules['jam_mulai'] = ['nullable', 'date_format:H:i'];
             $rules['jam_selesai'] = ['nullable', 'date_format:H:i'];
             $rules['kegiatan'] = ['nullable'];
             $rules['manfaat'] = ['nullable'];
+            $rules['foto_kegiatan'] = ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'];
         }
 
         if ($this->status_kehadiran === 'wfo') {
@@ -48,6 +50,10 @@ class StoreJurnalRequest extends FormRequest
         } else {
             $rules['latitude'] = ['nullable'];
             $rules['longitude'] = ['nullable'];
+        }
+
+        if ($this->status_kehadiran === 'izin') {
+            $rules['kegiatan'] = ['required', 'string', 'max:1000'];
         }
 
         return $rules;
@@ -75,6 +81,11 @@ class StoreJurnalRequest extends FormRequest
             
             'latitude.required' => 'Lokasi GPS diperlukan untuk WFO',
             'longitude.required' => 'Lokasi GPS diperlukan untuk WFO',
+            
+            'foto_kegiatan.required' => 'Foto bukti kegiatan harus diunggah untuk WFO/WFH',
+            'foto_kegiatan.image' => 'File harus berupa gambar',
+            'foto_kegiatan.mimes' => 'Format foto harus jpeg, jpg, atau png',
+            'foto_kegiatan.max' => 'Ukuran foto maksimal 2MB',
         ];
     }
 }

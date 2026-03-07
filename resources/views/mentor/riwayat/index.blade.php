@@ -570,7 +570,7 @@
                                         </td>
                                         <td>
                                             @if(!$item->verifiedBy)
-                                                -
+                                                Guru Pembimbing
                                             @elseif($item->verifiedBy->role)
                                                 {{ $item->verifiedBy->name }}
                                             @else

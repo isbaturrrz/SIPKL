@@ -160,6 +160,7 @@
             padding: 1rem 1.25rem;
             border-radius: 8px;
             margin-top: 1rem;
+            margin-bottom: 1rem;
         }
 
         .rejection-alert strong {
@@ -178,6 +179,92 @@
             height: 400px;
             border-radius: 8px;
             border: 2px solid #e2e8f0;
+        }
+
+        .foto-kegiatan-container {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .foto-kegiatan-container img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .foto-kegiatan-container img:hover {
+            transform: scale(1.02);
+        }
+
+        .foto-kegiatan-label {
+            display: block;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .no-foto-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #f1f5f9;
+            color: #64748b;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .modal-foto {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-foto-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 900px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .modal-foto-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .modal-foto-close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
+            transition: color 0.3s;
+        }
+
+        .modal-foto-close:hover,
+        .modal-foto-close:focus {
+            color: #f1f5f9;
         }
 
         .btn-action {
@@ -211,7 +298,7 @@
         }
 
         .btn-edit-custom:hover {
-            background: #d97706;
+            background: #1e4179;
             color: #fff;
         }
 
@@ -240,6 +327,21 @@
             .btn-action {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .foto-kegiatan-container img {
+                max-width: 100%;
+            }
+
+            .modal-foto-content {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .modal-foto-close {
+                font-size: 30px;
+                top: 5px;
+                right: 15px;
             }
         }
 
@@ -284,6 +386,13 @@
                 <a class="nav-link" href="{{ route('siswa.jurnal.index') }}">
                     <i class="fas fa-history"></i>
                     <span>Riwayat Jurnal</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('siswa.leaderboard.index') }}">
+                    <i class="fas fa-trophy"></i>
+                    <span>Leaderboard</span>
                 </a>
             </li>
 
@@ -417,6 +526,21 @@
                             </div>
                             @endif
 
+                            @if($jurnal->foto_kegiatan)
+                            <div class="detail-card">
+                                <h5>Bukti Foto Kegiatan</h5>
+                                <div class="foto-kegiatan-container">
+                                    <img src="{{ asset('storage/' . $jurnal->foto_kegiatan) }}" 
+                                         alt="Foto Kegiatan" 
+                                         id="fotoKegiatan"
+                                         onclick="openModal()">
+                                    <small class="d-block mt-2 text-muted">
+                                        <i class="fas fa-info-circle"></i> Klik foto untuk memperbesar
+                                    </small>
+                                </div>
+                            </div>
+                            @endif
+
                             @if($jurnal->status_verifikasi == 'rejected' && $jurnal->keterangan_reject)
                             <div class="rejection-alert">
                                 <strong><i class="fas fa-exclamation-circle"></i> Alasan Penolakan</strong>
@@ -466,6 +590,13 @@
         </div>
     </div>
 
+    <div id="modalFoto" class="modal-foto">
+        <span class="modal-foto-close" onclick="closeModal()">&times;</span>
+        <div class="modal-foto-content">
+            <img src="{{ asset('storage/' . ($jurnal->foto_kegiatan ?? '')) }}" alt="Foto Kegiatan">
+        </div>
+    </div>
+
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
@@ -500,5 +631,30 @@
         }).addTo(map).bindPopup('<b>Lokasi Presensi</b>').openPopup();
     </script>
     @endif
+
+    <script>
+        function openModal() {
+            document.getElementById('modalFoto').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalFoto').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalFoto');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
