@@ -84,24 +84,36 @@ class JurnalController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $status = $request->status_kehadiran;
+        
+        $rules = [
             'id_siswa' => 'required|exists:siswa,id_siswa',
             'tgl' => 'required|date',
-            'jam_mulai' => 'required',
-            'jam_selesai' => 'required',
-            'status_kehadiran' => 'required|in:wfo,wfh,izin,sakit,izin,libur,alfa',
-            'kegiatan' => 'required|string',
-            'manfaat' => 'required|string',
-            'wfh' => 'nullable|boolean'
-        ], [
+            'status_kehadiran' => 'required|in:wfo,wfh,izin,sakit,libur,alfa',
+        ];
+
+        $messages = [
             'id_siswa.required' => 'Pilih siswa terlebih dahulu',
             'tgl.required' => 'Tanggal harus diisi',
-            'jam_mulai.required' => 'Jam mulai harus diisi',
-            'jam_selesai.required' => 'Jam selesai harus diisi',
             'status_kehadiran.required' => 'Status kehadiran harus dipilih',
-            'kegiatan.required' => 'Kegiatan harus diisi',
-            'manfaat.required' => 'Manfaat harus diisi'
-        ]);
+        ];
+
+        if ($status === 'wfo' || $status === 'wfh') {
+            $rules['jam_mulai'] = 'required';
+            $rules['jam_selesai'] = 'required';
+            $rules['kegiatan'] = 'required|string';
+            $rules['manfaat'] = 'required|string';
+            
+            $messages['jam_mulai.required'] = 'Jam mulai harus diisi';
+            $messages['jam_selesai.required'] = 'Jam selesai harus diisi';
+            $messages['kegiatan.required'] = 'Kegiatan harus diisi';
+            $messages['manfaat.required'] = 'Manfaat harus diisi';
+        } elseif ($status === 'izin') {
+            $rules['kegiatan'] = 'required|string';
+            $messages['kegiatan.required'] = 'Keterangan alasan izin harus diisi';
+        }
+
+        $request->validate($rules, $messages);
 
         $userId = Auth::id();
         
@@ -198,23 +210,36 @@ class JurnalController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $status = $request->status_kehadiran;
+        
+        $rules = [
             'id_siswa' => 'required|exists:siswa,id_siswa',
             'tgl' => 'required|date',
-            'jam_mulai' => 'required',
-            'jam_selesai' => 'required',
             'status_kehadiran' => 'required|in:wfo,wfh,izin,sakit,libur,alfa',
-            'kegiatan' => 'required|string',
-            'manfaat' => 'required|string',
-        ], [
+        ];
+
+        $messages = [
             'id_siswa.required' => 'Pilih siswa terlebih dahulu',
             'tgl.required' => 'Tanggal harus diisi',
-            'jam_mulai.required' => 'Jam mulai harus diisi',
-            'jam_selesai.required' => 'Jam selesai harus diisi',
             'status_kehadiran.required' => 'Status kehadiran harus dipilih',
-            'kegiatan.required' => 'Kegiatan harus diisi',
-            'manfaat.required' => 'Manfaat harus diisi'
-        ]);
+        ];
+
+        if ($status === 'wfo' || $status === 'wfh') {
+            $rules['jam_mulai'] = 'required';
+            $rules['jam_selesai'] = 'required';
+            $rules['kegiatan'] = 'required|string';
+            $rules['manfaat'] = 'required|string';
+            
+            $messages['jam_mulai.required'] = 'Jam mulai harus diisi';
+            $messages['jam_selesai.required'] = 'Jam selesai harus diisi';
+            $messages['kegiatan.required'] = 'Kegiatan harus diisi';
+            $messages['manfaat.required'] = 'Manfaat harus diisi';
+        } elseif ($status === 'izin') {
+            $rules['kegiatan'] = 'required|string';
+            $messages['kegiatan.required'] = 'Keterangan alasan izin harus diisi';
+        }
+
+        $request->validate($rules, $messages);
 
         $userId = Auth::id();
         

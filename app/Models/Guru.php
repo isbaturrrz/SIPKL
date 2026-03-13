@@ -19,7 +19,6 @@ class Guru extends Model
         'tempat_lahir',
         'tgl_lahir',
         'no_hp',
-        'id_instansi',
     ];
 
     public function user()
@@ -32,8 +31,8 @@ class Guru extends Model
         return $this->hasMany(Siswa::class, 'id_guru', 'id_guru');
     }
 
-     public function instansi()
+    public function instansi()
     {
-        return $this->belongsTo(Instansi::class, 'id_instansi', 'id_instansi');
+        return $this->hasMany(Instansi::class, 'id_guru', 'id_guru');
     }
 }

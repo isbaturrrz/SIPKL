@@ -24,10 +24,8 @@ class NilaiController extends Controller
 
             Log::info('NilaiController: User ID = ' . $user->id);
 
-            // Cari siswa berdasarkan relasi atau field id
-            $siswa = $user->siswa; // Menggunakan relasi
-            
-            // Jika relasi tidak ada, coba cari manual
+            $siswa = $user->siswa;
+
             if (!$siswa) {
                 $siswa = Siswa::where('id', $user->id)->first();
             }
@@ -40,7 +38,6 @@ class NilaiController extends Controller
 
             Log::info('NilaiController: Siswa found - ID: ' . $siswa->id_siswa . ', Nama: ' . $siswa->nama);
 
-            // Ambil penilaian dengan eager loading
             $penilaian = Penilaian::with('instansi')
                 ->where('id_siswa', $siswa->id_siswa)
                 ->first();
@@ -72,7 +69,6 @@ class NilaiController extends Controller
                     ->with('error', 'Silakan login terlebih dahulu');
             }
 
-            // Cari siswa
             $siswa = $user->siswa ?? Siswa::where('id', $user->id)->first();
 
             if (!$siswa) {
@@ -80,23 +76,20 @@ class NilaiController extends Controller
                     ->with('error', 'Data siswa tidak ditemukan');
             }
 
-            // Ambil penilaian
             $penilaian = Penilaian::with('instansi')
                 ->where('id_siswa', $siswa->id_siswa)
                 ->first();
 
             if (!$penilaian) {
                 return redirect()->back()
-                    ->with('error', 'Data penilaian belum tersedia. Hubungi pembimbing instansi.');
+                    ->with('error', 'Data penilaian belum tersedia. Hubungi mentor.');
             }
 
             Log::info('Generating PDF for: ' . $siswa->nama);
 
-            // Generate PDF
             $pdf = Pdf::loadView('siswa.nilai.pdf', compact('siswa', 'penilaian'))
                 ->setPaper('a4', 'portrait');
 
-            // Download dengan nama file yang clean
             $filename = 'Nilai_PKL_' . str_replace(' ', '_', $siswa->nama) . '.pdf';
             
             return $pdf->download($filename);

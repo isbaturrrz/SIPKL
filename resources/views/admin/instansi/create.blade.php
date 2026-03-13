@@ -119,14 +119,14 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="{{ route('admin.instansi.index') }}">
                     <i class="fas fa-building"></i>
                     <span>Kelola Instansi</span>
                 </a> 
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.pengajuan-instansi.index') }}">
                     <i class="fas fa-inbox"></i>
                     <span>Pengajuan Instansi</span>
@@ -344,7 +344,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                               <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="id_guru">Guru Pembimbing</label>
                                         <select class="form-control @error('id_guru') is-invalid @enderror" 
@@ -353,8 +353,14 @@
                                             <option value="">-- Pilih Guru Pembimbing --</option>
                                             @foreach($guru as $g)
                                                 <option value="{{ $g->id_guru }}" 
-                                                    {{ old('id_guru', $instansi->id_guru ?? '') == $g->id_guru ? 'selected' : '' }}>
+                                                    {{ old('id_guru') == $g->id_guru ? 'selected' : '' }}>
                                                     {{ $g->nama }}
+                                                    @php
+                                                        $jumlahInstansi = $g->instansi()->count();
+                                                    @endphp
+                                                    @if($jumlahInstansi > 0)
+                                                        (Membimbing {{ $jumlahInstansi }} instansi)
+                                                    @endif
                                                 </option>
                                             @endforeach
                                         </select>
@@ -362,7 +368,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <small class="form-text text-muted">
-                                            <i class="fas fa-info-circle"></i> Hanya menampilkan guru yang belum membimbing instansi lain
+                                            <i class="fas fa-info-circle"></i> 1 guru dapat membimbing beberapa instansi sekaligus
                                         </small>
                                     </div>
                                 </div>

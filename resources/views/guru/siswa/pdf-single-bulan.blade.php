@@ -175,7 +175,7 @@
         </div>
         <div class="info-row">
             <div class="info-label">Kelas</div>
-            <div class="info-value">: {{ $siswa->kelas }} {{ $siswa->jurusan }}</div>
+            <div class="info-value">: {{ $siswa->kelas_lengkap }}</div>
         </div>
         <div class="info-row">
             <div class="info-label">Guru Pembimbing</div>

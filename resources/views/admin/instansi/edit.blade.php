@@ -522,8 +522,14 @@
                                             <option value="">-- Pilih Guru Pembimbing --</option>
                                             @foreach($guru as $g)
                                                 <option value="{{ $g->id_guru }}" 
-                                                    {{ old('id_guru', $instansi->id_guru ?? '') == $g->id_guru ? 'selected' : '' }}>
+                                                    {{ old('id_guru', $instansi->id_guru) == $g->id_guru ? 'selected' : '' }}>
                                                     {{ $g->nama }}
+                                                    @php
+                                                        $jumlahInstansi = $g->instansi()->count();
+                                                    @endphp
+                                                    @if($jumlahInstansi > 0)
+                                                        (Membimbing {{ $jumlahInstansi }} instansi)
+                                                    @endif
                                                 </option>
                                             @endforeach
                                         </select>
@@ -531,7 +537,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <small class="form-text text-muted">
-                                            <i class="fas fa-info-circle"></i> Hanya menampilkan guru yang belum membimbing instansi lain
+                                            <i class="fas fa-info-circle"></i> 1 guru dapat membimbing beberapa instansi sekaligus
                                         </small>
                                     </div>
                                 </div>

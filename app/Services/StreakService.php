@@ -43,14 +43,12 @@ class StreakService
             $hasToday = $this->hasJournalToday($siswaId);
             $fireStatus = $this->getFireStatus($totalPoin, $hasToday);
             $consistencyRate = $this->calculateConsistencyRate($siswaId);
-            $motivationalMessage = $this->getMotivationalMessage($totalPoin, $hasToday);
 
             return [
                 'total_poin' => $totalPoin,
                 'has_journal_today' => $hasToday,
                 'fire_status' => $fireStatus,
                 'consistency_rate' => $consistencyRate,
-                'motivational_message' => $motivationalMessage,
             ];
         });
     }
@@ -67,31 +65,6 @@ class StreakService
             return self::FIRE_HOT;
         } else {
             return self::FIRE_ON;
-        }
-    }
-
-    public function getMotivationalMessage(int $totalPoin, bool $hasToday): string
-    {
-        if (!$hasToday) {
-            return "Yuk isi jurnal hari ini! Jangan sampai kehilangan poin! 💪";
-        }
-
-        if ($totalPoin >= 180) {
-            return "Luar biasa! Kamu adalah legenda sejati! 🏆👑";
-        } elseif ($totalPoin >= 120) {
-            return "Fantastis! Dedikasi luar biasa! Kamu inspirasi bagi yang lain! 🌟";
-        } elseif ($totalPoin >= 90) {
-            return "Hebat sekali! Konsistensimu patut diacungi jempol! 💎";
-        } elseif ($totalPoin >= 60) {
-            return "Keren! Terus pertahankan semangat ini! 🔥🔥";
-        } elseif ($totalPoin >= 30) {
-            return "Bagus! Kamu sudah menunjukkan komitmen yang baik! ⚡";
-        } elseif ($totalPoin >= 14) {
-            return "Mantap! Terus tingkatkan konsistensimu! 💪";
-        } elseif ($totalPoin >= 7) {
-            return "Bagus! Kamu di jalur yang tepat! 🌱";
-        } else {
-            return "Ayo semangat! Setiap langkah kecil adalah progress! 🚀";
         }
     }
 

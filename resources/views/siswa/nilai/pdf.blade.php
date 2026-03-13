@@ -12,149 +12,127 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            padding: 40px;
-            font-size: 12px;
+            font-family: 'Times New Roman', Times, serif;
+            padding: 30px 50px;
+            font-size: 11px;
+            line-height: 1.4;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #1e4179;
-            padding-bottom: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #000;
         }
 
         .header h1 {
-            color: #1e4179;
-            font-size: 24px;
-            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 3px;
         }
 
         .header p {
-            color: #666;
-            font-size: 14px;
+            font-size: 10px;
+            margin: 1px 0;
         }
 
         .info-section {
-            margin-bottom: 25px;
-        }
-
-        .info-section h3 {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e4179 100%);
-            color: white;
-            padding: 10px 15px;
-            margin-bottom: 15px;
-            font-size: 14px;
-        }
-
-        .info-table {
-            width: 100%;
             margin-bottom: 20px;
+            font-size: 11px;
         }
 
-        .info-table td {
-            padding: 8px 0;
-            font-size: 12px;
+        .info-grid {
+            display: table;
+            width: 100%;
+            margin-bottom: 15px;
         }
 
-        .info-table td:first-child {
-            width: 150px;
-            font-weight: bold;
-            color: #333;
+        .info-row {
+            display: table-row;
         }
 
-        .info-table td:nth-child(2) {
-            width: 20px;
-            text-align: center;
+        .info-label {
+            display: table-cell;
+            width: 110px;
+            padding: 2px 0;
+        }
+
+        .info-colon {
+            display: table-cell;
+            width: 15px;
+            padding: 2px 0;
+        }
+
+        .info-value {
+            display: table-cell;
+            padding: 2px 0;
         }
 
         .nilai-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 25px;
+            margin: 20px 0 15px 0;
+            font-size: 11px;
+        }
+
+        .nilai-table th,
+        .nilai-table td {
+            border: 1px solid #000;
+            padding: 6px 8px;
+            text-align: center;
         }
 
         .nilai-table th {
-            background: #1e4179;
-            color: white;
-            padding: 12px 10px;
-            text-align: center;
-            font-size: 12px;
-            border: 1px solid #1e4179;
-        }
-
-        .nilai-table td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-            font-size: 11px;
+            font-weight: bold;
+            background: #e3e3e3;
         }
 
         .nilai-table td:nth-child(2) {
             text-align: left;
-            padding-left: 20px;
+            padding-left: 12px;
         }
 
-        .nilai-table tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .nilai-table .total-row,
+        .nilai-table .average-row {
+            font-weight: normal;
+            background: #e3e3e3;
         }
 
-        .nilai-akhir-row {
-            background-color: #e8eef7 !important;
+        .nilai-table .total-row td:first-child,
+        .nilai-table .average-row td:first-child {
             font-weight: bold;
         }
 
-        .nilai-final {
-            background: #f0f4f8;
-            padding: 20px;
+        .nilai-akhir-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 11px;
+        }
+
+        .nilai-akhir-table th,
+        .nilai-akhir-table td {
+            border: 1px solid #000;
+            padding: 6px;
             text-align: center;
-            margin: 25px 0;
-            border: 2px solid #1e4179;
-            border-radius: 8px;
         }
 
-        .nilai-final h2 {
-            color: #1e4179;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-
-        .nilai-display {
-            font-size: 48px;
+        .nilai-akhir-table th {
             font-weight: bold;
-            color: #1e4179;
-            margin: 10px 0;
+            background: #e3e3e3;
         }
 
-        .predikat-display {
-            display: inline-block;
-            background: #10b981;
-            color: white;
-            padding: 10px 40px;
-            border-radius: 8px;
-            font-size: 32px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            padding-top: 20px;
-            border-top: 2px solid #ddd;
-            color: #666;
-            font-size: 10px;
+        .nilai-akhir-table tr:last-child td {
+            background: #e3e3e3;
         }
 
         .signature-section {
             margin-top: 50px;
-            display: table;
-            width: 100%;
+            text-align: right;
         }
 
         .signature-box {
-            display: table-cell;
-            width: 50%;
+            display: inline-block;
             text-align: center;
             padding: 20px;
         }
@@ -167,190 +145,211 @@
         .signature-line {
             border-top: 1px solid #000;
             display: inline-block;
-            width: 200px;
+            width: 175px;
             margin-top: 10px;
+        }
+
+        @media print {
+            body {
+                padding: 20px 40px;
+            }
+            
+            @page {
+                size: A4;
+                margin: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <div class="header">
-        <h1>LAPORAN NILAI PRAKTIK KERJA LAPANGAN (PKL)</h1>
-        <p>Tahun Ajaran 2024/2025</p>
+        <h1>SMK BUDI BAKTI CIWIDEY</h1>
+        <p>Jl. Raya Ciwidey No. 82, RT 001/RW 007, Desa Kelurahan Ciwidey,</p>
+        <p>Kecamatan Ciwidey, Kabupaten Bandung, Jawa Barat</p>
+        <p>Tlp. (022) 5928262</p>
     </div>
 
-    <!-- Informasi Siswa -->
     <div class="info-section">
-        <h3>INFORMASI SISWA</h3>
-        <table class="info-table">
-            <tr>
-                <td>Nama</td>
-                <td>:</td>
-                <td>{{ $siswa->nama }}</td>
-            </tr>
-            <tr>
-                <td>NIPD</td>
-                <td>:</td>
-                <td>{{ $siswa->nipd }}</td>
-            </tr>
-            <tr>
-                <td>Kelas</td>
-                <td>:</td>
-                <td>{{ $siswa->kelas }}</td>
-            </tr>
-        </table>
-    </div>
+        <div class="info-grid">
+            <div class="info-row">
+                <div class="info-label">Nama Siswa</div>
+                <div class="info-colon">:</div>
+                <div class="info-value">{{ $siswa->nama }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">NIPD</div>
+                <div class="info-colon">:</div>
+                <div class="info-value">{{ $siswa->nipd }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Kelas</div>
+                <div class="info-colon">:</div>
+                <div class="info-value">{{ $siswa->kelas_lengkap }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Jurusan</div>
+                <div class="info-colon">:</div>
+                <div class="info-value">Rekayasa Perangkat Lunak</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Periode PKL</div>
+                <div class="info-colon">:</div>
+                <div class="info-value">{{ date('d M Y', strtotime($siswa->tanggal_mulai)) }} - {{ date('d M Y', strtotime($siswa->tanggal_selesai)) }}</div>
+            </div>
+        </div>
 
-    <!-- Informasi PKL -->
-    <div class="info-section">
-        <h3>INFORMASI PKL</h3>
-        <table class="info-table">
-            <tr>
-                <td>Instansi PKL</td>
-                <td>:</td>
-                <td>{{ $penilaian->instansi->nama_instansi ?? '-' }}</td>
-            </tr>
-            <tr>
-                <td>Periode PKL</td>
-                <td>:</td>
-                <td>21.2.2024 - 21.5.2024</td>
-            </tr>
-            <tr>
-                <td>Pembimbing</td>
-                <td>:</td>
-                <td>{{ $penilaian->instansi->pembimbing ?? '-' }}</td>
-            </tr>
-        </table>
-    </div>
-
-    <!-- Nilai Akhir (Box Besar) -->
-    <div class="nilai-final">
-        <h2>NILAI AKHIR</h2>
-        <div class="nilai-display">{{ number_format($penilaian->nilai_akhir, 1) }}</div>
-        <div class="predikat-display">
-            @if($penilaian->nilai_akhir >= 90) A
-            @elseif($penilaian->nilai_akhir >= 80) B
-            @elseif($penilaian->nilai_akhir >= 70) C
-            @elseif($penilaian->nilai_akhir >= 60) D
-            @else E
-            @endif
+        <div class="info-grid">
+            <div class="info-row">
+                <div class="info-label">Nama Instansi</div>
+                <div class="info-colon">:</div>
+                <div class="info-value">{{ $penilaian->instansi->nama_instansi ?? 'Cyberlabs' }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Alamat</div>
+                <div class="info-colon">:</div>
+                <div class="info-value">{{ $penilaian->instansi->alamat ?? 'Jl Mars III Utara, Bandung' }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">No. HP</div>
+                <div class="info-colon">:</div>
+                <div class="info-value">{{ $penilaian->instansi->no_hp ?? '(022) 8888 1999 0857 2303' }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Pimpinan</div>
+                <div class="info-colon">:</div>
+                <div class="info-value">{{ $penilaian->instansi->pemilik }}</div>
+            </div>
         </div>
     </div>
 
-    <!-- Detail Aspek Penilaian -->
-    <div class="info-section">
-        <h3>DETAIL ASPEK YANG DINILAI</h3>
-        <table class="nilai-table">
-            <thead>
-                <tr>
-                    <th style="width: 10%;">No.</th>
-                    <th style="width: 45%;">ASPEK YANG DINILAI</th>
-                    <th style="width: 22.5%;">NILAI</th>
-                    <th style="width: 22.5%;">PREDIKAT</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1.</td>
-                    <td>Kedisiplinan</td>
-                    <td>{{ number_format($penilaian->nilai_kedisiplinan, 0) }}</td>
-                    <td>
-                        @if($penilaian->nilai_kedisiplinan >= 90) A
-                        @elseif($penilaian->nilai_kedisiplinan >= 80) B
-                        @elseif($penilaian->nilai_kedisiplinan >= 70) C
-                        @elseif($penilaian->nilai_kedisiplinan >= 60) D
-                        @else E
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td>2.</td>
-                    <td>Tanggung Jawab</td>
-                    <td>{{ number_format($penilaian->nilai_tanggung_jawab, 0) }}</td>
-                    <td>
-                        @if($penilaian->nilai_tanggung_jawab >= 90) A
-                        @elseif($penilaian->nilai_tanggung_jawab >= 80) B
-                        @elseif($penilaian->nilai_tanggung_jawab >= 70) C
-                        @elseif($penilaian->nilai_tanggung_jawab >= 60) D
-                        @else E
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td>Kreatifitas</td>
-                    <td>{{ number_format($penilaian->nilai_kreatifitas, 0) }}</td>
-                    <td>
-                        @if($penilaian->nilai_kreatifitas >= 90) A
-                        @elseif($penilaian->nilai_kreatifitas >= 80) B
-                        @elseif($penilaian->nilai_kreatifitas >= 70) C
-                        @elseif($penilaian->nilai_kreatifitas >= 60) D
-                        @else E
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td>4.</td>
-                    <td>Komunikasi</td>
-                    <td>{{ number_format($penilaian->nilai_komunikasi, 0) }}</td>
-                    <td>
-                        @if($penilaian->nilai_komunikasi >= 90) A
-                        @elseif($penilaian->nilai_komunikasi >= 80) B
-                        @elseif($penilaian->nilai_komunikasi >= 70) C
-                        @elseif($penilaian->nilai_komunikasi >= 60) D
-                        @else E
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td>5.</td>
-                    <td>Kerjasama</td>
-                    <td>{{ number_format($penilaian->nilai_kerjasama, 0) }}</td>
-                    <td>
-                        @if($penilaian->nilai_kerjasama >= 90) A
-                        @elseif($penilaian->nilai_kerjasama >= 80) B
-                        @elseif($penilaian->nilai_kerjasama >= 70) C
-                        @elseif($penilaian->nilai_kerjasama >= 60) D
-                        @else E
-                        @endif
-                    </td>
-                </tr>
-                <tr class="nilai-akhir-row">
-                    <td colspan="2">JUMLAH</td>
-                    <td>{{ number_format($penilaian->nilai_kedisiplinan + $penilaian->nilai_tanggung_jawab + $penilaian->nilai_kreatifitas + $penilaian->nilai_komunikasi + $penilaian->nilai_kerjasama, 0) }}</td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="nilai-table">
+        <thead>
+            <tr>
+                <th rowspan="2" style="width: 8%;">NO</th>
+                <th rowspan="2" style="width: 50%;">ASPEK YANG DINILAI</th>
+                <th colspan="2">ASPEK</th>
+            </tr>
+            <tr>
+                <th style="width: 21%;">NILAI</th>
+                <th style="width: 21%;">HURUF</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1.</td>
+                <td>Kedisiplinan</td>
+                <td>{{ number_format($penilaian->nilai_kedisiplinan, 0) }}</td>
+                <td>
+                    @if($penilaian->nilai_kedisiplinan >= 90) A
+                    @elseif($penilaian->nilai_kedisiplinan >= 80) B
+                    @elseif($penilaian->nilai_kedisiplinan >= 70) C
+                    @elseif($penilaian->nilai_kedisiplinan >= 60) D
+                    @else E
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td>Tanggung Jawab</td>
+                <td>{{ number_format($penilaian->nilai_tanggung_jawab, 0) }}</td>
+                <td>
+                    @if($penilaian->nilai_tanggung_jawab >= 90) A
+                    @elseif($penilaian->nilai_tanggung_jawab >= 80) B
+                    @elseif($penilaian->nilai_tanggung_jawab >= 70) C
+                    @elseif($penilaian->nilai_tanggung_jawab >= 60) D
+                    @else E
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td>Kreatifitas</td>
+                <td>{{ number_format($penilaian->nilai_kreatifitas, 0) }}</td>
+                <td>
+                    @if($penilaian->nilai_kreatifitas >= 90) A
+                    @elseif($penilaian->nilai_kreatifitas >= 80) B
+                    @elseif($penilaian->nilai_kreatifitas >= 70) C
+                    @elseif($penilaian->nilai_kreatifitas >= 60) D
+                    @else E
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td>4.</td>
+                <td>Komunikasi</td>
+                <td>{{ number_format($penilaian->nilai_komunikasi, 0) }}</td>
+                <td>
+                    @if($penilaian->nilai_komunikasi >= 90) A
+                    @elseif($penilaian->nilai_komunikasi >= 80) B
+                    @elseif($penilaian->nilai_komunikasi >= 70) C
+                    @elseif($penilaian->nilai_komunikasi >= 60) D
+                    @else E
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td>5.</td>
+                <td>Kerjasama</td>
+                <td>{{ number_format($penilaian->nilai_kerjasama, 0) }}</td>
+                <td>
+                    @if($penilaian->nilai_kerjasama >= 90) A
+                    @elseif($penilaian->nilai_kerjasama >= 80) B
+                    @elseif($penilaian->nilai_kerjasama >= 70) C
+                    @elseif($penilaian->nilai_kerjasama >= 60) D
+                    @else E
+                    @endif
+                </td>
+            </tr>
+            <tr class="total-row">
+                <td colspan="2">TOTAL</td>
+                <td>{{ number_format($penilaian->nilai_kedisiplinan + $penilaian->nilai_tanggung_jawab + $penilaian->nilai_kreatifitas + $penilaian->nilai_komunikasi + $penilaian->nilai_kerjasama, 0) }}</td>
+                <td>-</td>
+            </tr>
+            <tr class="average-row">
+                <td colspan="2">RATA-RATA</td>
+                <td>{{ number_format($penilaian->nilai_akhir, 1) }}</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
 
-    @if($penilaian->keterangan)
-    <div class="info-section">
-        <h3>KETERANGAN</h3>
-        <p style="padding: 15px; background: #f9f9f9; border-left: 4px solid #1e4179;">
-            {{ $penilaian->keterangan }}
-        </p>
-    </div>
-    @endif
+    <table class="nilai-akhir-table">
+        <thead>
+            <tr>
+                <th style="width: 50%;">Nilai Akhir</th>
+                <th style="width: 50%;">Predikat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ number_format($penilaian->nilai_akhir, 1) }}</td>
+                <td>
+                    @if($penilaian->nilai_akhir >= 90) A
+                    @elseif($penilaian->nilai_akhir >= 80) B
+                    @elseif($penilaian->nilai_akhir >= 70) C
+                    @elseif($penilaian->nilai_akhir >= 60) D
+                    @else E
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: left; padding: 8px;">
+                    @if($penilaian->keterangan)
+                    Catatan: {{ $penilaian->keterangan }}
+                    @else
+                    Catatan:<br>Demikian keterangan ini dibuat, untuk digunakan sebagaimana mestinya.
+                    @endif
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-    <!-- Tanda Tangan -->
     <div class="signature-section">
         <div class="signature-box">
-            <p>Mengetahui,<br>Pembimbing Sekolah</p>
+            <p>Bandung, {{ date('d F Y') }}<br>Pembimbing DU/DI</p>
             <div class="signature-line"></div>
-            <p style="margin-top: 10px; margin-bottom: 0;">(............................)</p>
+            <p style="margin-top: 10px; margin-bottom: 0;">{{ $penilaian->instansi->pemilik ?? '(............................)' }}</p>
         </div>
-        <div class="signature-box">
-            <p>Bandung, {{ date('d F Y') }}<br>Pembimbing Instansi</p>
-            <div class="signature-line"></div>
-            <p style="margin-top: 10px; margin-bottom: 0;">{{ $penilaian->instansi->pembimbing ?? '(............................)' }}</p>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p>Dokumen ini digenerate secara otomatis oleh Sistem Informasi PKL</p>
-        <p>Copyright © COHESION TEAM 2026</p>
     </div>
 </body>
 </html>

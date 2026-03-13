@@ -454,11 +454,21 @@
                                     @enderror
                                 </div>
 
+                                @if($guru->instansi && $guru->instansi->count() > 0)
+                                <div class="alert alert-info">
+                                    <strong><i class="fas fa-info-circle"></i> Informasi Instansi:</strong>
+                                    <ul class="mb-0 mt-2">
+                                        <li>Guru ini membimbing {{ $guru->instansi->count() }} instansi</li>
+                                        <li>Untuk mengelola instansi, silakan ke halaman Kelola Instansi</li>
+                                    </ul>
+                                </div>
+                                @endif
+
                                 <div class="alert alert-warning">
                                     <strong>Perhatian:</strong>
                                     <ul class="mb-0">
-                                        <li>Password guru akan berubah saat mengedit data</li>
-                                        <li>Password tetap menggunakan tanggal lahir awal saat pendaftaran</li>
+                                        <li>Password guru akan berubah saat mengedit tanggal lahir</li>
+                                        <li>Password tetap menggunakan tanggal lahir yang baru</li>
                                         <li>Semua field bertanda <span class="text-danger">*</span> wajib diisi</li>
                                     </ul>
                                 </div>
@@ -506,8 +516,6 @@
             const tempatLahir = document.getElementById('tempat_lahir').value;
             const tglLahir = document.getElementById('tgl_lahir').value;
             const noHp = document.getElementById('no_hp').value;
-            const instansiSelect = document.getElementById('id_instansi');
-            const instansiText = instansiSelect.options[instansiSelect.selectedIndex].text;
 
             const tglLahirFormatted = new Date(tglLahir).toLocaleDateString('id-ID', {
                 day: 'numeric',
@@ -544,10 +552,6 @@
                             <tr>
                                 <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">No HP:</td>
                                 <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${noHp}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Instansi:</td>
-                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${instansiText}</td>
                             </tr>
                         </table>
                     </div>

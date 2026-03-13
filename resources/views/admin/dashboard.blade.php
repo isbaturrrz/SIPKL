@@ -460,7 +460,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-12 mb-3">
                             <div class="chart-card">
                                 <div class="chart-title">Trend Jurnal Per Bulan</div>
                                 <canvas id="chartTrend" height="60"></canvas>

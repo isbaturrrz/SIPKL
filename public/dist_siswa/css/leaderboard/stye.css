@@ -1,0 +1,489 @@
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
+        }
+
+        .sidebar .nav-item .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .sidebar .nav-item .nav-link:hover,
+        .sidebar .nav-item.active .nav-link {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-item .nav-link i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem !important;
+        }
+
+        .sidebar-brand-icon img {
+            max-width: 120px;
+            height: auto;
+            transition: max-width 0.3s ease;
+        }
+
+        .sidebar.toggled .sidebar-brand-icon img {
+            max-width: 50px;
+        }
+
+        .sidebar.toggled .sidebar-brand {
+            padding: 1rem 0.5rem !important;
+        }
+
+        .topbar {
+            height: 4.375rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+
+        .topbar .nav-item .nav-link {
+            height: 4.375rem;
+            display: flex;
+            align-items: center;
+        }
+
+        #content {
+            background-color: #e8eef7;
+            min-height: 100vh;
+        }
+
+        .container-fluid {
+            padding: 1.5rem 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .page-title i {
+            color: #FFD700;
+            font-size: 1.5rem;
+        }
+
+        .personal-stats-card {
+            background: linear-gradient(135deg, #182151 11%, #3F7FB6 75%, #010B40 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(30, 65, 121, 0.25);
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-header h5 {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .leaderboard-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .podium-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .podium-item {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .podium-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .podium-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .podium-item.first {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFE6B3 100%);
+            border: 2px solid #FFD700;
+            order: 2;
+        }
+
+        .podium-item.first::before {
+            background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
+        }
+
+        .podium-item.second {
+            background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%);
+            border: 2px solid #C0C0C0;
+            order: 1;
+            margin-top: 1rem;
+        }
+
+        .podium-item.second::before {
+            background: linear-gradient(90deg, #C0C0C0 0%, #A8A8A8 100%);
+        }
+
+        .podium-item.third {
+            background: linear-gradient(135deg, #FFF0E6 0%, #FFE0CC 100%);
+            border: 2px solid #CD7F32;
+            order: 3;
+            margin-top: 1rem;
+        }
+
+        .podium-item.third::before {
+            background: linear-gradient(90deg, #CD7F32 0%, #B87333 100%);
+        }
+
+        .medal {
+            font-size: 3.5rem;
+            margin-bottom: 0.75rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .rank-number {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+        }
+
+        .student-name {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            min-height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .student-class {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .poin-badge {
+            display: inline-block;
+            padding: 0.6rem 1.25rem;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .poin-badge.gold {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #1e293b;
+        }
+
+        .poin-badge.silver {
+            background: linear-gradient(135deg, #C0C0C0 0%, #A8A8A8 100%);
+            color: #1e293b;
+        }
+
+        .poin-badge.bronze {
+            background: linear-gradient(135deg, #CD7F32 0%, #B87333 100%);
+            color: #fff;
+        }
+
+        .ranking-list {
+            margin-top: 2rem;
+        }
+
+        .list-header, .list-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 200px 120px;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            align-items: center;
+        }
+
+        .list-header {
+            background: #f8fafc;
+            border-radius: 8px;
+            font-weight: 700;
+            color: #64748b;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .list-row {
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+        }
+
+        .list-row:hover {
+            background: #f8fafc;
+            transform: translateX(5px);
+        }
+
+        .list-row.highlight-me {
+            background: linear-gradient(135deg, #182151 11%, #3F7FB6 75%, #010B40 100%);
+            border-left: 4px solid #FFD700;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(30, 65, 121, 0.2);
+        }
+
+        .list-row.highlight-me .col-name,
+        .list-row.highlight-me .col-class {
+            color: #fff;
+        }
+
+        .list-row.highlight-me .rank-badge {
+            background: #fff;
+            color: #1e293b;
+        }
+
+        .list-row.highlight-me .poin-value {
+            color: #FFD700;
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: #f1f5f9;
+            border-radius: 50%;
+            font-weight: 800;
+            color: #1e293b;
+            font-size: 1.1rem;
+        }
+
+        .col-name {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+
+        .col-class {
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .poin-value {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+
+        .badge-anda {
+            display: inline-block;
+            background: #FFD700;
+            color: #1e293b;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-left: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
+        }
+
+        .no-data-icon {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+        }
+
+        .no-data-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .sticky-footer {
+            background-color: #fff;
+            border-top: 1px solid #e3e6f0;
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #858796;
+        }
+
+        .animation-fadeUp {
+            animation: fadeUp 0.5s ease both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding: 1rem 1.5rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .personal-stats-card {
+                padding: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .podium-section {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .podium-item.first,
+            .podium-item.second,
+            .podium-item.third {
+                order: initial;
+                margin-top: 0;
+            }
+
+            .medal {
+                font-size: 2.5rem;
+            }
+
+            .student-name {
+                font-size: 1rem;
+                min-height: auto;
+            }
+
+            .list-header, .list-row {
+                grid-template-columns: 60px 1fr 90px;
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .col-class {
+                display: none;
+            }
+
+            .rank-badge {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .poin-value {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.25rem;
+            }
+
+            .medal {
+                font-size: 2rem;
+            }
+
+            .poin-badge {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }

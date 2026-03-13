@@ -412,7 +412,7 @@
 
                         <div class="col-xl-4">
                             <div class="siswa-table">
-                                <div class="table-title">5 Siswa Terbaru</div>
+                                <div class="table-title">5 Aktifitas Siswa Terbaru</div>
                                 <div class="table-responsive">
                                     <table class="table table-sm mb-0">
                                         <thead>

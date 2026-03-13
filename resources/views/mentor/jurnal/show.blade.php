@@ -347,14 +347,14 @@
         }
 
         .swal2-confirm {
-            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
             color: #fff !important;
             padding: 0.65rem 1.5rem !important;
             border-radius: 10px !important;
             font-weight: 700 !important;
             font-size: 0.9rem !important;
             border: none !important;
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
             margin: 0 !important;
             flex: 1 !important;
             min-width: 0 !important;
@@ -362,7 +362,7 @@
 
         .swal2-confirm:hover {
             transform: translateY(-2px) !important;
-            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4)!important;
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4)!important;
         }
 
         .swal2-confirm.swal2-confirm-reject {
@@ -911,10 +911,13 @@
             Swal.fire({
                 html: confirmHTML,
                 showCancelButton: true,
-                confirmButtonText: '<i class="fas fa-check" style="margin-right: 0.5rem;"></i>Ya, Verifikasi',
+                confirmButtonText: '<i class="fas fa-check" style="margin-right: 0.5rem;"></i>Verifikasi',
                 cancelButtonText: '<i class="fas fa-times" style="margin-right: 0.5rem;"></i>Batal',
                 reverseButtons: true,
-                buttonsStyling: true
+                buttonsStyling: true,
+                customClass: {
+                    confirmButton: 'swal2-confirm-verify'
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('verifyForm').submit();
@@ -951,7 +954,7 @@
                 reverseButtons: true,
                 buttonsStyling: true,
                 customClass: {
-                    confirm: 'swal2-confirm-reject'
+                    confirmButton: 'swal2-confirm-reject'
                 },
                 inputValidator: (value) => {
                     if (!value) {

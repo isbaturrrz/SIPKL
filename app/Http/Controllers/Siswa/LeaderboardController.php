@@ -29,7 +29,7 @@ class LeaderboardController extends Controller
 
         $leaderboard = $this->streakService->getLeaderboardInstansi(
             $siswa->id_instansi,
-            20,
+            10,
             $siswa->id_siswa
         );
 

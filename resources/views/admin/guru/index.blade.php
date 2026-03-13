@@ -837,8 +837,10 @@
                                         <td>{{ \Carbon\Carbon::parse($item->tgl_lahir)->format('d-m-Y') }}</td>
                                         <td>{{ $item->no_hp }}</td>
                                         <td>
-                                            @if($item->instansi)
-                                                <span class="status-badge badge-success">Sudah Ditugaskan</span>
+                                            @if($item->instansi && $item->instansi->count() > 0)
+                                                <span class="status-badge badge-success">
+                                                    {{ $item->instansi->count() }} Instansi
+                                                </span>
                                             @else
                                                 <span class="status-badge badge-secondary">Belum Ditugaskan</span>
                                             @endif
@@ -856,8 +858,8 @@
                                                   data-nama="{{ $item->nama }}"
                                                   data-email="{{ $item->email }}"
                                                   data-nohp="{{ $item->no_hp }}"
-                                                  data-instansi="{{ $item->instansi ? $item->instansi->nama_instansi : 'Belum Ditugaskan' }}"
-                                                  data-has-instansi="{{ $item->instansi ? 'true' : 'false' }}">
+                                                  data-instansi-count="{{ $item->instansi ? $item->instansi->count() : 0 }}"
+                                                  data-has-instansi="{{ ($item->instansi && $item->instansi->count() > 0) ? 'true' : 'false' }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn-action btn-danger btn-delete">
@@ -953,7 +955,7 @@
                 const nama = form.getAttribute('data-nama');
                 const email = form.getAttribute('data-email');
                 const nohp = form.getAttribute('data-nohp');
-                const instansi = form.getAttribute('data-instansi');
+                const instansiCount = parseInt(form.getAttribute('data-instansi-count'));
                 const hasInstansi = form.getAttribute('data-has-instansi') === 'true';
 
                 if (hasInstansi) {
@@ -963,7 +965,7 @@
                                 <i class="fas fa-times-circle" style="font-size: 1.75rem; color: #dc2626;"></i>
                             </div>
                             <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Tidak Dapat Menghapus</h3>
-                            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Guru ini tidak dapat dihapus karena masih bertugas di instansi.</p>
+                            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Guru ini tidak dapat dihapus karena masih membimbing ${instansiCount} instansi.</p>
                             
                             <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left;">
                                 <table style="width: 100%; font-size: 0.85rem;">
@@ -977,7 +979,7 @@
                                     </tr>
                                     <tr>
                                         <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Instansi:</td>
-                                        <td style="padding: 0.4rem 0; color: #dc2626; font-weight: 700;">${instansi}</td>
+                                        <td style="padding: 0.4rem 0; color: #dc2626; font-weight: 700;">${instansiCount} Instansi</td>
                                     </tr>
                                 </table>
                             </div>
@@ -985,7 +987,7 @@
                             <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
                                 <p style="font-size: 0.8rem; color: #991b1b; margin: 0; font-weight: 600;">
                                     <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
-                                    Lepaskan guru dari instansi terlebih dahulu
+                                    Lepaskan guru dari semua instansi terlebih dahulu
                                 </p>
                             </div>
                         </div>
@@ -1025,7 +1027,7 @@
                                     </tr>
                                     <tr>
                                         <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Status:</td>
-                                        <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${instansi}</td>
+                                        <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">Belum Ditugaskan</td>
                                     </tr>
                                 </table>
                             </div>

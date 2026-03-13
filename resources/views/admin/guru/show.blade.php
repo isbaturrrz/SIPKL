@@ -270,12 +270,17 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="detail-label">Instansi Binaan</div>
+                                            <div class="detail-label">Instansi yang Dibimbing</div>
                                             <div class="detail-value">
-                                                @if($guru->instansi)
-                                                    <span class="badge badge-success badge-custom">
-                                                        <i class="fas fa-building"></i> {{ $guru->instansi->nama_instansi }}
-                                                    </span>
+                                                @if($guru->instansi && $guru->instansi->count() > 0)
+                                                    @foreach($guru->instansi as $inst)
+                                                        <span class="badge badge-success badge-custom mb-1">
+                                                            <i class="fas fa-building"></i> {{ $inst->nama_instansi }}
+                                                        </span><br>
+                                                    @endforeach
+                                                    <small class="text-muted mt-2 d-block">
+                                                        ({{ $guru->instansi->count() }} instansi)
+                                                    </small>
                                                 @else
                                                     <span class="badge badge-secondary badge-custom">
                                                         <i class="fas fa-exclamation-circle"></i> Belum Ditugaskan
@@ -284,6 +289,54 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Instansi yang Dibimbing</h6>
+                                </div>
+                                <div class="card-body">
+                                    @if($guru->instansi && $guru->instansi->count() > 0)
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th width="5%">No</th>
+                                                        <th>Nama Instansi</th>
+                                                        <th>Alamat</th>
+                                                        <th>No HP</th>
+                                                        <th>Kuota</th>
+                                                        <th>Jurusan</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($guru->instansi as $index => $inst)
+                                                    <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>{{ $inst->nama_instansi }}</td>
+                                                        <td>{{ $inst->alamat }}</td>
+                                                        <td>{{ $inst->no_hp }}</td>
+                                                        <td>{{ $inst->kuota_terpakai }}/{{ $inst->kuota_siswa }}</td>
+                                                        <td>
+                                                            <span class="badge badge-info">{{ $inst->jurusan_diterima }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="mt-3">
+                                            <span class="badge badge-success badge-custom">
+                                                <i class="fas fa-building"></i> Total: {{ $guru->instansi->count() }} Instansi
+                                            </span>
+                                        </div>
+                                    @else
+                                        <div class="text-center py-4">
+                                            <i class="fas fa-building fa-3x text-gray-300 mb-3"></i>
+                                            <p class="text-gray-500">Belum membimbing instansi manapun</p>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
 
@@ -364,11 +417,18 @@
                                     <hr>
 
                                     <h6 class="font-weight-bold text-primary mb-3">Status Penugasan</h6>
-                                    @if($guru->instansi)
+                                    @if($guru->instansi && $guru->instansi->count() > 0)
                                         <div class="alert alert-success">
                                             <i class="fas fa-check-circle"></i> 
                                             <strong>Sudah Ditugaskan</strong>
-                                            <p class="mb-0 mt-2 small">{{ $guru->instansi->nama_instansi }}</p>
+                                            <p class="mb-0 mt-2 small">Membimbing {{ $guru->instansi->count() }} instansi</p>
+                                        </div>
+                                        <div class="list-group">
+                                            @foreach($guru->instansi as $inst)
+                                                <div class="list-group-item">
+                                                    <small>{{ $inst->nama_instansi }}</small>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     @else
                                         <div class="alert alert-warning">

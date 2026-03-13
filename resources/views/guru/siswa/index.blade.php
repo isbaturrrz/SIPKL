@@ -13,7 +13,6 @@
 
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
     <link rel="stylesheet" href="{{ asset('dist_guru/css/style.css') }}">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('small-logo.png') }}">
@@ -75,7 +74,7 @@
         }
 
         #content {
-            background-color: #e8eef7;
+            background-color: #f8f9fc;
             min-height: 100vh;
         }
 
@@ -261,6 +260,114 @@
             font-size: 0.9rem;
         }
 
+        .swal2-popup {
+            border-radius: 16px !important;
+            padding: 0 !important;
+            width: 90% !important;
+            max-width: 500px !important;
+        }
+
+        .swal2-icon {
+            width: 60px !important;
+            height: 60px !important;
+            margin: 1.5rem auto 1rem !important;
+            border-width: 3px !important;
+        }
+
+        .swal2-icon.swal2-warning {
+            border-color: #f59e0b !important;
+            color: #f59e0b !important;
+        }
+
+        .swal2-icon.swal2-error {
+            border-color: #ef4444 !important;
+        }
+
+        .swal2-icon .swal2-icon-content {
+            font-size: 2.5rem !important;
+        }
+
+        .swal2-title {
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            color: #1a1a1a !important;
+            padding: 0 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+            line-height: 1.3 !important;
+        }
+
+        .swal2-html-container {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            font-size: 0.9rem !important;
+            color: #64748b !important;
+            line-height: 1.5 !important;
+        }
+
+        .swal2-actions {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            gap: 0.75rem !important;
+            display: flex !important;
+            width: 100% !important;
+        }
+
+        .swal2-confirm {
+            background: #ef4444 !important;
+            color: #fff !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .swal2-confirm:hover {
+            background: #dc2626 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4) !important;
+        }
+
+        .swal2-cancel {
+            background: #fff !important;
+            color: #64748b !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            border: 2px solid #e2e8f0 !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .swal2-cancel:hover {
+            background: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            color: #475569 !important;
+        }
+
+        .swal2-styled:focus {
+            box-shadow: none !important;
+        }
+
+        .swal2-input {
+            border: 2px solid #e2e8f0 !important;
+            border-radius: 8px !important;
+            padding: 0.75rem 1rem !important;
+            font-size: 0.9rem !important;
+            margin: 1rem 0 !important;
+        }
+
+        .swal2-input:focus {
+            border-color: #2c5aa0 !important;
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.1) !important;
+        }
+
         @media (max-width: 768px) {
             .sidebar-brand {
                 padding: 1rem 0.5rem !important;
@@ -286,6 +393,46 @@
             .jurnal-table tbody td {
                 padding: 0.75rem 0.5rem;
             }
+
+            .swal2-popup {
+                width: 92% !important;
+                max-width: 450px !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .swal2-popup {
+                width: 95% !important;
+                max-width: 400px !important;
+            }
+            
+            .swal2-icon {
+                width: 56px !important;
+                height: 56px !important;
+                margin: 1.25rem auto 0.75rem !important;
+            }
+            
+            .swal2-title {
+                font-size: 1.1rem !important;
+                padding: 0 1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            .swal2-html-container {
+                padding: 0 1rem 1.25rem !important;
+                font-size: 0.85rem !important;
+            }
+            
+            .swal2-actions {
+                padding: 0 1rem 1.25rem !important;
+                gap: 0.5rem !important;
+            }
+            
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.6rem 1.25rem !important;
+                font-size: 0.85rem !important;
+            }
         }
 
         @media (max-width: 480px) {
@@ -295,6 +442,42 @@
 
             .sidebar.toggled .sidebar-brand-icon img {
                 max-width: 45px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .swal2-popup {
+                width: 96% !important;
+                max-width: 350px !important;
+            }
+            
+            .swal2-icon {
+                width: 48px !important;
+                height: 48px !important;
+                margin: 1rem auto 0.5rem !important;
+            }
+            
+            .swal2-title {
+                font-size: 1rem !important;
+                padding: 0 0.75rem !important;
+            }
+            
+            .swal2-html-container {
+                padding: 0 0.75rem 1rem !important;
+                font-size: 0.8rem !important;
+            }
+            
+            .swal2-actions {
+                padding: 0 0.75rem 1rem !important;
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+            }
+            
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.55rem 1rem !important;
+                font-size: 0.8rem !important;
+                width: 100% !important;
             }
         }
     </style>
@@ -558,53 +741,6 @@
 
     </div>
 
-    <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="detailModalLabel">
-                        <i class="fas fa-user-times"></i> Tandai Siswa Alfa
-                    </h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="updateStatusForm" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <p class="font-weight-bold" id="modalSiswaName"></p>
-                        
-                        <div class="form-group">
-                            <label for="tanggal">Tanggal Bolos <span class="text-danger">*</span></label>
-                            <input type="date" 
-                                   name="tanggal" 
-                                   id="tanggal" 
-                                   class="form-control" 
-                                   max="{{ date('Y-m-d') }}"
-                                   required>
-                            <small class="form-text text-muted">Pilih tanggal saat siswa bolos/alfa</small>
-                        </div>
-                        
-                        <input type="hidden" name="status" value="alfa">
-                        
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <strong>Perhatian!</strong> Tindakan ini akan menandai siswa sebagai <strong>ALFA</strong> pada tanggal yang dipilih.
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            <i class="fas fa-times"></i> Batal
-                        </button>
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fas fa-check"></i> Tandai Alfa
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
@@ -613,13 +749,125 @@
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        function showDetailModal(siswaId, siswaName) {
-            $('#modalSiswaName').text('Nama Siswa: ' + siswaName);
-            $('#updateStatusForm').attr('action', '/guru/siswa/' + siswaId + '/update-status');
-            $('#tanggal').val(''); 
-            $('#detailModal').modal('show');
+        async function showDetailModal(siswaId, siswaName) {
+            const { value: formValues } = await Swal.fire({
+                html: `
+                    <div style="padding: 0.5rem 0;">
+                        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                            <i class="fas fa-user-times" style="font-size: 1.75rem; color: #ef4444;"></i>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Tandai Siswa Alfa</h3>
+                        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Silakan pilih tanggal ketika siswa bolos/alfa</p>
+                        
+                        <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left; margin-bottom: 1rem;">
+                            <p style="font-size: 0.9rem; color: #64748b; margin: 0;"><strong>Nama Siswa:</strong></p>
+                            <p style="font-size: 1rem; color: #1a1a1a; font-weight: 700; margin: 0.25rem 0 0 0;">${siswaName}</p>
+                        </div>
+                        
+                        <div style="text-align: left;">
+                            <label style="font-weight: 600; color: #1a1a1a; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">
+                                Tanggal Bolos <span style="color: #ef4444;">*</span>
+                            </label>
+                            <input type="date" id="tanggal" class="swal2-input" max="${new Date().toISOString().split('T')[0]}" style="margin: 0; width: 100%;" required>
+                            <small style="color: #64748b; font-size: 0.8rem; display: block; margin-top: 0.5rem;">
+                                <i class="fas fa-info-circle"></i> Pilih tanggal saat siswa bolos/alfa
+                            </small>
+                        </div>
+                        
+                        <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 0.75rem 1rem; border-radius: 8px; margin-top: 1rem;">
+                            <p style="font-size: 0.85rem; color: #92400e; margin: 0; font-weight: 600;">
+                                <i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>
+                                Tindakan ini akan menandai siswa sebagai <strong>ALFA</strong> pada tanggal yang dipilih
+                            </p>
+                        </div>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fas fa-check" style="margin-right: 0.5rem;"></i>Tandai Alfa',
+                cancelButtonText: '<i class="fas fa-times" style="margin-right: 0.5rem;"></i>Batal',
+                reverseButtons: true,
+                buttonsStyling: true,
+                preConfirm: () => {
+                    const tanggal = document.getElementById('tanggal').value;
+                    if (!tanggal) {
+                        Swal.showValidationMessage('Tanggal harus diisi!');
+                        return false;
+                    }
+                    return { tanggal: tanggal };
+                },
+                didOpen: () => {
+                    const input = document.getElementById('tanggal');
+                    input.focus();
+                }
+            });
+
+            if (formValues) {
+                Swal.fire({
+                    html: `
+                        <div style="padding: 0.5rem 0;">
+                            <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                                <i class="fas fa-exclamation-triangle" style="font-size: 1.75rem; color: #f59e0b;"></i>
+                            </div>
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Konfirmasi Tandai Alfa</h3>
+                            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Apakah Anda yakin ingin menandai siswa sebagai alfa?</p>
+                            
+                            <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left;">
+                                <table style="width: 100%; font-size: 0.85rem;">
+                                    <tr>
+                                        <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600; width: 35%;">Nama Siswa:</td>
+                                        <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${siswaName}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Tanggal:</td>
+                                        <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${new Date(formValues.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Status:</td>
+                                        <td style="padding: 0.4rem 0; color: #ef4444; font-weight: 700;">ALFA</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>Ya, Tandai',
+                    cancelButtonText: '<i class="fas fa-times-circle" style="margin-right: 0.5rem;"></i>Batal',
+                    reverseButtons: true,
+                    buttonsStyling: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '/guru/siswa/' + siswaId + '/update-status';
+                        
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                        const csrfInput = document.createElement('input');
+                        csrfInput.type = 'hidden';
+                        csrfInput.name = '_token';
+                        csrfInput.value = csrfToken;
+                        
+                        const tanggalInput = document.createElement('input');
+                        tanggalInput.type = 'hidden';
+                        tanggalInput.name = 'tanggal';
+                        tanggalInput.value = formValues.tanggal;
+                        
+                        const statusInput = document.createElement('input');
+                        statusInput.type = 'hidden';
+                        statusInput.name = 'status';
+                        statusInput.value = 'alfa';
+                        
+                        form.appendChild(csrfInput);
+                        form.appendChild(tanggalInput);
+                        form.appendChild(statusInput);
+                        
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                });
+            }
         }
 
         $('#searchInput').on('keyup', function() {
@@ -635,7 +883,12 @@
 
             if (!siswa || !rentangWaktu) {
                 e.preventDefault();
-                alert('Silakan pilih siswa dan rentang waktu terlebih dahulu!');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Data Tidak Lengkap',
+                    text: 'Silakan pilih siswa dan rentang waktu terlebih dahulu!',
+                    confirmButtonText: 'OK'
+                });
                 return false;
             }
         });

@@ -15,7 +15,7 @@ class GuruController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Guru::with('instansi');
+        $query = Guru::with(['instansi', 'siswa']);
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -29,9 +29,9 @@ class GuruController extends Controller
 
         if ($request->filled('instansi')) {
             if ($request->instansi === 'ada') {
-                $query->whereNotNull('id_instansi');
+                $query->has('instansi');
             } elseif ($request->instansi === 'kosong') {
-                $query->whereNull('id_instansi');
+                $query->doesntHave('instansi');
             }
         }
 
@@ -42,9 +42,7 @@ class GuruController extends Controller
 
     public function create()
     {
-        $instansi = Instansi::whereNull('id_guru')
-                        ->orderBy('nama_instansi', 'asc')
-                        ->get();
+        $instansi = Instansi::orderBy('nama_instansi', 'asc')->get();
         return view('admin.guru.create', compact('instansi'));
     }
 
@@ -59,17 +57,7 @@ class GuruController extends Controller
                 'tempat_lahir' => 'required|max:50',
                 'tgl_lahir' => 'required|date',
                 'no_hp' => 'required|max:13',
-                'id_instansi' => 'nullable|exists:instansi,id_instansi',
             ]);
-
-            if ($request->id_instansi) {
-                $instansi = Instansi::find($request->id_instansi);
-                if ($instansi && $instansi->id_guru) {
-                    return redirect()->back()
-                        ->withInput()
-                        ->with('error', 'Instansi "' . $instansi->nama_instansi . '" sudah memiliki guru pembimbing!');
-                }
-            }
 
             Log::info('Validasi berhasil', $validated);
 
@@ -92,15 +80,9 @@ class GuruController extends Controller
                 'tempat_lahir' => $request->tempat_lahir,
                 'tgl_lahir' => $request->tgl_lahir,
                 'no_hp' => $request->no_hp,
-                'id_instansi' => $request->id_instansi,
             ]);
 
             Log::info('Guru berhasil dibuat', ['guru_id' => $guru->id_guru]);
-
-            if ($request->id_instansi) {
-                Instansi::where('id_instansi', $request->id_instansi)
-                        ->update(['id_guru' => $guru->id_guru]);
-            }
 
             DB::commit();
 
@@ -130,26 +112,22 @@ class GuruController extends Controller
 
     public function show($id)
     {
-        $guru = Guru::with(['instansi', 'siswa.user'])->findOrFail($id);
+        $guru = Guru::with(['instansi', 'siswa' => function($query) {
+            $query->with('instansi');
+        }])->findOrFail($id);
+        
         return view('admin.guru.show', compact('guru'));
     }
 
     public function edit($id)
     {
-        $guru = Guru::findOrFail($id);
-        $instansi = Instansi::where(function($query) use ($id) {
-                    $query->whereNull('id_guru')
-                          ->orWhere('id_guru', $id);
-                })
-                ->orderBy('nama_instansi', 'asc')
-                ->get();
-        return view('admin.guru.edit', compact('guru', 'instansi'));
+        $guru = Guru::with(['instansi', 'siswa'])->findOrFail($id);
+        return view('admin.guru.edit', compact('guru'));
     }
 
     public function update(Request $request, $id)
     {
         $guru = Guru::findOrFail($id);
-        $oldInstansiId = $guru->id_instansi;
 
         try {
             $validated = $request->validate([
@@ -158,17 +136,7 @@ class GuruController extends Controller
                 'tempat_lahir' => 'required|max:50',
                 'tgl_lahir' => 'required|date',
                 'no_hp' => 'required|max:13',
-                'id_instansi' => 'nullable|exists:instansi,id_instansi',
             ]);
-
-            if ($request->id_instansi && $request->id_instansi != $oldInstansiId) {
-                $instansi = Instansi::find($request->id_instansi);
-                if ($instansi && $instansi->id_guru && $instansi->id_guru != $id) {
-                    return redirect()->back()
-                        ->withInput()
-                        ->with('error', 'Instansi "' . $instansi->nama_instansi . '" sudah memiliki guru pembimbing lain!');
-                }
-            }
 
             DB::beginTransaction();
             
@@ -178,7 +146,6 @@ class GuruController extends Controller
                 'tempat_lahir' => $request->tempat_lahir,
                 'tgl_lahir' => $request->tgl_lahir,
                 'no_hp' => $request->no_hp,
-                'id_instansi' => $request->id_instansi,
             ]);
 
             $user = User::find($guru->id);
@@ -195,16 +162,6 @@ class GuruController extends Controller
                 }
 
                 $user->update($userUpdateData);
-            }
-
-            if ($oldInstansiId && $oldInstansiId != $request->id_instansi) {
-                Instansi::where('id_instansi', $oldInstansiId)
-                        ->update(['id_guru' => null]);
-            }
-
-            if ($request->id_instansi) {
-                Instansi::where('id_instansi', $request->id_instansi)
-                        ->update(['id_guru' => $id]);
             }
 
             DB::commit();
@@ -234,14 +191,17 @@ class GuruController extends Controller
     public function destroy($id)
     {
         try {
-            $guru = Guru::findOrFail($id);
+            $guru = Guru::with(['instansi', 'siswa'])->findOrFail($id);
+            
+            if ($guru->instansi()->count() > 0) {
+                return back()->with('error', 'Tidak dapat menghapus guru yang masih membimbing ' . $guru->instansi()->count() . ' instansi!');
+            }
+
+            if ($guru->siswa()->count() > 0) {
+                return back()->with('error', 'Tidak dapat menghapus guru yang masih membimbing siswa!');
+            }
             
             DB::beginTransaction();
-
-            if ($guru->id_instansi) {
-                Instansi::where('id_instansi', $guru->id_instansi)
-                        ->update(['id_guru' => null]);
-            }
             
             User::where('id', $guru->id)->delete();
             

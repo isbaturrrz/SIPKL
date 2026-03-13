@@ -43,6 +43,14 @@ class InstansiController extends Controller
             }
         }
 
+        if ($request->filled('kuota')) {
+            if ($request->kuota === 'tersedia') {
+                $query->whereRaw('kuota_terpakai < kuota_siswa');
+            } elseif ($request->kuota === 'penuh') {
+                $query->whereRaw('kuota_terpakai >= kuota_siswa');
+            }
+        }
+
         $instansi = $query->orderBy('created_at', 'desc')->paginate(10);
         
         return view('admin.instansi.index', compact('instansi'));
@@ -50,9 +58,7 @@ class InstansiController extends Controller
 
     public function create()
     {
-        $guru = Guru::whereNull('id_instansi')
-                ->orderBy('nama', 'asc')
-                ->get();
+        $guru = Guru::orderBy('nama', 'asc')->get();
         
         return view('admin.instansi.create', compact('guru'));
     }
@@ -70,14 +76,6 @@ class InstansiController extends Controller
         'id_guru' => 'nullable|exists:guru,id_guru',
         'jurusan_diterima' => 'required|in:PPLG,BRP,DKV,PPLG-BRP,PPLG-DKV,BRP-DKV,PPLG-BRP-DKV',
     ]);
-
-    if ($request->id_guru) {
-        $guru = Guru::find($request->id_guru);
-        if ($guru && $guru->id_instansi) {
-            return back()->withInput()
-                ->with('error', 'Guru "' . $guru->nama . '" sudah membimbing instansi lain!');
-        }
-    }
 
     try {
         DB::beginTransaction();
@@ -120,11 +118,6 @@ class InstansiController extends Controller
             'id_instansi' => $instansi->id_instansi,
         ]);
 
-        if ($request->id_guru) {
-            Guru::where('id_guru', $request->id_guru)
-                ->update(['id_instansi' => $instansi->id_instansi]);
-        }
-
         DB::commit();
 
         return redirect()->route('admin.instansi.index')
@@ -144,12 +137,7 @@ class InstansiController extends Controller
     public function edit($id)
     {
         $instansi = Instansi::findOrFail($id);
-        $guru = Guru::where(function($query) use ($id) {
-                $query->whereNull('id_instansi')
-                      ->orWhere('id_instansi', $id);
-            })
-            ->orderBy('nama', 'asc')
-            ->get();
+        $guru = Guru::orderBy('nama', 'asc')->get();
         
         return view('admin.instansi.edit', compact('instansi', 'guru'));
     }
@@ -176,28 +164,10 @@ class InstansiController extends Controller
                 ->with('error', 'Kuota siswa tidak boleh lebih kecil dari kuota terpakai (' . $instansi->kuota_terpakai . ' siswa)!');
         }
 
-        if ($request->id_guru && $request->id_guru != $oldGuruId) {
-            $guru = Guru::find($request->id_guru);
-            if ($guru && $guru->id_instansi && $guru->id_instansi != $id) {
-                return back()->withInput()
-                    ->with('error', 'Guru "' . $guru->nama . '" sudah membimbing instansi lain!');
-            }
-        }
-
         try {
             DB::beginTransaction();
 
             $instansi->update($validated);
-
-            if ($oldGuruId && $oldGuruId != $request->id_guru) {
-                Guru::where('id_guru', $oldGuruId)
-                    ->update(['id_instansi' => null]);
-            }
-
-            if ($request->id_guru) {
-                Guru::where('id_guru', $request->id_guru)
-                    ->update(['id_instansi' => $id]);
-            }
 
             DB::commit();
 
@@ -221,11 +191,6 @@ class InstansiController extends Controller
             
             if ($instansi->kuota_terpakai > 0 || $instansi->siswa()->count() > 0) {
                 return back()->with('error', 'Tidak dapat menghapus instansi yang masih memiliki siswa!');
-            }
-
-            if ($instansi->id_guru) {
-                Guru::where('id_guru', $instansi->id_guru)
-                    ->update(['id_instansi' => null]);
             }
 
             User::where('id_instansi', $id)->where('role', 'mentor')->delete();
