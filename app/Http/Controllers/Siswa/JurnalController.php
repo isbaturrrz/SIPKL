@@ -12,6 +12,8 @@ use App\Models\Jurnal;
 use App\Models\Siswa;
 use Carbon\Carbon;
 use App\Services\StreakService;
+use App\Services\WhatsAppService;
+use Illuminate\Support\Facades\Log;
 
 class JurnalController extends Controller
 {
@@ -129,11 +131,21 @@ class JurnalController extends Controller
             'status_verifikasi' => 'pending',
         ];
         
-        Jurnal::create($dataJurnal);
+        $jurnal = Jurnal::create($dataJurnal);
 
         $this->streakService->clearCache($siswa->id_siswa);
     
         $totalPoin = $this->streakService->calculateTotalPoin($siswa->id_siswa);
+
+        try {
+            $whatsapp = new WhatsAppService();
+            $whatsapp->sendKonfirmasiSudahIsi(
+                $siswa,
+                Carbon::parse($jurnal->tgl)->format('d F Y')
+            );
+        } catch (\Exception $e) {
+            Log::error('WhatsApp gagal: ' . $e->getMessage());
+        }
     
         return redirect()->route('siswa.jurnal.index')
             ->with('success', "Jurnal berhasil disimpan! Total poin: {$totalPoin} 🔥");     

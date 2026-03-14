@@ -7,6 +7,8 @@ use App\Models\Jurnal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Services\WhatsAppService;
+use Illuminate\Support\Facades\Log;
 
 class JurnalController extends Controller
 {
@@ -80,6 +82,16 @@ class JurnalController extends Controller
             'keterangan_reject' => null
         ]);
 
+        try {
+            $whatsapp = new WhatsAppService();
+            $whatsapp->sendNotifikasiDiverifikasi(
+                $jurnal->siswa,
+                $jurnal->tgl->format('d F Y')
+            );
+        } catch (\Exception $e) {
+            Log::error('WhatsApp gagal: ' . $e->getMessage());
+        }
+
         return redirect()->route('mentor.jurnal.index')
             ->with('success', 'Jurnal berhasil diverifikasi!');
     }
@@ -108,6 +120,17 @@ class JurnalController extends Controller
             'verified_at' => Carbon::now(),
             'keterangan_reject' => $request->keterangan_reject
         ]);
+
+        try {
+            $whatsapp = new WhatsAppService();
+            $whatsapp->sendNotifikasiDitolak(
+                $jurnal->siswa,
+                $jurnal->tgl->format('d F Y'),
+                $request->keterangan_reject
+            );
+        } catch (\Exception $e) {
+            Log::error('WhatsApp gagal: ' . $e->getMessage());
+        }
 
         return redirect()->route('mentor.jurnal.index')
             ->with('success', 'Jurnal berhasil ditolak!');

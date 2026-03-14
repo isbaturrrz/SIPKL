@@ -1,38 +1,41 @@
 
 body {
-    background: radial-gradient(
-        circle at center,
-        #2bb3ff 10%,
-        #0f4c9c 40%,
-        #071a3a 75%,
-        #000814 100%
-    );
-    min-height: 100vh;
+    background: linear-gradient(135deg, #182151 11%, #3F7FB6 75%, #010B40 100%);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    min-height: 100vh;
     display: flex;
     align-items: center;
 }
 
-.main-logo img{
+.login-card {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.641);
+    backdrop-filter: blur(10px);
+}
+
+.main-logo img {
     height: 60px;
 }
 
-.email .username-input{
+
+.email .username-input {
     margin-bottom: 20px;
 }
 
-.password .password-input{
+.password .password-input {
     margin-bottom: 40px;
+    position: relative;
 }
 
-.login-card {
-    border-radius: 15px;
-    box-shadow: 0 10px 30px 0 rgba(0,0,0,0.15);
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.641);
-    backdrop-filter: blur(10px);
+.password-input .form-control {
+    padding-right: 45px;
+}
+
+.btn {
+    background: linear-gradient(135deg, #182151 11%, #3F7FB6 75%, #010B40 100%);
 }
 
 .btn-primary-custom {
@@ -41,19 +44,162 @@ body {
     border-radius: 14px;
 }
 
-.btn {
-    background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    padding: 5px;
+    color: #6c757d;
+    transition: color 0.3s;
 }
 
-@media (max-width: 426px){
-    .login_card{
-        padding: 0px 30px 0px 30px;
+.toggle-password:hover {
+    color: #1e4179;
+}
+
+.toggle-password:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+#page-loader {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#page-loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 2rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loader-text {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.btn-submit-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-submit-loader {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-submit-loader .btn-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="text"]::-ms-reveal,
+input[type="text"]::-ms-clear {
+    display: none !important;
+}
+
+input[type="password"]::-webkit-contacts-auto-fill-button,
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="text"]::-webkit-contacts-auto-fill-button,
+input[type="text"]::-webkit-credentials-auto-fill-button {
+    visibility: hidden !important;
+    display: none !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+}
+
+@media (max-width: 575.98px) {
+    .login_card {
+        padding: 12px !important;
     }
 
-    .padding_card{
+    .card-body,
+    .padding_card {
+        padding: 24px 20px !important;
+    }
+
+    .main-logo img {
+        max-height: 50px;
+    }
+
+    .form-control {
+        font-size: 16px !important;
+    }
+}
+
+@media (max-width: 426px) {
+    .login_card {
+        padding: 0px 30px !important;
+    }
+
+    .padding_card {
         padding-top: 30px !important;
         padding-bottom: 40px !important;
         padding-left: 30px !important;
         padding-right: 30px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .card-body,
+    .padding_card {
+        padding: 20px 16px !important;
     }
 }
