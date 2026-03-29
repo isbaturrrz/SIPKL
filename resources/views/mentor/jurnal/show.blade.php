@@ -19,6 +19,65 @@
             background-color: #f8f9fc;
         }
 
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
         .sidebar {
             background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
         }
@@ -64,6 +123,7 @@
             padding: 20px;
             background: white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
         .detail-header {
@@ -406,7 +466,147 @@
             margin: 0.5rem 0 0 0 !important;
         }
 
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0.5rem 0;
+        }
+
+        .bottom-nav-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 0.75rem;
+            text-decoration: none;
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .bottom-nav-item i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .bottom-nav-item.active {
+            color: #182151;
+        }
+
+        .bottom-nav-item.active i {
+            transform: scale(1.1);
+        }
+
+        .bottom-nav-item span {
+            font-size: 0.65rem;
+        }
+
+        .more-menu {
+            position: fixed;
+            bottom: 70px;
+            right: 1rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 0.5rem 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .more-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .more-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1.25rem;
+            color: #334155;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .more-menu-item:hover {
+            background: #f8fafc;
+            color: #182151;
+        }
+
+        .more-menu-item i {
+            margin-right: 0.75rem;
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .more-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .more-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         @media (max-width: 768px) {
+            .sidebar {
+                display: none !important;
+            }
+
+            .topbar {
+                display: none !important;
+            }
+
+            #content-wrapper {
+                margin-left: 0 !important;
+            }
+
+            .bottom-nav {
+                display: block;
+            }
+
+            .container-fluid {
+                padding: 1rem 1rem 5rem 1rem;
+            }
+
+            .sticky-footer {
+                display: none;
+            }
+
             .sidebar-brand {
                 padding: 1rem 0.5rem !important;
             }
@@ -492,6 +692,14 @@
             .sidebar.toggled .sidebar-brand-icon img {
                 max-width: 45px;
             }
+
+            .bottom-nav-item {
+                font-size: 0.65rem;
+            }
+
+            .bottom-nav-item i {
+                font-size: 1.1rem;
+            }
         }
 
         @media (max-width: 400px) {
@@ -529,10 +737,21 @@
                 width: 100% !important;
             }
         }
+
+        #content {
+            background-color: #e8eef7;
+            min-height: 100vh;
+        }
     </style>
 </head>
 
 <body id="page-top">
+    <div id="page-loader">
+        <img src="{{ asset('dist_mentor/img/logo.png') }}" alt="IPKL" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Detail...</div>
+    </div>
+
     <div id="wrapper">
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('mentor.dashboard') }}">
@@ -545,7 +764,7 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('mentor.dashboard') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-th-large"></i>
                     <span>Dashboard</span>
                 </a>
             </li>   
@@ -640,17 +859,17 @@
                                     <div class="info-label">Status</div>
                                     <div class="info-value">: 
                                         @if($jurnal->status_kehadiran == 'wfo')
-                                            <span class="badge badge-success">WFO</span>
+                                            <span>WFO</span>
                                         @elseif($jurnal->status_kehadiran == 'wfh')
-                                            <span class="badge badge-success">WFH</span>
+                                            <span>WFH</span>
                                         @elseif($jurnal->status_kehadiran == 'izin')
-                                            <span class="badge badge-info">Izin</span>
+                                            <span>Izin</span>
                                         @elseif($jurnal->status_kehadiran == 'sakit')
-                                            <span class="badge badge-warning">Sakit</span>
+                                            <span>Sakit</span>
                                         @elseif($jurnal->status_kehadiran == 'libur')
-                                            <span class="badge badge-secondary">Libur</span>
+                                            <span>Libur</span>
                                         @else
-                                            <span class="badge badge-danger">Alfa</span>
+                                            <span>Alfa</span>
                                         @endif
                                     </div>
                                 </div>
@@ -805,6 +1024,47 @@
             </div>
         </div>
     </div>
+
+    <div class="more-menu-overlay" id="moreMenuOverlay"></div>
+    <div class="more-menu" id="moreMenu">
+        <a href="{{ route('mentor.riwayat.index') }}" class="more-menu-item">
+            <i class="fas fa-history"></i>
+            <span>Riwayat Jurnal</span>
+        </a>
+        <a href="{{ route('mentor.nilai.index') }}" class="more-menu-item">
+            <i class="fas fa-star"></i>
+            <span>Nilai Siswa</span>
+        </a>
+        <a href="#" class="more-menu-item" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="bottom-nav-container">
+            <a href="{{ route('mentor.dashboard') }}" class="bottom-nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ route('mentor.siswa.index') }}" class="bottom-nav-item">
+                <i class="fas fa-users"></i>
+                <span>Siswa</span>
+            </a>
+            <a href="{{ route('mentor.jurnal.index') }}" class="bottom-nav-item active">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Verifikasi</span>
+            </a>
+            <a href="#" class="bottom-nav-item" id="moreBtn">
+                <i class="fas fa-ellipsis-h"></i>
+                <span>Lainnya</span>
+            </a>
+        </div>
+    </nav>
+
+    <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
    
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -844,6 +1104,34 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
+        const moreBtn = document.getElementById('moreBtn');
+        const moreMenu = document.getElementById('moreMenu');
+        const moreMenuOverlay = document.getElementById('moreMenuOverlay');
+
+        moreBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            moreMenu.classList.toggle('active');
+            moreMenuOverlay.classList.toggle('active');
+        });
+
+        moreMenuOverlay.addEventListener('click', function() {
+            moreMenu.classList.remove('active');
+            moreMenuOverlay.classList.remove('active');
+        });
+
+        document.querySelectorAll('.more-menu-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                moreMenu.classList.remove('active');
+                moreMenuOverlay.classList.remove('active');
+            });
+        });
+
         function openModal() {
             document.getElementById('modalFoto').style.display = 'block';
             document.body.style.overflow = 'hidden';

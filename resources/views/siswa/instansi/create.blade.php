@@ -181,7 +181,6 @@
         .form-control {
             border: 2px solid #e2e8f0;
             border-radius: 8px;
-            padding: 0.75rem 1rem;
             font-size: 0.95rem;
             transition: all 0.3s;
         }
@@ -281,6 +280,92 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
+        }
+
+        .swal2-popup {
+            border-radius: 16px !important;
+            padding: 0 !important;
+            width: 85% !important;
+            max-width: 450px !important;
+        }
+
+        .swal2-icon {
+            width: 60px !important;
+            height: 60px !important;
+            margin: 1.5rem auto 1rem !important;
+            border-width: 3px !important;
+        }
+
+        .swal2-icon.swal2-success {
+            border-color: #10b981 !important;
+            color: #10b981 !important;
+        }
+
+        .swal2-title {
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            color: #1a1a1a !important;
+            padding: 0 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+            line-height: 1.3 !important;
+        }
+
+        .swal2-html-container {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            font-size: 0.9rem !important;
+            color: #64748b !important;
+            line-height: 1.5 !important;
+        }
+
+        .swal2-actions {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            gap: 0.75rem !important;
+            display: flex !important;
+            width: 100% !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            color: #fff !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .swal2-confirm:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4) !important;
+        }
+
+        .swal2-cancel {
+            background: #fff !important;
+            color: #64748b !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.9rem !important;
+            border: 2px solid #e2e8f0 !important;
+            margin: 0 !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+        }
+
+        .swal2-cancel:hover {
+            background: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            color: #475569 !important;
+        }
+
+        .swal2-styled:focus {
+            box-shadow: none !important;
         }
 
         .bottom-nav {
@@ -459,6 +544,46 @@
             .form-header-text p {
                 font-size: 0.85rem;
             }
+
+            .swal2-popup {
+                width: 90% !important;
+                max-width: 380px !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .swal2-popup {
+                width: 92% !important;
+                max-width: 340px !important;
+            }
+            
+            .swal2-icon {
+                width: 56px !important;
+                height: 56px !important;
+                margin: 1.25rem auto 0.75rem !important;
+            }
+            
+            .swal2-title {
+                font-size: 1.1rem !important;
+                padding: 0 1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            .swal2-html-container {
+                padding: 0 1rem 1.25rem !important;
+                font-size: 0.85rem !important;
+            }
+            
+            .swal2-actions {
+                padding: 0 1rem 1.25rem !important;
+                gap: 0.5rem !important;
+            }
+            
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.6rem 1.25rem !important;
+                font-size: 0.85rem !important;
+            }
         }
 
         @media (max-width: 480px) {
@@ -476,6 +601,42 @@
 
             .form-header-text h4 {
                 font-size: 1.15rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .swal2-popup {
+                width: 95% !important;
+                max-width: 300px !important;
+            }
+            
+            .swal2-icon {
+                width: 48px !important;
+                height: 48px !important;
+                margin: 1rem auto 0.5rem !important;
+            }
+            
+            .swal2-title {
+                font-size: 1rem !important;
+                padding: 0 0.75rem !important;
+            }
+            
+            .swal2-html-container {
+                padding: 0 0.75rem 1rem !important;
+                font-size: 0.8rem !important;
+            }
+            
+            .swal2-actions {
+                padding: 0 0.75rem 1rem !important;
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+            }
+            
+            .swal2-confirm,
+            .swal2-cancel {
+                padding: 0.55rem 1rem !important;
+                font-size: 0.8rem !important;
+                width: 100% !important;
             }
         }
     </style>
@@ -565,12 +726,6 @@
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <span class="nav-link text-gray-600 font-weight-bold">Siswa</span>
-                        </li>
-                    </ul>
                 </nav>
 
                 <div class="container-fluid">
@@ -736,7 +891,6 @@
                                 <select class="form-control @error('jurusan_diterima') is-invalid @enderror" 
                                         id="jurusan_diterima" 
                                         name="jurusan_diterima" 
-                                        style="padding: 0.75rem 1rem" 
                                         required>
                                     <option value="">-- Pilih Jurusan --</option>
                                     <option value="PPLG" {{ old('jurusan_diterima') == 'PPLG' ? 'selected' : '' }}>PPLG</option>
@@ -760,7 +914,7 @@
                                     <i class="fas fa-times"></i>
                                     Batal
                                 </a>
-                                <button type="submit" class="btn-submit">
+                                <button type="button" id="btnSubmit" class="btn-submit">
                                     <i class="fas fa-paper-plane"></i>
                                     Kirim Pengajuan
                                 </button>
@@ -833,6 +987,7 @@
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         window.addEventListener('load', function() {
@@ -871,6 +1026,87 @@
 
         document.getElementById('kuota_siswa').addEventListener('input', function(e) {
             if (this.value > 50) this.value = 50;
+        });
+
+        $('#btnSubmit').on('click', function(e) {
+            e.preventDefault();
+
+            const namaPerusahaan = $('#nama_perusahaan').val();
+            const alamat = $('#alamat').val();
+            const noHp = $('#no_hp').val();
+            const pemilik = $('#pemilik').val();
+            const kuota = $('#kuota_siswa').val();
+            const jurusan = $('#jurusan_diterima option:selected').text();
+
+            if (!namaPerusahaan || !alamat || !noHp || !pemilik || !kuota || !$('#jurusan_diterima').val()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Form Tidak Lengkap',
+                    text: 'Harap isi semua field yang wajib diisi (bertanda *)',
+                    confirmButtonText: 'OK',
+                    buttonsStyling: true
+                });
+                return false;
+            }
+
+            const confirmHTML = `
+                <div style="padding: 0.5rem 0;">
+                    <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <i class="fas fa-building" style="font-size: 1.75rem; color: #10b981;"></i>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Konfirmasi Pengajuan Instansi</h3>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Apakah Anda yakin ingin mengajukan instansi berikut?</p>
+                    
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left;">
+                        <table style="width: 100%; font-size: 0.85rem;">
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600; width: 35%;">Perusahaan:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${namaPerusahaan}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Alamat:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${alamat.substring(0, 40)}${alamat.length > 40 ? '...' : ''}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Pemilik:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${pemilik}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">No. Telepon:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${noHp}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Kuota:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${kuota} Siswa</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Jurusan:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${jurusan}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <p style="font-size: 0.8rem; color: #1e40af; margin: 0; font-weight: 600;">
+                            <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
+                            Pengajuan akan direview oleh admin
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            Swal.fire({
+                html: confirmHTML,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fas fa-paper-plane" style="margin-right: 0.5rem;"></i>Ya, Kirim',
+                cancelButtonText: '<i class="fas fa-times" style="margin-right: 0.5rem;"></i>Batal',
+                reverseButtons: true,
+                buttonsStyling: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#form-ajukan').submit();
+                }
+            });
         });
     </script>
 </body>

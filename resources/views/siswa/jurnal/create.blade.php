@@ -1099,7 +1099,7 @@
                                                 Memuat lokasi...
                                             </span>
                                         </div>
-                                        <p class="mt-3"><strong>Jika GPS Tidak Sesuai Gunakan Data Seluler Dan Refresh Halaman</strong></p>
+                                        <p class="mt-3"><strong>*Jika GPS Tidak Sesuai Gunakan Data Seluler Dan Refresh Halaman</strong></p>
                                     </div>
 
                                     <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude') }}">

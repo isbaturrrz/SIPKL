@@ -3,260 +3,249 @@
 <head>
     <meta charset="utf-8">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            color: #333;
+        @page {
+            margin: 15mm;
         }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 11pt;
+            color: #000;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+        }
+        
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #4e73df;
-            padding-bottom: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #000;
         }
+        
         .header h2 {
-            margin: 5px 0;
-            color: #4e73df;
+            margin: 0 0 5px 0;
+            font-size: 16pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+        
         .header p {
-            margin: 3px 0;
-            font-size: 12px;
+            margin: 0;
+            font-size: 10pt;
+            font-style: italic;
         }
-        .info-section {
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
+        
+        .info-table {
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 10pt;
         }
-        .info-row {
-            display: flex;
-            margin-bottom: 8px;
+        
+        .info-table td {
+            padding: 3px 0;
+            vertical-align: top;
         }
-        .info-label {
+        
+        .info-table .label {
             width: 150px;
             font-weight: bold;
-            color: #4e73df;
         }
-        .info-value {
-            flex: 1;
-        }
-        .performa-section {
-            margin-bottom: 20px;
-        }
-        .performa-title {
-            background-color: #4e73df;
-            color: white;
-            padding: 10px 15px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            border-radius: 5px;
-        }
-        .performa-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .performa-item {
-            border: 2px solid #ddd;
-            padding: 15px;
+        
+        .info-table .separator {
+            width: 15px;
             text-align: center;
-            border-radius: 5px;
-            background-color: #f8f9fa;
         }
-        .performa-item.wfo {
-            border-color: #1cc88a;
-            background-color: #d4edda;
+        
+        .summary-section {
+            margin-bottom: 15px;
         }
-        .performa-item.wfh {
-            border-color: #36b9cc;
-            background-color: #cce5ff;
-        }
-        .performa-item.izin {
-            border-color: #f6c23e;
-            background-color: #fff3cd;
-        }
-        .performa-item.sakit {
-            border-color: #36b9cc;
-            background-color: #d1ecf1;
-        }
-        .performa-item.libur {
-            border-color: #858796;
-            background-color: #e2e3e5;
-        }
-        .performa-item.alfa {
-            border-color: #e74a3b;
-            background-color: #f8d7da;
-        }
-        .performa-item-label {
-            font-weight: bold;
-            font-size: 12px;
-            color: #333;
-            margin-bottom: 5px;
-        }
-        .performa-item-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
-        .table {
+        
+        .summary-section table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
         }
-        .table th {
-            background-color: #4e73df;
-            color: white;
-            padding: 12px;
-            text-align: left;
+        
+        .summary-section td {
+            padding: 4px 8px;
+            border: 1px solid #000;
+        }
+        
+        .section-title {
             font-weight: bold;
+            font-size: 11pt;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #000;
         }
-        .table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #ddd;
+        
+        .statistics {
+            font-size: 10pt;
+            margin-bottom: 15px;
         }
-        .table tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
+        
+        .statistics table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .status-badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 11px;
+        
+        .statistics td {
+            padding: 4px 8px;
+            border: 1px solid #000;
+        }
+        
+        .statistics .stat-label {
             font-weight: bold;
-            color: white;
+            width: 50%;
+            background-color: #f0f0f0;
         }
-        .status-wfo {
-            background-color: #1cc88a;
+        
+        .statistics .stat-value {
+            text-align: center;
+            width: 50%;
         }
-        .status-wfh {
-            background-color: #36b9cc;
-        }
-        .status-izin {
-            background-color: #f6c23e;
-            color: #333;
-        }
-        .status-sakit {
-            background-color: #36b9cc;
-        }
-        .status-libur {
-            background-color: #858796;
-        }
-        .status-alfa {
-            background-color: #e74a3b;
-        }
+        
         .footer {
-            margin-top: 30px;
-            text-align: right;
-            font-size: 12px;
-            border-top: 1px solid #ddd;
-            padding-top: 15px;
+            margin-top: 20px;
+            font-size: 9pt;
         }
-        .tanggal-cetak {
+        
+        .signature-section {
+            margin-top: 15px;
+            text-align: right;
+        }
+        
+        .signature-box {
+            display: inline-block;
+            text-align: center;
+            min-width: 200px;
+        }
+        
+        .signature-line {
+            margin-top: 50px;
+            border-top: 1px solid #000;
+            padding-top: 3px;
+        }
+        
+        .print-info {
+            font-size: 8pt;
             color: #666;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
+    @php
+        // Helper function untuk format data
+        function safeGet($array, $key, $default = 0) {
+            return isset($array[$key]) ? $array[$key] : $default;
+        }
+        
+        // Ambil data performa dengan safety check
+        $wfo = safeGet($performa, 'wfo');
+        $wfh = safeGet($performa, 'wfh');
+        $izin = safeGet($performa, 'izin');
+        $sakit = safeGet($performa, 'sakit');
+        $libur = safeGet($performa, 'libur');
+        $alfa = safeGet($performa, 'alfa');
+        
+        // Hitung statistik kehadiran
+        $total_hadir = $wfo + $wfh;
+        $total_tidak_hadir = $izin + $sakit + $alfa;
+        $total_hari = $total_hadir + $total_tidak_hadir;
+        $persentase = $total_hari > 0 ? round(($total_hadir / $total_hari) * 100, 2) : 0;
+    @endphp
+
     <div class="header">
-        <h2>Laporan Performa Kehadiran Siswa</h2>
+        <h2>Laporan Kehadiran Siswa</h2>
         <p>Periode: {{ $bulan }} {{ $tahun }}</p>
     </div>
 
-    <div class="info-section">
-        <div class="info-row">
-            <div class="info-label">Nama Siswa</div>
-            <div class="info-value">: {{ $siswa->nama }}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">NIPD</div>
-            <div class="info-value">: {{ $siswa->nipd ?? '-' }}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">Kelas</div>
-            <div class="info-value">: {{ $siswa->kelas_lengkap }}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">Guru Pembimbing</div>
-            <div class="info-value">: {{ $guru->nama }}</div>
-        </div>
-    </div>
+    <table class="info-table">
+        <tr>
+            <td class="label">Nama Siswa</td>
+            <td class="separator">:</td>
+            <td>{{ $siswa->nama }}</td>
+        </tr>
+        <tr>
+            <td class="label">NIPD</td>
+            <td class="separator">:</td>
+            <td>{{ $siswa->nipd ?? '-' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Kelas</td>
+            <td class="separator">:</td>
+            <td>{{ $siswa->kelas_lengkap }}</td>
+        </tr>
+        <tr>
+            <td class="label">Guru Pembimbing</td>
+            <td class="separator">:</td>
+            <td>{{ $guru->nama }}</td>
+        </tr>
+    </table>
 
-    <div class="performa-section">
-        <div class="performa-title">Ringkasan Performa Kehadiran</div>
-        
-        <div class="performa-grid">
-            <div class="performa-item wfo">
-                <div class="performa-item-label">Hadir WFO</div>
-                <div class="performa-item-value">{{ $performa['wfo'] }}</div>
-            </div>
-            <div class="performa-item wfh">
-                <div class="performa-item-label">Hadir WFH</div>
-                <div class="performa-item-value">{{ $performa['wfh'] }}</div>
-            </div>
-            <div class="performa-item izin">
-                <div class="performa-item-label">Izin</div>
-                <div class="performa-item-value">{{ $performa['izin'] }}</div>
-            </div>
-            <div class="performa-item sakit">
-                <div class="performa-item-label">Sakit</div>
-                <div class="performa-item-value">{{ $performa['sakit'] }}</div>
-            </div>
-            <div class="performa-item libur">
-                <div class="performa-item-label">Libur</div>
-                <div class="performa-item-value">{{ $performa['libur'] }}</div>
-            </div>
-            <div class="performa-item alfa">
-                <div class="performa-item-label">Alfa</div>
-                <div class="performa-item-value">{{ $performa['alfa'] }}</div>
-            </div>
-        </div>
-    </div>
-
-    @if($jurnal->count() > 0)
-    <div class="performa-section">
-        <div class="performa-title">Detail Kehadiran Harian</div>
-        
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Tanggal</th>
-                    <th>Status</th>
-                    <th>Jam Mulai</th>
-                    <th>Jam Selesai</th>
-                    <th>Keterangan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($jurnal as $index => $item)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ date('d-m-Y', strtotime($item->tgl)) }}</td>
-                    <td>
-                        <span class="status-badge status-{{ $item->status_kehadiran }}">
-                            {{ strtoupper(str_replace(['wfo', 'wfh'], ['WFO', 'WFH'], $item->status_kehadiran)) }}
-                        </span>
-                    </td>
-                    <td>{{ $item->jam_mulai }}</td>
-                    <td>{{ $item->jam_selesai }}</td>
-                    <td>{{ $item->keterangan ?? '-' }}</td>
-                </tr>
-                @endforeach
-            </tbody>
+    <div class="summary-section">
+        <div class="section-title">Ringkasan Kehadiran</div>
+        <table>
+            <tr>
+                <td class="stat-label">Hadir WFO</td>
+                <td class="stat-value">{{ $wfo }} Hari</td>
+            </tr>
+            <tr>
+                <td class="stat-label">Hadir WFH</td>
+                <td class="stat-value">{{ $wfh }} Hari</td>
+            </tr>
+            <tr>
+                <td class="stat-label">Izin</td>
+                <td class="stat-value">{{ $izin }} Hari</td>
+            </tr>
+            <tr>
+                <td class="stat-label">Sakit</td>
+                <td class="stat-value">{{ $sakit }} Hari</td>
+            </tr>
+            <tr>
+                <td class="stat-label">Libur</td>
+                <td class="stat-value">{{ $libur }} Hari</td>
+            </tr>
+            <tr>
+                <td class="stat-label">Alfa</td>
+                <td class="stat-value">{{ $alfa }} Hari</td>
+            </tr>
         </table>
     </div>
-    @else
-    <div class="info-section" style="text-align: center; background-color: #fff3cd; border-color: #f6c23e;">
-        <p><strong>Tidak ada data kehadiran untuk periode ini</strong></p>
+
+    <div class="statistics">
+        <div class="section-title">Statistik Kehadiran</div>
+        <table>
+            <tr>
+                <td class="stat-label">Total Hadir</td>
+                <td class="stat-value">{{ $total_hadir }} Hari</td>
+            </tr>
+            <tr>
+                <td class="stat-label">Total Tidak Hadir</td>
+                <td class="stat-value">{{ $total_tidak_hadir }} Hari</td>
+            </tr>
+            <tr>
+                <td class="stat-label">Persentase Kehadiran</td>
+                <td class="stat-value">{{ $persentase }}%</td>
+            </tr>
+        </table>
     </div>
-    @endif
 
     <div class="footer">
-        <p class="tanggal-cetak">Dicetak pada: {{ date('d-m-Y H:i:s') }}</p>
-        <p style="margin-top: 15px;">Guru Pembimbing</p>
-        <p style="margin-top: 50px; text-decoration: underline;">{{ $guru->nama }}</p>
+        <div class="signature-section">
+            <div class="signature-box">
+                <div>Mengetahui,</div>
+                <div style="margin-top: 5px; font-weight: bold;">Guru Pembimbing</div>
+                <div class="signature-line">{{ $guru->nama }}</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 15px;">
+            <p class="print-info">Dokumen ini dicetak pada: {{ date('d F Y, H:i') }} WIB</p>
+        </div>
     </div>
 </body>
 </html>

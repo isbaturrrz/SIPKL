@@ -23,6 +23,65 @@
             background-color: #f8f9fc;
         }
 
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
         .sidebar {
             background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
         }
@@ -85,8 +144,7 @@
             color: white;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
-            max-width: 350px;   
-        
+            max-width: 350px;
         }
 
         .stat-card:hover {
@@ -472,7 +530,7 @@
         }
 
         .swal2-icon.swal2-warning {
-            border-color: #6495ed  !important;
+            border-color: #6495ed !important;
             color: #f59e0b !important;
         }
 
@@ -573,21 +631,167 @@
             box-shadow: 0 6px 16px rgba(30, 65, 121, 0.4) !important;
         }
 
+        .sticky-footer {
+            background-color: #fff;
+            border-top: 1px solid #e3e6f0;
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #858796;
+        }
+
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0.5rem 0;
+        }
+
+        .bottom-nav-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 0.75rem;
+            text-decoration: none;
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .bottom-nav-item i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .bottom-nav-item.active {
+            color: #182151;
+        }
+
+        .bottom-nav-item.active i {
+            transform: scale(1.1);
+        }
+
+        .bottom-nav-item span {
+            font-size: 0.65rem;
+        }
+
+        .more-menu {
+            position: fixed;
+            bottom: 70px;
+            right: 1rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 0.5rem 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .more-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .more-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1.25rem;
+            color: #334155;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .more-menu-item:hover {
+            background: #f8fafc;
+            color: #182151;
+        }
+
+        .more-menu-item i {
+            margin-right: 0.75rem;
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .more-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .more-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         @media (max-width: 768px) {
+            .sidebar {
+                display: none !important;
+            }
+
+            .topbar {
+                display: none !important;
+            }
+
+            #content-wrapper {
+                margin-left: 0 !important;
+            }
+
+            .bottom-nav {
+                display: block;
+            }
+
+            .container-fluid {
+                padding: 1rem 1rem 5rem 1rem;
+            }
+
+            .sticky-footer {
+                display: none;
+            }
+
             .sidebar-brand {
                 padding: 1rem 0.5rem !important;
             }
-            
+
             .sidebar-brand-icon img {
                 max-width: 80px;
             }
 
             .sidebar.toggled .sidebar-brand-icon img {
                 max-width: 60px;
-            }
-
-            .container-fluid {
-                padding: 1rem 1.5rem;
             }
 
             .swal2-popup {
@@ -610,29 +814,29 @@
                 width: 92% !important;
                 max-width: 340px !important;
             }
-            
+
             .swal2-icon {
                 width: 56px !important;
                 height: 56px !important;
                 margin: 1.25rem auto 0.75rem !important;
             }
-            
+
             .swal2-title {
                 font-size: 1.1rem !important;
                 padding: 0 1rem !important;
                 margin-bottom: 0.5rem !important;
             }
-            
+
             .swal2-html-container {
                 padding: 0 1rem 1.25rem !important;
                 font-size: 0.85rem !important;
             }
-            
+
             .swal2-actions {
                 padding: 0 1rem 1.25rem !important;
                 gap: 0.5rem !important;
             }
-            
+
             .swal2-confirm,
             .swal2-cancel {
                 padding: 0.6rem 1.25rem !important;
@@ -648,6 +852,14 @@
             .sidebar.toggled .sidebar-brand-icon img {
                 max-width: 45px;
             }
+
+            .bottom-nav-item {
+                font-size: 0.65rem;
+            }
+
+            .bottom-nav-item i {
+                font-size: 1.1rem;
+            }
         }
 
         @media (max-width: 400px) {
@@ -655,29 +867,29 @@
                 width: 95% !important;
                 max-width: 300px !important;
             }
-            
+
             .swal2-icon {
                 width: 48px !important;
                 height: 48px !important;
                 margin: 1rem auto 0.5rem !important;
             }
-            
+
             .swal2-title {
                 font-size: 1rem !important;
                 padding: 0 0.75rem !important;
             }
-            
+
             .swal2-html-container {
                 padding: 0 0.75rem 1rem !important;
                 font-size: 0.8rem !important;
             }
-            
+
             .swal2-actions {
                 padding: 0 0.75rem 1rem !important;
                 flex-direction: column !important;
                 gap: 0.5rem !important;
             }
-            
+
             .swal2-confirm,
             .swal2-cancel {
                 padding: 0.55rem 1rem !important;
@@ -689,6 +901,12 @@
 </head>
 
 <body id="page-top">
+
+    <div id="page-loader">
+        <img src="{{ asset('dist_guru/img/logo.png') }}" alt="Logo" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Halaman...</div>
+    </div>
 
     <div id="wrapper">
 
@@ -791,13 +1009,12 @@
                     @endif
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h1 class="h3 mb-0 text-gray-800" style="font-weight: 700;">Jurnal Siswa</h1>
                         <a href="{{ route('guru.jurnal.create') }}" class="btn-add">
                             <i class="fas fa-plus"></i> Tambah Jurnal
                         </a>
                     </div>
 
-                     <div class="row mb-4">
+                    <div class="row mb-4">
                         <div class="col-xl-4 col-md-6 mb-4">
                             <div class="stat-card">
                                 <div class="d-flex justify-content-between align-items-start">
@@ -1129,7 +1346,41 @@
         </div>
 
     </div>
-    
+
+    <div class="more-menu-overlay" id="moreMenuOverlay"></div>
+
+    <div class="more-menu" id="moreMenu">
+        <a href="#" class="more-menu-item" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="bottom-nav-container">
+            <a href="{{ route('guru.dashboard') }}" class="bottom-nav-item">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ route('guru.siswa.index') }}" class="bottom-nav-item">
+                <i class="fas fa-users"></i>
+                <span>Siswa</span>
+            </a>
+            <a href="{{ route('guru.jurnal.index') }}" class="bottom-nav-item active">
+                <i class="fas fa-book"></i>
+                <span>Jurnal</span>
+            </a>
+            <a href="#" class="bottom-nav-item" id="moreBtn">
+                <i class="fas fa-ellipsis-h"></i>
+                <span>Lainnya</span>
+            </a>
+        </div>
+    </nav>
+
+    <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
@@ -1141,6 +1392,34 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
+        const moreBtn = document.getElementById('moreBtn');
+        const moreMenu = document.getElementById('moreMenu');
+        const moreMenuOverlay = document.getElementById('moreMenuOverlay');
+
+        moreBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            moreMenu.classList.toggle('active');
+            moreMenuOverlay.classList.toggle('active');
+        });
+
+        moreMenuOverlay.addEventListener('click', function() {
+            moreMenu.classList.remove('active');
+            moreMenuOverlay.classList.remove('active');
+        });
+
+        document.querySelectorAll('.more-menu-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                moreMenu.classList.remove('active');
+                moreMenuOverlay.classList.remove('active');
+            });
+        });
+
         document.querySelectorAll('.btn-delete').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();

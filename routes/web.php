@@ -24,7 +24,7 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth');
 
 
-Route::middleware(['auth', 'role:admin'])
+Route::middleware(['auth', 'role:admin', 'prevent-back'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
@@ -57,7 +57,7 @@ Route::middleware(['auth', 'role:admin'])
     });
 
 
-Route::middleware(['auth', 'role:siswa'])
+Route::middleware(['auth', 'role:siswa', 'prevent-back'])
     ->prefix('siswa')
     ->name('siswa.')
     ->group(function () {       
@@ -78,7 +78,7 @@ Route::middleware(['auth', 'role:siswa'])
 
 
 
-Route::middleware(['auth', 'role:mentor'])
+Route::middleware(['auth', 'role:mentor', 'prevent-back'])
     ->prefix('mentor')
     ->name('mentor.')
     ->group(function () {      
@@ -106,7 +106,7 @@ Route::middleware(['auth', 'role:mentor'])
     });
 
 
-Route::middleware(['auth', 'role:guru'])
+Route::middleware(['auth', 'role:guru', 'prevent-back'])
     ->prefix('guru')
     ->name('guru.')
     ->group(function () {      

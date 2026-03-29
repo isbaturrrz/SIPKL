@@ -23,8 +23,8 @@ class LeaderboardController extends Controller
         $siswa = Siswa::with('instansi')->where('id', $user->id)->firstOrFail();
 
         if (!$siswa->id_instansi) {
-            return redirect()->route('siswa.dashboard')
-                ->with('error', 'Anda belum memiliki instansi PKL');
+            return redirect()->route('siswa.jurnal.index')
+                ->with('error', 'Anda belum memiliki instansi PKL. Silakan pilih instansi terlebih dahulu.');
         }
 
         $leaderboard = $this->streakService->getLeaderboardInstansi(

@@ -232,6 +232,8 @@
             background: #fef3c7;
             color: #92400e;
             border-left: 4px solid #f59e0b;
+            padding: 5px;
+            border-radius: 7px;
         }
 
         .instansi-card {
@@ -576,6 +578,11 @@
             font-size: 0.9rem;
         }
 
+        .more-menu-item.active {
+            background: #f1f5f9;
+            color: #182151;
+        }
+
         .more-menu-item:hover {
             background: #f8fafc;
             color: #182151;
@@ -881,7 +888,7 @@
 
                     @if($pengajuanRejected->count() > 0)
                     <div class="section-title">
-                        <i class="fas fa-times-circle"></i> Pengajuan Ditolak
+                        <span>Pengajuan Ditolak</span>
                     </div>
                     @foreach($pengajuanRejected as $rejected)
                     <div class="rejected-card">
@@ -905,7 +912,7 @@
 
                     @if(!$hasInstansi && !$pengajuanPending)
                     <div class="section-title">
-                        <i class="fas fa-building"></i> Daftar Instansi Tersedia
+                        <span>Daftar Instansi Tersedia</span>
                     </div>
 
                     @if($instansiList->count() > 0)
@@ -982,7 +989,7 @@
             <i class="fas fa-download"></i>
             <span>Unduh Nilai</span>
         </a>
-        <a href="{{ route('siswa.instansi.index') }}" class="more-menu-item">
+        <a href="{{ route('siswa.instansi.index') }}" class="more-menu-item active">
             <i class="fas fa-building"></i>
             <span>Pilih Instansi</span>
         </a>

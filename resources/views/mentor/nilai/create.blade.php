@@ -16,6 +16,69 @@
             background-color: #f8f9fc;
         }
 
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control{
+            padding: .375rem .20rem;
+        }
+
         .sidebar {
             background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
         }
@@ -55,49 +118,117 @@
             padding: 1rem 0.5rem !important;
         }
 
-        @media (max-width: 768px) {
-            .sidebar-brand {
-                padding: 1rem 0.5rem !important;
-            }
-            .sidebar-brand-icon img {
-                max-width: 80px;
-            }
-            .sidebar.toggled .sidebar-brand-icon img {
-                max-width: 60px;
-            }
+        #content {
+            background-color: #e8eef7;
+            min-height: 100vh;
         }
 
-        @media (max-width: 480px) {
-            .sidebar-brand-icon img {
-                max-width: 60px;
-            }
-            .sidebar.toggled .sidebar-brand-icon img {
-                max-width: 45px;
-            }
+        .table-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
         }
 
-        .table-nilai th {
-            vertical-align: middle;
-            text-align: center;
-            background-color: #f8f9fc;
-        }
-
-        .box-summary {
-            border: 1px solid #e3e6f0;
-            margin-bottom: 20px;
-        }
-
-        .box-summary .label {
-            background-color: #f8f9fc;
-            font-weight: bold;
-            padding: 10px;
+        .table-header {
+            padding: 1.5rem 2rem;
             border-bottom: 1px solid #e3e6f0;
         }
 
-        .box-summary .value {
-            padding: 15px;
-            font-size: 1.5rem;
-            font-weight: bold;
+        .table-header h5 {
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .nilai-table {
+            width: 100%;
+            margin: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .nilai-table thead {
+            background: linear-gradient(135deg, #182151 11%, #3F7FB6 75%, #010B40 100%);
+        }
+
+        .nilai-table thead th {
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            border: none;
+            vertical-align: middle;
+        }
+
+        .nilai-table tbody tr {
+            border-bottom: 1px solid #e3e6f0;
+            transition: all 0.2s;
+        }
+
+        .nilai-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .nilai-table tbody td {
+            padding: 0.875rem 1rem;
+            font-size: 0.9rem;
+            color: #334155;
+            vertical-align: middle;
+            border-bottom: 1px solid #e3e6f0;
+        }
+
+        .nilai-table tbody td:first-child {
+            text-align: center;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .nilai-table tfoot td {
+            padding: 0.875rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-align: center;
+            background-color: #f8f9fc;
+            border-top: 2px solid #e3e6f0;
+        }
+
+        .box-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid #e3e6f0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .box-summary .summary-item {
+            padding: 1rem 1.5rem;
+            text-align: center;
+        }
+
+        .box-summary .summary-item:first-child {
+            border-right: 1px solid #e3e6f0;
+        }
+
+        .box-summary .summary-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+
+        .box-summary .summary-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #182151;
         }
 
         .btn-action {
@@ -117,6 +248,16 @@
         }
 
         .btn-save-custom {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: #fff;
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
@@ -221,10 +362,172 @@
             box-shadow: none !important;
         }
 
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0.5rem 0;
+        }
+
+        .bottom-nav-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 0.75rem;
+            text-decoration: none;
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .bottom-nav-item i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .bottom-nav-item.active {
+            color: #182151;
+        }
+
+        .bottom-nav-item.active i {
+            transform: scale(1.1);
+        }
+
+        .bottom-nav-item span {
+            font-size: 0.65rem;
+        }
+
+        .more-menu {
+            position: fixed;
+            bottom: 70px;
+            right: 1rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 0.5rem 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .more-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .more-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1.25rem;
+            color: #334155;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .more-menu-item:hover {
+            background: #f8fafc;
+            color: #182151;
+        }
+
+        .more-menu-item.active {
+            background: #f1f5f9;
+            color: #182151;
+        }
+
+        .more-menu-item i {
+            margin-right: 0.75rem;
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .more-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .more-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         @media (max-width: 768px) {
-            .btn-action {
+            .sidebar {
+                display: none !important;
+            }
+
+            .topbar {
+                display: none !important;
+            }
+
+            #content-wrapper {
+                margin-left: 0 !important;
+            }
+
+            .bottom-nav {
+                display: block;
+            }
+
+            .container-fluid {
+                padding: 1rem 1rem 5rem 1rem;
+            }
+
+            .sticky-footer {
+                display: none;
+            }
+
+            .sidebar-brand {
+                padding: 1rem 0.5rem !important;
+            }
+
+            .sidebar-brand-icon img {
+                max-width: 80px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .btn-save-custom {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .btn-secondary-custom {
+                justify-content: center;
+                width: 100%
             }
 
             .swal2-popup {
@@ -262,6 +565,24 @@
             }
         }
 
+        @media (max-width: 480px) {
+            .sidebar-brand-icon img {
+                max-width: 60px;
+            }
+
+            .sidebar.toggled .sidebar-brand-icon img {
+                max-width: 45px;
+            }
+
+            .bottom-nav-item {
+                font-size: 0.65rem;
+            }
+
+            .bottom-nav-item i {
+                font-size: 1.1rem;
+            }
+        }
+
         @media (max-width: 400px) {
             .swal2-popup {
                 width: 95% !important;
@@ -294,6 +615,12 @@
     </style>
 </head>
 <body id="page-top">
+    <div id="page-loader">
+        <img src="{{ asset('dist_mentor/img/logo.png') }}" alt="IPKL" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Formulir...</div>
+    </div>
+
     <div id="wrapper">
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('mentor.dashboard') }}">
@@ -379,26 +706,22 @@
                 </nav>
 
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Input Nilai Siswa</h1>
-                    </div>
 
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <table class="table table-sm table-borderless mb-0">
-                                        <tr>
-                                            <td width="100">Nama</td>
-                                            <td class="font-weight-bold">: {{ $siswa->nama }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Kelas</td>
-                                            <td class="font-weight-bold">: {{ $siswa->kelas_lengkap }}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Data Siswa</h5>
+                        </div>
+                        <div style="padding: 1.25rem 2rem;">
+                            <table class="table table-sm table-borderless mb-0">
+                                <tr>
+                                    <td width="100" class="font-weight-bold">Nama</td>
+                                    <td>: {{ $siswa->nama }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Kelas</td>
+                                    <td>: {{ $siswa->kelas_lengkap }}</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
 
@@ -406,67 +729,67 @@
                         @csrf
                         <input type="hidden" name="id_siswa" value="{{ $siswa->id_siswa }}">
 
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Form Penilaian</h6>
+                        <div class="table-card">
+                            <div class="table-header">
+                                <h5>Form Penilaian</h5>
                             </div>
-                            <div class="card-body">
-                                <div class="row no-gutters text-center box-summary">
-                                    <div class="col-6 border-right">
-                                        <div class="label text-dark">NILAI AKHIR</div>
-                                        <div class="value text-primary" id="display-rata-rata">0.00</div>
+                            <div style="padding: 1.5rem 2rem;">
+                                <div class="box-summary">
+                                    <div class="summary-item">
+                                        <div class="summary-label">Nilai Akhir</div>
+                                        <div class="summary-value" id="display-rata-rata">0.00</div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="label text-dark">HURUF / PREDIKAT</div>
-                                        <div class="value text-primary" id="display-huruf">-</div>
+                                    <div class="summary-item">
+                                        <div class="summary-label">Huruf / Predikat</div>
+                                        <div class="summary-value" id="display-huruf">-</div>
                                     </div>
                                 </div>
 
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-nilai">
+                                    <table class="nilai-table">
                                         <thead>
                                             <tr>
                                                 <th width="50">No</th>
-                                                <th>ASPEK YANG DINILAI</th>
-                                                <th width="200">NILAI (0-100)</th>
-                                                <th width="150">PREDIKAT</th>
+                                                <th>Aspek yang Dinilai</th>
+                                                <th width="200">Nilai</th>
+                                                <th width="150">Predikat</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="text-center">1</td>
+                                                <td>1</td>
                                                 <td>Kedisiplinan</td>
                                                 <td><input type="number" name="nilai_kedisiplinan" class="form-control input-score" min="0" max="100" required></td>
                                                 <td class="text-center font-weight-bold row-predikat">-</td>
                                             </tr>
                                             <tr>
-                                                <td class="text-center">2</td>
-                                                <td>Kretifitas</td>
+                                                <td>2</td>
+                                                <td>Kreatifitas</td>
                                                 <td><input type="number" name="nilai_kreatifitas" class="form-control input-score" min="0" max="100" required></td>
                                                 <td class="text-center font-weight-bold row-predikat">-</td>
                                             </tr>
                                             <tr>
-                                                <td class="text-center">3</td>
+                                                <td>3</td>
                                                 <td>Tanggung Jawab</td>
                                                 <td><input type="number" name="nilai_tanggung_jawab" class="form-control input-score" min="0" max="100" required></td>
                                                 <td class="text-center font-weight-bold row-predikat">-</td>
                                             </tr>
                                             <tr>
-                                                <td class="text-center">4</td>
+                                                <td>4</td>
                                                 <td>Kerjasama</td>
                                                 <td><input type="number" name="nilai_kerjasama" class="form-control input-score" min="0" max="100" required></td>
                                                 <td class="text-center font-weight-bold row-predikat">-</td>
                                             </tr>
                                             <tr>
-                                                <td class="text-center">5</td>
+                                                <td>5</td>
                                                 <td>Komunikasi</td>
                                                 <td><input type="number" name="nilai_komunikasi" class="form-control input-score" min="0" max="100" required></td>
                                                 <td class="text-center font-weight-bold row-predikat">-</td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
-                                            <tr class="bg-light font-weight-bold text-center">
-                                                <td colspan="2">RATA-RATA</td>
+                                            <tr>
+                                                <td colspan="2">Rata-Rata</td>
                                                 <td id="total-score">0</td>
                                                 <td>-</td>
                                             </tr>
@@ -481,10 +804,10 @@
 
                                 <div class="mt-4 text-right">
                                     <a href="{{ route('mentor.nilai.index') }}" class="btn-action btn-secondary-custom">
-                                        <i class="fas fa-arrow-left"></i> Kembali
+                                        <i class="fas fa-arrow-left"></i> Batal
                                     </a>
                                     <button type="button" id="btnSimpan" class="btn-action btn-save-custom">
-                                        <i class="fas fa-save"></i> Simpan Nilai
+                                        <i class="fas fa-save"></i> Simpan
                                     </button>
                                 </div>
                             </div>
@@ -503,6 +826,47 @@
         </div>
     </div>
 
+    <div class="more-menu-overlay" id="moreMenuOverlay"></div>
+    <div class="more-menu" id="moreMenu">
+        <a href="{{ route('mentor.riwayat.index') }}" class="more-menu-item">
+            <i class="fas fa-history"></i>
+            <span>Riwayat Jurnal</span>
+        </a>
+        <a href="{{ route('mentor.nilai.index') }}" class="more-menu-item active">
+            <i class="fas fa-star"></i>
+            <span>Nilai Siswa</span>
+        </a>
+        <a href="#" class="more-menu-item" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="bottom-nav-container">
+            <a href="{{ route('mentor.dashboard') }}" class="bottom-nav-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ route('mentor.siswa.index') }}" class="bottom-nav-item">
+                <i class="fas fa-users"></i>
+                <span>Siswa</span>
+            </a>
+            <a href="{{ route('mentor.jurnal.index') }}" class="bottom-nav-item">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Verifikasi</span>
+            </a>
+            <a href="#" class="bottom-nav-item active" id="moreBtn">
+                <i class="fas fa-ellipsis-h"></i>
+                <span>Lainnya</span>
+            </a>
+        </div>
+    </nav>
+
+    <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
@@ -514,6 +878,34 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
+        const moreBtn = document.getElementById('moreBtn');
+        const moreMenu = document.getElementById('moreMenu');
+        const moreMenuOverlay = document.getElementById('moreMenuOverlay');
+
+        moreBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            moreMenu.classList.toggle('active');
+            moreMenuOverlay.classList.toggle('active');
+        });
+
+        moreMenuOverlay.addEventListener('click', function() {
+            moreMenu.classList.remove('active');
+            moreMenuOverlay.classList.remove('active');
+        });
+
+        document.querySelectorAll('.more-menu-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                moreMenu.classList.remove('active');
+                moreMenuOverlay.classList.remove('active');
+            });
+        });
+        
         $(document).ready(function () {
             $('.input-score').on('input', function () {
                 let total = 0;

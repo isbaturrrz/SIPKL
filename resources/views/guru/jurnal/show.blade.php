@@ -18,6 +18,60 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #page-loader .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        #page-loader .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        #page-loader .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.95); }
+        }
+
         body {
             font-family: 'Nunito', sans-serif;
             background-color: #f8f9fc;
@@ -235,7 +289,148 @@
             color: #fff;
         }
 
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0.5rem 0;
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            text-decoration: none;
+            color: #64748b;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bottom-nav-item i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .bottom-nav-item span {
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .bottom-nav-item.active {
+            color: #182151;
+        }
+
+        .more-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1040;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .more-menu-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .more-menu {
+            position: fixed;
+            bottom: 70px;
+            right: 1rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1050;
+            min-width: 200px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .more-menu.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .more-menu-item {
+            padding: 0.875rem 1.25rem;
+            display: flex;
+            align-items: center;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .more-menu-item:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .more-menu-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .more-menu-item:hover {
+            background: #f8f9fa;
+        }
+
+        .more-menu-item i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+            color: #182151;
+        }
+
+        .more-menu-item span {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 768px) {
+            #wrapper #content-wrapper {
+                margin-left: 0 !important;
+            }
+
+            .sidebar {
+                display: none !important;
+            }
+
+            .topbar {
+                display: none !important;
+            }
+
+            #content {
+                margin-top: 0 !important;
+            }
+
+            .container-fluid {
+                padding: 1rem 1rem 5rem 1rem !important;
+            }
+
+            .bottom-nav {
+                display: flex;
+            }
+
+            .sticky-footer {
+                display: none;
+            }
+
             .sidebar-brand {
                 padding: 1rem 0.5rem !important;
             }
@@ -246,10 +441,6 @@
 
             .sidebar.toggled .sidebar-brand-icon img {
                 max-width: 60px;
-            }
-
-            .container-fluid {
-                padding: 1rem 1.5rem;
             }
 
             .btn-action {
@@ -286,6 +477,12 @@
 </head>
 
 <body id="page-top">
+
+    <div id="page-loader">
+        <img src="{{ asset('dist_guru/img/logo.png') }}" alt="Logo" class="loader-logo">
+        <div class="spinner"></div>
+        <div class="loader-text">Memuat Detail...</div>
+    </div>
 
     <div id="wrapper">
 
@@ -583,6 +780,38 @@
 
     </div>
 
+    <div class="more-menu-overlay" id="moreMenuOverlay"></div>
+
+    <div class="more-menu" id="moreMenu">
+        <a href="#" class="more-menu-item" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="{{ route('guru.dashboard') }}" class="bottom-nav-item">
+            <i class="fas fa-th-large"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="{{ route('guru.siswa.index') }}" class="bottom-nav-item">
+            <i class="fas fa-users"></i>
+            <span>Kelola Siswa</span>
+        </a>
+        <a href="{{ route('guru.jurnal.index') }}" class="bottom-nav-item active">
+            <i class="fas fa-book"></i>
+            <span>Jurnal</span>
+        </a>
+        <a href="#" class="bottom-nav-item" id="moreBtn">
+            <i class="fas fa-ellipsis-h"></i>
+            <span>Lainnya</span>
+        </a>
+    </nav>
+
+    <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+
     <div id="modalFoto" class="modal-foto">
         <span class="modal-foto-close" onclick="closeModal()">&times;</span>
         <div class="modal-foto-content">
@@ -626,6 +855,30 @@
     @endif
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
+        document.getElementById('moreBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('moreMenu').classList.toggle('show');
+            document.getElementById('moreMenuOverlay').classList.toggle('show');
+        });
+
+        document.getElementById('moreMenuOverlay').addEventListener('click', function() {
+            document.getElementById('moreMenu').classList.remove('show');
+            document.getElementById('moreMenuOverlay').classList.remove('show');
+        });
+
+        document.querySelectorAll('.more-menu-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                document.getElementById('moreMenu').classList.remove('show');
+                document.getElementById('moreMenuOverlay').classList.remove('show');
+            });
+        });
+
         function openModal() {
             document.getElementById('modalFoto').style.display = 'block';
             document.body.style.overflow = 'hidden';

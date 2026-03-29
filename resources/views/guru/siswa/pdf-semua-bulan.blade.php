@@ -1,314 +1,295 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            color: #333;
+        @page {
+            margin: 15mm;
         }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 11pt;
+            color: #000;
+            line-height: 1.4;
+            margin: 0;
+            padding: 0;
+        }
+        
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #4e73df;
-            padding-bottom: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #000;
         }
+        
         .header h2 {
-            margin: 5px 0;
-            color: #4e73df;
+            margin: 0 0 5px 0;
+            font-size: 16pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+        
         .header p {
-            margin: 3px 0;
-            font-size: 12px;
+            margin: 0;
+            font-size: 10pt;
+            font-style: italic;
         }
-        .info-section {
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
+        
+        .info-table {
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 10pt;
         }
-        .info-row {
-            display: flex;
-            margin-bottom: 8px;
+        
+        .info-table td {
+            padding: 3px 0;
+            vertical-align: top;
         }
-        .info-label {
+        
+        .info-table .label {
             width: 150px;
             font-weight: bold;
-            color: #4e73df;
         }
-        .info-value {
-            flex: 1;
-        }
-        .month-section {
-            page-break-inside: avoid;
-            margin-bottom: 30px;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 5px;
-        }
-        .month-title {
-            background-color: #4e73df;
-            color: white;
-            padding: 10px 15px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        .performa-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .performa-item {
-            border: 2px solid #ddd;
-            padding: 10px;
+        
+        .info-table .separator {
+            width: 15px;
             text-align: center;
-            border-radius: 5px;
-            background-color: #f8f9fa;
-            font-size: 12px;
         }
-        .performa-item.wfo {
-            border-color: #1cc88a;
-            background-color: #d4edda;
-        }
-        .performa-item.wfh {
-            border-color: #36b9cc;
-            background-color: #cce5ff;
-        }
-        .performa-item.izin {
-            border-color: #f6c23e;
-            background-color: #fff3cd;
-        }
-        .performa-item.sakit {
-            border-color: #36b9cc;
-            background-color: #d1ecf1;
-        }
-        .performa-item.libur {
-            border-color: #858796;
-            background-color: #e2e3e5;
-        }
-        .performa-item.alfa {
-            border-color: #e74a3b;
-            background-color: #f8d7da;
-        }
-        .performa-item-label {
+        
+        .section-title {
             font-weight: bold;
-            font-size: 10px;
-            color: #333;
-            margin-bottom: 3px;
+            font-size: 11pt;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #000;
         }
-        .performa-item-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
+        
+        .summary-section {
+            margin-bottom: 15px;
         }
-        .table {
+        
+        .summary-section table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 11px;
         }
-        .table th {
-            background-color: #4e73df;
-            color: white;
-            padding: 8px;
-            text-align: left;
+        
+        .summary-section td,
+        .summary-section th {
+            padding: 4px 8px;
+            border: 1px solid #000;
+            text-align: center;
+        }
+        
+        .summary-section th {
             font-weight: bold;
+            background-color: #f0f0f0;
         }
-        .table td {
-            padding: 6px 8px;
-            border-bottom: 1px solid #ddd;
+        
+        .monthly-section {
+            margin-bottom: 15px;
         }
-        .table tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
+        
+        .monthly-section table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
         }
-        .status-badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-size: 9px;
+        
+        .monthly-section th {
+            padding: 4px 6px;
+            border: 1px solid #000;
             font-weight: bold;
-            color: white;
+            background-color: #f0f0f0;
+            text-align: center;
         }
-        .status-wfo {
-            background-color: #1cc88a;
+        
+        .monthly-section td {
+            padding: 4px 6px;
+            border: 1px solid #000;
+            text-align: center;
         }
-        .status-wfh {
-            background-color: #36b9cc;
+        
+        .statistics {
+            margin-bottom: 15px;
         }
-        .status-izin {
-            background-color: #f6c23e;
-            color: #333;
+        
+        .statistics table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .status-sakit {
-            background-color: #36b9cc;
+        
+        .statistics td {
+            padding: 4px 8px;
+            border: 1px solid #000;
         }
-        .status-libur {
-            background-color: #858796;
+        
+        .stat-label {
+            font-weight: bold;
+            width: 50%;
+            background-color: #f0f0f0;
         }
-        .status-alfa {
-            background-color: #e74a3b;
+        
+        .stat-value {
+            text-align: center;
+            width: 50%;
         }
+        
         .footer {
-            margin-top: 30px;
+            margin-top: 15px;
+            font-size: 9pt;
+        }
+        
+        .signature-section {
+            margin-top: 10px;
             text-align: right;
-            font-size: 12px;
-            border-top: 1px solid #ddd;
-            padding-top: 15px;
         }
-        .summary-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 11px;
-        }
-        .summary-table th {
-            background-color: #4e73df;
-            color: white;
-            padding: 8px;
+        
+        .signature-box {
+            display: inline-block;
             text-align: center;
-            font-weight: bold;
+            min-width: 200px;
         }
-        .summary-table td {
-            padding: 8px;
-            text-align: center;
-            border: 1px solid #ddd;
+        
+        .signature-line {
+            margin-top: 40px;
+            border-top: 1px solid #000;
+            padding-top: 3px;
         }
-        .summary-table tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
+        
+        .print-info {
+            font-size: 8pt;
+            color: #666;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h2>Laporan Performa Kehadiran Siswa</h2>
-        <p>Periode: Semua Bulan {{ $data[0]['tahun'] ?? date('Y') }}</p>
-    </div>
-
-    <div class="info-section">
-        <div class="info-row">
-            <div class="info-label">Nama Siswa</div>
-            <div class="info-value">: {{ $siswa->nama }}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">NIPD</div>
-            <div class="info-value">: {{ $siswa->nipd ?? '-' }}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">Kelas</div>
-            <div class="info-value">: {{ $siswa->kelas_lengkap }}</div>
-        </div>
-        <div class="info-row">
-            <div class="info-label">Guru Pembimbing</div>
-            <div class="info-value">: {{ $guru->nama }}</div>
-        </div>
-    </div>
-
-    <!-- Ringkasan Tahunan -->
-    <div class="info-section">
-        <h3 style="color: #4e73df; margin-top: 0;">Ringkasan Kehadiran Tahunan</h3>
-        <table class="summary-table">
-            <thead>
-                <tr>
-                    <th>WFO</th>
-                    <th>WFH</th>
-                    <th>Izin</th>
-                    <th>Sakit</th>
-                    <th>Libur</th>
-                    <th>Alfa</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>{{ collect($data)->sum(fn($d) => $d['performa']['wfo']) }}</strong></td>
-                    <td><strong>{{ collect($data)->sum(fn($d) => $d['performa']['wfh']) }}</strong></td>
-                    <td><strong>{{ collect($data)->sum(fn($d) => $d['performa']['izin']) }}</strong></td>
-                    <td><strong>{{ collect($data)->sum(fn($d) => $d['performa']['sakit']) }}</strong></td>
-                    <td><strong>{{ collect($data)->sum(fn($d) => $d['performa']['libur']) }}</strong></td>
-                    <td><strong>{{ collect($data)->sum(fn($d) => $d['performa']['alfa']) }}</strong></td>
-                    <td><strong>{{ collect($data)->sum(fn($d) => $d['performa']['total']) }}</strong></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Detail per Bulan -->
-    @foreach($data as $monthData)
-    <div class="month-section">
-        <div class="month-title">{{ $monthData['bulan'] }} {{ $monthData['tahun'] }}</div>
+    @php
+        // Helper function untuk format data
+        function safeGet($array, $key, $default = 0) {
+            return isset($array[$key]) ? $array[$key] : $default;
+        }
         
-        <div class="performa-grid">
-            <div class="performa-item wfo">
-                <div class="performa-item-label">WFO</div>
-                <div class="performa-item-value">{{ $monthData['performa']['wfo'] }}</div>
-            </div>
-            <div class="performa-item wfh">
-                <div class="performa-item-label">WFH</div>
-                <div class="performa-item-value">{{ $monthData['performa']['wfh'] }}</div>
-            </div>
-            <div class="performa-item izin">
-                <div class="performa-item-label">Izin</div>
-                <div class="performa-item-value">{{ $monthData['performa']['izin'] }}</div>
-            </div>
-            <div class="performa-item sakit">
-                <div class="performa-item-label">Sakit</div>
-                <div class="performa-item-value">{{ $monthData['performa']['sakit'] }}</div>
-            </div>
-            <div class="performa-item libur">
-                <div class="performa-item-label">Libur</div>
-                <div class="performa-item-value">{{ $monthData['performa']['libur'] }}</div>
-            </div>
-            <div class="performa-item alfa">
-                <div class="performa-item-label">Alfa</div>
-                <div class="performa-item-value">{{ $monthData['performa']['alfa'] }}</div>
-            </div>
-        </div>
+        // Hitung total tahunan
+        $total_wfo = collect($data)->sum(fn($d) => safeGet($d['performa'], 'wfo'));
+        $total_wfh = collect($data)->sum(fn($d) => safeGet($d['performa'], 'wfh'));
+        $total_izin = collect($data)->sum(fn($d) => safeGet($d['performa'], 'izin'));
+        $total_sakit = collect($data)->sum(fn($d) => safeGet($d['performa'], 'sakit'));
+        $total_libur = collect($data)->sum(fn($d) => safeGet($d['performa'], 'libur'));
+        $total_alfa = collect($data)->sum(fn($d) => safeGet($d['performa'], 'alfa'));
+        
+        // Hitung statistik kehadiran tahunan
+        $total_hadir = $total_wfo + $total_wfh;
+        $total_tidak_hadir = $total_izin + $total_sakit + $total_alfa;
+        $total_hari = $total_hadir + $total_tidak_hadir;
+        $persentase = $total_hari > 0 ? round(($total_hadir / $total_hari) * 100, 2) : 0;
+    @endphp
 
-        @if($monthData['jurnal']->count() > 0)
-        <table class="table">
+    <div class="header">
+        <h2>Laporan Kehadiran Siswa</h2>
+        <p>Periode: Tahun {{ $data[0]['tahun'] ?? date('Y') }}</p>
+    </div>
+
+    <table class="info-table">
+        <tr>
+            <td class="label">Nama Siswa</td>
+            <td class="separator">:</td>
+            <td>{{ $siswa->nama }}</td>
+        </tr>
+        <tr>
+            <td class="label">NIPD</td>
+            <td class="separator">:</td>
+            <td>{{ $siswa->nipd ?? '-' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Kelas</td>
+            <td class="separator">:</td>
+            <td>{{ $siswa->kelas_lengkap }}</td>
+        </tr>
+        <tr>
+            <td class="label">Guru Pembimbing</td>
+            <td class="separator">:</td>
+            <td>{{ $guru->nama }}</td>
+        </tr>
+    </table>
+
+    <div class="monthly-section">
+        <div class="section-title">Rekapitulasi Per Bulan</div>
+        <table>
             <thead>
                 <tr>
-                    <th style="width: 5%;">No.</th>
-                    <th style="width: 15%;">Tanggal</th>
-                    <th style="width: 15%;">Status</th>
-                    <th style="width: 15%;">Jam Mulai</th>
-                    <th style="width: 15%;">Jam Selesai</th>
-                    <th style="width: 35%;">Keterangan</th>
+                    <th style="width: 20%;">Bulan</th>
+                    <th style="width: 10%;">WFO</th>
+                    <th style="width: 10%;">WFH</th>
+                    <th style="width: 10%;">Izin</th>
+                    <th style="width: 10%;">Sakit</th>
+                    <th style="width: 10%;">Libur</th>
+                    <th style="width: 10%;">Alfa</th>
+                    <th style="width: 10%;">Hadir</th>
+                    <th style="width: 10%;">Tidak Hadir</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($monthData['jurnal'] as $index => $item)
+                @foreach($data as $monthData)
+                @php
+                    $m_wfo = safeGet($monthData['performa'], 'wfo');
+                    $m_wfh = safeGet($monthData['performa'], 'wfh');
+                    $m_izin = safeGet($monthData['performa'], 'izin');
+                    $m_sakit = safeGet($monthData['performa'], 'sakit');
+                    $m_libur = safeGet($monthData['performa'], 'libur');
+                    $m_alfa = safeGet($monthData['performa'], 'alfa');
+                    $m_hadir = $m_wfo + $m_wfh;
+                    $m_tidak_hadir = $m_izin + $m_sakit + $m_alfa;
+                @endphp
                 <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ date('d-m-Y', strtotime($item->tgl)) }}</td>
-                    <td>
-                        <span class="status-badge status-{{ $item->status_kehadiran }}">
-                            {{ strtoupper(str_replace(['wfo', 'wfh'], ['WFO', 'WFH'], $item->status_kehadiran)) }}
-                        </span>
-                    </td>
-                    <td>{{ $item->jam_mulai }}</td>
-                    <td>{{ $item->jam_selesai }}</td>
-                    <td>{{ $item->keterangan ?? '-' }}</td>
+                    <td style="text-align: left; padding-left: 10px;">{{ $monthData['bulan'] }}</td>
+                    <td>{{ $m_wfo }}</td>
+                    <td>{{ $m_wfh }}</td>
+                    <td>{{ $m_izin }}</td>
+                    <td>{{ $m_sakit }}</td>
+                    <td>{{ $m_libur }}</td>
+                    <td>{{ $m_alfa }}</td>
+                    <td><strong>{{ $m_hadir }}</strong></td>
+                    <td><strong>{{ $m_tidak_hadir }}</strong></td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        @else
-        <div style="text-align: center; padding: 10px; background-color: #fff3cd; border-radius: 5px; font-size: 12px;">
-            Tidak ada data kehadiran untuk bulan ini
-        </div>
-        @endif
     </div>
-    @endforeach
+
+    <div class="statistics">
+        <div class="section-title">Statistik Kehadiran Tahunan</div>
+        <table>
+            <tr>
+                <td class="stat-label">Total Hadir</td>
+                <td class="stat-value">{{ $total_hadir }} Hari</td>
+            </tr>
+            <tr>
+                <td class="stat-label">Total Tidak Hadir</td>
+                <td class="stat-value">{{ $total_tidak_hadir }} Hari</td>
+            </tr>
+            <tr>
+                <td class="stat-label">Persentase Kehadiran</td>
+                <td class="stat-value">{{ $persentase }}%</td>
+            </tr>
+        </table>
+    </div>
 
     <div class="footer">
-        <p style="margin: 0;">Dicetak pada: {{ date('d-m-Y H:i:s') }}</p>
-        <p style="margin-top: 30px; margin-bottom: 0;">Guru Pembimbing</p>
-        <p style="margin-top: 50px; text-decoration: underline; margin-bottom: 0;">{{ $guru->nama }}</p>
+        <div class="signature-section">
+            <div class="signature-box">
+                <div>Mengetahui,</div>
+                <div style="margin-top: 5px; font-weight: bold;">Guru Pembimbing</div>
+                <div class="signature-line">{{ $guru->nama }}</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 10px;">
+            <p class="print-info">Dokumen ini dicetak pada: {{ date('d F Y, H:i') }} WIB</p>
+        </div>
     </div>
 </body>
 </html>
