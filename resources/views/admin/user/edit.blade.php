@@ -18,6 +18,65 @@
             background-color: #f8f9fc;
         }
 
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
         .sidebar {
             background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
         }
@@ -577,6 +636,12 @@
 </head>
 
 <body id="page-top">
+    <div id="page-loader">
+        <img src="{{ asset('dist_admin/img/logo.png') }}" alt="IPKL" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Form Edit User...</div>
+    </div>
+
     <div id="wrapper">
         
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -951,6 +1016,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
         const mobileOverlay = document.getElementById('mobileNavOverlay');
         const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
         const closeNavBtn = document.getElementById('closeNavBtn');
@@ -1044,7 +1115,7 @@
                     
                     <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left; max-height: 300px; overflow-y: auto;">
                         <table style="width: 100%; font-size: 0.85rem;">
-                            <tr>
+                             <tr>
                                 <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600; width: 35%;">Nama:</td>
                                 <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${escapeHtml(name)}</td>
                             </tr>

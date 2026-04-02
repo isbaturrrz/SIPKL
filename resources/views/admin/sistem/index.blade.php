@@ -16,6 +16,65 @@
             background-color: #f8f9fc;
         }
 
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
         .sidebar {
             background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
         }
@@ -488,6 +547,12 @@
     </style>
 </head>
 <body id="page-top">
+    <div id="page-loader">
+        <img src="{{ asset('dist_admin/img/logo.png') }}" alt="IPKL" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Pengaturan Sistem...</div>
+    </div>
+
     <div id="wrapper">
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
@@ -605,16 +670,13 @@
                     </div>
                     @endif
 
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h1 class="h3 mb-0 text-gray-800" style="font-weight: 700;">Kelola Sistem</h1>
-                    </div>
-
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="table-card">
                                 <div class="table-header">
                                     <h5>
-                                        <i class="fas fa-lock"></i> Kontrol Akses Aplikasi
+                                        <i class="fas fa-lock"></i>
+                                        <span>Kontrol Akses Aplikasi</span>
                                     </h5>
                                 </div>
                                 <div style="padding: 2rem;">
@@ -761,6 +823,12 @@
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
         const mobileOverlay = document.getElementById('mobileNavOverlay');
         const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
         const closeNavBtn = document.getElementById('closeNavBtn');

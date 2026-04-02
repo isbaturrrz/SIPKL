@@ -20,6 +20,65 @@
             background-color: #f8f9fc;
         }
 
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
         .sidebar {
             background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
         }
@@ -209,6 +268,11 @@
         .instansi-item:last-child {
             border-bottom: none;
         }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            min-height: 250px;
+        }
 
         @media (max-width: 768px) {
             .chart-card .chart-title {
@@ -226,6 +290,9 @@
             .stat-item .stat-item-value {
                 font-size: 16px;
             }
+            .chart-container {
+                min-height: 280px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -241,6 +308,36 @@
             }
             .info-card {
                 padding: 15px;
+            }
+            .chart-container {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 425px) {
+            .chart-container {
+                min-height: 280px;
+            }
+            .stat-breakdown {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .chart-container {
+                min-height: 260px;
+            }
+            .chart-card {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .chart-container {
+                min-height: 240px;
+            }
+            .chart-card .chart-title {
+                font-size: 13px;
             }
         }
 
@@ -486,28 +583,6 @@
             }
         }
 
-        @media (max-width: 400px) {
-            .mobile-nav-menu a {
-                font-size: 1rem;
-                padding: 0.8rem 0.8rem;
-            }
-            
-            .mobile-nav-menu a i {
-                width: 38px;
-                height: 38px;
-                font-size: 0.9rem;
-            }
-            
-            .user-info i {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .user-info .user-name {
-                font-size: 0.9rem;
-            }
-        }
-
         .hamburger-menu {
             display: none;
             background: none;
@@ -542,6 +617,11 @@
 </head>
 
 <body id="page-top">
+    <div id="page-loader">
+        <img src="{{ asset('dist_admin/img/logo.png') }}" alt="IPKL" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Dashboard...</div>
+    </div>
 
     <div id="wrapper">
 
@@ -762,12 +842,14 @@
                         <div class="col-xl-8">
                             <div class="chart-card">
                                 <div class="chart-title">Penempatan Siswa per Jurusan</div>
-                                <canvas id="chartPenempatan" height="100"></canvas>
+                                <div class="chart-container">
+                                    <canvas id="chartPenempatan"></canvas>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-xl-4">
-                            <div class="info-card">
+                            <div class="info-card mt-4">
                                 <div class="info-title">Data Siswa per Jurusan Tahun Ajaran 2025</div>
                                 @foreach($jurusanList as $jurusan)
                                 <div class="info-item">
@@ -783,12 +865,14 @@
                         <div class="col-xl-6">
                             <div class="chart-card">
                                 <div class="chart-title">Sebaran Siswa per Jurusan</div>
-                                <canvas id="chartJurusan" height="80"></canvas>
+                                <div class="chart-container">
+                                    <canvas id="chartJurusan"></canvas>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-xl-6">
-                            <div class="info-card">
+                            <div class="info-card mt-4">
                                 <div class="info-title">5 Instansi dengan Siswa Terbanyak</div>
                                 <div class="instansi-list">
                                     @forelse($instansiData as $instansi)
@@ -810,7 +894,9 @@
                         <div class="col-xl-12 mb-3">
                             <div class="chart-card">
                                 <div class="chart-title">Trend Jurnal Per Bulan</div>
-                                <canvas id="chartTrend" height="60"></canvas>
+                                <div class="chart-container">
+                                    <canvas id="chartTrend"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -922,6 +1008,12 @@
     <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
         const mobileOverlay = document.getElementById('mobileNavOverlay');
         const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
         const closeNavBtn = document.getElementById('closeNavBtn');
@@ -959,317 +1051,409 @@
             });
         });
 
-        function getResponsiveFontSize() {
-            if (window.innerWidth <= 576) return 9;
-            if (window.innerWidth <= 768) return 10;
-            if (window.innerWidth <= 992) return 11;
-            return 12;
-        }
-
-        function getResponsiveStepSize(maxValue) {
-            if (maxValue <= 50) return 10;
-            if (maxValue <= 100) return 20;
-            if (maxValue <= 200) return 50;
-            if (maxValue <= 500) return 100;
-            return 200;
-        }
-
-        var chartPenempatanData = {
-            labels: {!! json_encode($jurusanList) !!},
-            datasets: [
-                {
-                    label: 'Belum ditempatkan',
-                    data: [
-                        @foreach($jurusanList as $jurusan)
-                            {{ $chartData[$jurusan]['belum_ditempatkan'] }},
-                        @endforeach
-                    ],
-                    backgroundColor: '#e74a3b',
-                    borderColor: '#c0392b',
-                    borderWidth: 1,
-                    borderRadius: 4,
-                    maxBarThickness: 60
-                },
-                {
-                    label: 'Sudah ditempatkan',
-                    data: [
-                        @foreach($jurusanList as $jurusan)
-                            {{ $chartData[$jurusan]['sudah_ditempatkan'] }},
-                        @endforeach
-                    ],
-                    backgroundColor: '#1dd1a1',
-                    borderColor: '#10ac84',
-                    borderWidth: 1,
-                    borderRadius: 4,
-                    maxBarThickness: 60
-                }
-            ]
-        };
-
-        var maxPenempatanValue = Math.max(
-            ...chartPenempatanData.datasets[0].data,
-            ...chartPenempatanData.datasets[1].data
-        );
-
-        var ctx = document.getElementById('chartPenempatan').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: chartPenempatanData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: getResponsiveStepSize(maxPenempatanValue),
-                            maxTicksLimit: 6,
-                            font: {
-                                size: getResponsiveFontSize()
-                            }
-                        },
-                        grid: {
-                            drawBorder: true,
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            font: {
-                                size: getResponsiveFontSize()
-                            },
-                            maxRotation: 45,
-                            minRotation: 45,
-                            autoSkip: true,
-                            maxTicksLimit: 6
-                        },
-                        grid: {
-                            display: false
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            font: {
-                                size: getResponsiveFontSize()
-                            },
-                            boxWidth: 12,
-                            usePointStyle: true
-                        }
-                    },
-                    tooltip: {
-                        titleFont: {
-                            size: 11
-                        },
-                        bodyFont: {
-                            size: 11
-                        }
-                    }
-                },
-                layout: {
-                    padding: {
-                        top: 10,
-                        bottom: 10,
-                        left: 5,
-                        right: 5
-                    }
-                }
-            }
-        });
-
-        var chartJurusanData = {
-            labels: {!! json_encode($jurusanList) !!},
-            datasets: [{
-                data: [
-                    @foreach($jurusanList as $jurusan)
-                        {{ $siswaJurusanData[$jurusan] }},
-                    @endforeach
-                ],
-                backgroundColor: ['#667eea', '#f6c23e', '#e74a3b', '#1dd1a1', '#36b9cc'],
-                borderColor: '#fff',
-                borderWidth: 2,
-                hoverOffset: 10
-            }]
-        };
-
-        var ctx2 = document.getElementById('chartJurusan').getContext('2d');
-        var chartJurusan = new Chart(ctx2, {
-            type: 'doughnut',
-            data: chartJurusanData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 12,
-                            font: {
-                                size: getResponsiveFontSize()
-                            },
-                            boxWidth: 10,
-                            usePointStyle: true
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                var label = context.label || '';
-                                var value = context.raw || 0;
-                                var total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                var percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                return `${label}: ${value} (${percentage}%)`;
-                            }
-                        },
-                        bodyFont: {
-                            size: 11
-                        }
-                    }
-                },
-                cutout: '55%',
-                layout: {
-                    padding: {
-                        top: 5,
-                        bottom: 5,
-                        left: 5,
-                        right: 5
-                    }
-                }
-            }
-        });
-
-        var trendData = [
-            @foreach(range(1, 12) as $bulan)
-                {{ $jurnalPerBulan[$bulan] ?? 0 }},
-            @endforeach
-        ];
-
-        var maxTrendValue = Math.max(...trendData);
-
-        var ctx3 = document.getElementById('chartTrend').getContext('2d');
-        var chartTrend = new Chart(ctx3, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'],
-                datasets: [{
-                    label: 'Jurnal',
-                    data: trendData,
-                    borderColor: '#667eea',
-                    backgroundColor: 'rgba(102, 126, 234, 0.05)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: function(context) {
-                        return window.innerWidth <= 576 ? 3 : 4;
-                    },
-                    pointHoverRadius: 6,
-                    pointBackgroundColor: '#667eea',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: maxTrendValue <= 50 ? 10 : (maxTrendValue <= 100 ? 20 : 50),
-                            maxTicksLimit: 5,
-                            font: {
-                                size: getResponsiveFontSize()
-                            }
-                        },
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            font: {
-                                size: getResponsiveFontSize()
-                            },
-                            maxRotation: 45,
-                            minRotation: 45,
-                            autoSkip: true,
-                            maxTicksLimit: 8
-                        },
-                        grid: {
-                            display: false
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            font: {
-                                size: getResponsiveFontSize()
-                            },
-                            boxWidth: 12,
-                            usePointStyle: true
-                        }
-                    },
-                    tooltip: {
-                        titleFont: {
-                            size: 11
-                        },
-                        bodyFont: {
-                            size: 11
-                        }
-                    }
-                },
-                layout: {
-                    padding: {
-                        top: 10,
-                        bottom: 10,
-                        left: 5,
-                        right: 5
-                    }
-                }
-            }
-        });
-
-        function resizeCharts() {
-            var fontSize = getResponsiveFontSize();
-            var stepSize = getResponsiveStepSize(maxPenempatanValue);
+        function getResponsiveConfig() {
+            const width = window.innerWidth;
             
-            if (myChart && myChart.options) {
-                myChart.options.scales.y.ticks.font.size = fontSize;
-                myChart.options.scales.x.ticks.font.size = fontSize;
-                myChart.options.plugins.legend.labels.font.size = fontSize;
-                myChart.options.scales.y.ticks.stepSize = stepSize;
-                myChart.update();
-            }
-            
-            if (chartJurusan && chartJurusan.options) {
-                chartJurusan.options.plugins.legend.labels.font.size = fontSize;
-                chartJurusan.update();
-            }
-            
-            if (chartTrend && chartTrend.options) {
-                var trendStepSize = maxTrendValue <= 50 ? 10 : (maxTrendValue <= 100 ? 20 : 50);
-                chartTrend.options.scales.y.ticks.font.size = fontSize;
-                chartTrend.options.scales.x.ticks.font.size = fontSize;
-                chartTrend.options.plugins.legend.labels.font.size = fontSize;
-                chartTrend.options.scales.y.ticks.stepSize = trendStepSize;
-                if (chartTrend.options.elements && chartTrend.options.elements.point) {
-                    chartTrend.options.elements.point.radius = window.innerWidth <= 576 ? 3 : 4;
-                }
-                chartTrend.update();
+            if (width <= 320) {
+                return {
+                    fontSize: 9,
+                    legendFontSize: 8,
+                    padding: 8,
+                    maxTicksLimit: 4,
+                    pointRadius: 2,
+                    borderWidth: 1.5
+                };
+            } else if (width <= 375) {
+                return {
+                    fontSize: 10,
+                    legendFontSize: 9,
+                    padding: 10,
+                    maxTicksLimit: 5,
+                    pointRadius: 3,
+                    borderWidth: 2
+                };
+            } else if (width <= 425) {
+                return {
+                    fontSize: 10,
+                    legendFontSize: 9,
+                    padding: 10,
+                    maxTicksLimit: 6,
+                    pointRadius: 3,
+                    borderWidth: 2
+                };
+            } else if (width <= 768) {
+                return {
+                    fontSize: 11,
+                    legendFontSize: 10,
+                    padding: 12,
+                    maxTicksLimit: 8,
+                    pointRadius: 3.5,
+                    borderWidth: 2
+                };
+            } else {
+                return {
+                    fontSize: 12,
+                    legendFontSize: 11,
+                    padding: 15,
+                    maxTicksLimit: 10,
+                    pointRadius: 4,
+                    borderWidth: 2
+                };
             }
         }
 
+        let chartPenempatan, chartJurusan, chartTrend;
+
+        function createPenempatanChart() {
+            const config = getResponsiveConfig();
+            
+            if (chartPenempatan) {
+                chartPenempatan.destroy();
+            }
+
+            const belumData = [
+                @foreach($jurusanList as $jurusan)
+                    {{ $chartData[$jurusan]['belum_ditempatkan'] }},
+                @endforeach
+            ];
+            const sudahData = [
+                @foreach($jurusanList as $jurusan)
+                    {{ $chartData[$jurusan]['sudah_ditempatkan'] }},
+                @endforeach
+            ];
+            const allValues = [...belumData, ...sudahData];
+            const maxValue = Math.max(...allValues);
+            
+            let dynamicStepSize;
+            let suggestedMax;
+
+            if (maxValue <= 10) {
+                dynamicStepSize = 2;
+                suggestedMax = 10;
+            } else if (maxValue <= 20) {
+                dynamicStepSize = 5;
+                suggestedMax = Math.ceil(maxValue / 5) * 5;
+            } else if (maxValue <= 50) {
+                dynamicStepSize = 10;
+                suggestedMax = Math.ceil(maxValue / 10) * 10;
+            } else if (maxValue <= 100) {
+                dynamicStepSize = 20;
+                suggestedMax = Math.ceil(maxValue / 20) * 20;
+            } else if (maxValue <= 200) {
+                dynamicStepSize = 25;
+                suggestedMax = Math.ceil(maxValue / 25) * 25;
+            } else {
+                dynamicStepSize = Math.ceil(maxValue / 8);
+                suggestedMax = Math.ceil(maxValue / dynamicStepSize) * dynamicStepSize;
+            }
+
+            const ctx = document.getElementById('chartPenempatan').getContext('2d');
+            chartPenempatan = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode($jurusanList) !!},
+                    datasets: [
+                        {
+                            label: 'Belum ditempatkan',
+                            data: belumData,
+                            backgroundColor: '#e74a3b',
+                            borderColor: '#c0392b',
+                            borderWidth: config.borderWidth,
+                            borderRadius: 4,
+                            maxBarThickness: 60
+                        },
+                        {
+                            label: 'Sudah ditempatkan',
+                            data: sudahData,
+                            backgroundColor: '#1dd1a1',
+                            borderColor: '#10ac84',
+                            borderWidth: config.borderWidth,
+                            borderRadius: 4,
+                            maxBarThickness: 60
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            suggestedMax: suggestedMax,
+                            ticks: {
+                                stepSize: dynamicStepSize,
+                                font: {
+                                    size: config.fontSize
+                                },
+                                maxTicksLimit: config.maxTicksLimit,
+                                padding: window.innerWidth <= 425 ? 5 : 10
+                            },
+                            grid: {
+                                drawBorder: true,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: config.fontSize
+                                },
+                                maxRotation: window.innerWidth <= 768 ? 45 : 0,
+                                minRotation: window.innerWidth <= 768 ? 45 : 0,
+                                autoSkip: true,
+                                maxTicksLimit: window.innerWidth <= 425 ? 4 : 6
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: config.padding,
+                                font: {
+                                    size: config.legendFontSize
+                                },
+                                boxWidth: window.innerWidth <= 425 ? 12 : 15,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            titleFont: {
+                                size: config.fontSize
+                            },
+                            bodyFont: {
+                                size: config.fontSize
+                            },
+                            padding: window.innerWidth <= 425 ? 8 : 12
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            left: window.innerWidth <= 425 ? 5 : 10,
+                            right: window.innerWidth <= 425 ? 5 : 10,
+                            top: 10,
+                            bottom: 5
+                        }
+                    }
+                }
+            });
+        }
+
+        function createJurusanChart() {
+            const config = getResponsiveConfig();
+            
+            if (chartJurusan) {
+                chartJurusan.destroy();
+            }
+
+            const jurusanValues = [
+                @foreach($jurusanList as $jurusan)
+                    {{ $siswaJurusanData[$jurusan] }},
+                @endforeach
+            ];
+            const totalJurusan = jurusanValues.reduce((a, b) => a + b, 0);
+
+            const ctx = document.getElementById('chartJurusan').getContext('2d');
+            chartJurusan = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: {!! json_encode($jurusanList) !!},
+                    datasets: [{
+                        data: jurusanValues,
+                        backgroundColor: ['#667eea', '#f6c23e', '#e74a3b', '#1dd1a1', '#36b9cc'],
+                        borderColor: '#fff',
+                        borderWidth: window.innerWidth <= 425 ? 1 : 2,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: config.padding,
+                                font: {
+                                    size: config.legendFontSize
+                                },
+                                boxWidth: window.innerWidth <= 425 ? 10 : 12,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const percentage = totalJurusan > 0 ? ((value / totalJurusan) * 100).toFixed(1) : 0;
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            },
+                            titleFont: {
+                                size: config.fontSize
+                            },
+                            bodyFont: {
+                                size: config.fontSize
+                            }
+                        }
+                    },
+                    cutout: window.innerWidth <= 425 ? '50%' : '55%',
+                    layout: {
+                        padding: {
+                            top: 5,
+                            bottom: 5,
+                            left: 5,
+                            right: 5
+                        }
+                    }
+                }
+            });
+        }
+
+        function createTrendChart() {
+            const config = getResponsiveConfig();
+            
+            if (chartTrend) {
+                chartTrend.destroy();
+            }
+
+            const trendData = [
+                @foreach(range(1, 12) as $bulan)
+                    {{ $jurnalPerBulan[$bulan] ?? 0 }},
+                @endforeach
+            ];
+            const maxTrendValue = Math.max(...trendData);
+            
+            let dynamicStepSize;
+            let suggestedMax;
+
+            if (maxTrendValue <= 10) {
+                dynamicStepSize = 2;
+                suggestedMax = 10;
+            } else if (maxTrendValue <= 20) {
+                dynamicStepSize = 5;
+                suggestedMax = Math.ceil(maxTrendValue / 5) * 5;
+            } else if (maxTrendValue <= 50) {
+                dynamicStepSize = 10;
+                suggestedMax = Math.ceil(maxTrendValue / 10) * 10;
+            } else if (maxTrendValue <= 100) {
+                dynamicStepSize = 20;
+                suggestedMax = Math.ceil(maxTrendValue / 20) * 20;
+            } else if (maxTrendValue <= 200) {
+                dynamicStepSize = 25;
+                suggestedMax = Math.ceil(maxTrendValue / 25) * 25;
+            } else {
+                dynamicStepSize = Math.ceil(maxTrendValue / 8);
+                suggestedMax = Math.ceil(maxTrendValue / dynamicStepSize) * dynamicStepSize;
+            }
+
+            const ctx = document.getElementById('chartTrend').getContext('2d');
+            chartTrend = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'],
+                    datasets: [{
+                        label: 'Jurnal',
+                        data: trendData,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.05)',
+                        borderWidth: config.borderWidth,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: config.pointRadius,
+                        pointHoverRadius: window.innerWidth <= 425 ? 4 : 6,
+                        pointBackgroundColor: '#667eea',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: window.innerWidth <= 425 ? 1 : 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            suggestedMax: suggestedMax,
+                            ticks: {
+                                stepSize: dynamicStepSize,
+                                font: {
+                                    size: config.fontSize
+                                },
+                                maxTicksLimit: config.maxTicksLimit,
+                                padding: window.innerWidth <= 425 ? 5 : 10
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: config.fontSize
+                                },
+                                maxRotation: window.innerWidth <= 768 ? 45 : 0,
+                                minRotation: window.innerWidth <= 768 ? 45 : 0,
+                                autoSkip: true,
+                                maxTicksLimit: window.innerWidth <= 425 ? 6 : 12
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: config.padding,
+                                font: {
+                                    size: config.legendFontSize
+                                },
+                                boxWidth: window.innerWidth <= 425 ? 12 : 15,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            titleFont: {
+                                size: config.fontSize
+                            },
+                            bodyFont: {
+                                size: config.fontSize
+                            },
+                            padding: window.innerWidth <= 425 ? 8 : 12
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            left: window.innerWidth <= 425 ? 5 : 10,
+                            right: window.innerWidth <= 425 ? 5 : 10,
+                            top: 10,
+                            bottom: 5
+                        }
+                    }
+                }
+            });
+        }
+
+        function initAllCharts() {
+            createPenempatanChart();
+            createJurusanChart();
+            createTrendChart();
+        }
+
+        initAllCharts();
+
+        let resizeTimer;
         window.addEventListener('resize', function() {
-            setTimeout(resizeCharts, 100);
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                initAllCharts();
+            }, 250);
         });
-
-        resizeCharts();
     </script>
 
 </body>

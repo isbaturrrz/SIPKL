@@ -41,7 +41,7 @@
                             @csrf
                             
                             <div class="mb-3 email">
-                                <label for="email" class="form-label">Username atau Email</label>
+                                <label for="email" class="form-label">NIPD atau Email</label>
                                 <div class="input-group username-input">
                                     <span class="input-group-text icon-1"><i class="fas fa-user"></i></span>
                                     <input value="{{ old('email') }}" type="text" class="form-control input-id" 

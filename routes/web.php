@@ -82,7 +82,8 @@ Route::middleware(['auth', 'role:mentor', 'prevent-back'])
     ->prefix('mentor')
     ->name('mentor.')
     ->group(function () {      
-        Route::get('/dashboard', [App\Http\Controllers\Mentor\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [App\Http\Controllers\Mentor\DashboardController::class, 'index'])
+            ->name('dashboard');
 
         Route::resource('siswa', App\Http\Controllers\Mentor\SiswaController::class)
             ->only(['index', 'show']);
@@ -110,7 +111,8 @@ Route::middleware(['auth', 'role:guru', 'prevent-back'])
     ->prefix('guru')
     ->name('guru.')
     ->group(function () {      
-         Route::get('/dashboard', [ App\Http\Controllers\Guru\DashboardController::class, 'index'])->name('dashboard');
+         Route::get('/dashboard', [ App\Http\Controllers\Guru\DashboardController::class, 'index'])
+            ->name('dashboard');
 
         Route::resource('siswa', App\Http\Controllers\Guru\SiswaController::class)
             ->only(['index', 'show']);

@@ -18,6 +18,65 @@
             background-color: #f8f9fc;
         }
 
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
         .sidebar {
             background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
         }
@@ -430,10 +489,101 @@
         body.menu-open {
             overflow: hidden;
         }
+
+        @media (max-width: 991px) {
+            .row-custom-reorder {
+                display: flex;
+                flex-direction: column;
+            }
+            .order-first-mobile {
+                order: -1;
+            }
+            .order-last-mobile {
+                order: 1;
+            }
+        }
+
+        .action-card-no-header {
+            border: none;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        }
+        .action-card-no-header .card-body {
+            padding: 1.25rem;
+        }
+        .btn-action-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 576px) {
+            .btn-action-group {
+                flex-direction: column;
+            }
+            .btn-action-group .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        .swal2-popup {
+            border-radius: 16px !important;
+            padding: 0 !important;
+            width: 85% !important;
+            max-width: 450px !important;
+        }
+
+        .swal2-icon {
+            width: 60px !important;
+            height: 60px !important;
+            margin: 1.5rem auto 1rem !important;
+            border-width: 3px !important;
+        }
+
+        .swal2-title {
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            color: #1a1a1a !important;
+            padding: 0 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+        }
+
+        .swal2-html-container {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            font-size: 0.9rem !important;
+            color: #64748b !important;
+        }
+
+        .swal2-actions {
+            margin: 0 !important;
+            padding: 0 1.5rem 1.5rem !important;
+            gap: 0.75rem !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+        }
+
+        .swal2-cancel {
+            background: #fff !important;
+            color: #64748b !important;
+            padding: 0.65rem 1.5rem !important;
+            border-radius: 10px !important;
+            border: 2px solid #e2e8f0 !important;
+        }
     </style>
 </head>
 
 <body id="page-top">
+    <div id="page-loader">
+        <img src="{{ asset('dist_admin/img/logo.png') }}" alt="IPKL" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Detail Siswa...</div>
+    </div>
+
     <div id="wrapper">
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
@@ -544,9 +694,8 @@
                 </nav>
 
                 <div class="container-fluid">
-
-                    <div class="row">
-                        <div class="col-lg-8">
+                    <div class="row row-custom-reorder">
+                        <div class="col-lg-8 order-last-mobile">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Informasi Pribadi</h6>
@@ -711,7 +860,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 order-first-mobile">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Ringkasan</h6>
@@ -769,29 +918,28 @@
                                     @endif
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Aksi</h6>
-                                </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card action-card-no-header shadow mb-4">
                                 <div class="card-body">
-                                    <a href="{{ route('admin.siswa.edit', $siswa->id_siswa) }}" 
-                                       class="btn btn-warning btn-block mb-2">
-                                        <i class="fas fa-edit"></i> Edit Data
-                                    </a>
-                                    <form action="{{ route('admin.siswa.destroy', $siswa->id_siswa) }}" 
-                                          method="POST"
-                                          id="deleteForm">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-block" id="deleteBtn">
-                                            <i class="fas fa-trash"></i> Hapus Data
-                                        </button>
-                                    </form>
-                                    <a href="{{ route('admin.siswa.index', $siswa->id_siswa) }}" 
-                                       class="btn btn-secondary btn-block mt-2">
-                                        <i class="fas fa-arrow-left"></i> Kembali
-                                    </a>
+                                    <div class="btn-action-group">
+                                        <a href="{{ route('admin.siswa.edit', $siswa->id_siswa) }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Edit Data
+                                        </a>
+                                        <form action="{{ route('admin.siswa.destroy', $siswa->id_siswa) }}" method="POST" id="deleteForm" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger" id="deleteBtn">
+                                                <i class="fas fa-trash"></i> Hapus Data
+                                            </button>
+                                        </form>
+                                        <a href="{{ route('admin.siswa.index') }}" class="btn btn-secondary">
+                                            <i class="fas fa-arrow-left"></i> Kembali
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -903,6 +1051,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
         const mobileOverlay = document.getElementById('mobileNavOverlay');
         const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
         const closeNavBtn = document.getElementById('closeNavBtn');

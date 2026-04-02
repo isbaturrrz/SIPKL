@@ -18,6 +18,65 @@
             background-color: #f8f9fc;
         }
 
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
         .sidebar {
             background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
         }
@@ -492,10 +551,38 @@
         .modal-header .close:hover {
             opacity: 1;
         }
+
+        .action-card-no-header {
+            border: none;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        }
+        .action-card-no-header .card-body {
+            padding: 1.25rem;
+        }
+        .btn-action-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 576px) {
+            .btn-action-group {
+                flex-direction: column;
+            }
+            .btn-action-group .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
     </style>
 </head>
 
 <body id="page-top">
+    <div id="page-loader">
+        <img src="{{ asset('dist_admin/img/logo.png') }}" alt="IPKL" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Detail Pengajuan...</div>
+    </div>
+
     <div id="wrapper">
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
@@ -606,13 +693,6 @@
                 </nav>
 
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Detail Pengajuan Instansi</h1>
-                        <a href="{{ route('admin.pengajuan-instansi.index') }}" class="btn btn-secondary btn-sm">
-                            <i class="fas fa-arrow-left"></i> Kembali
-                        </a>
-                    </div>
-
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="card shadow mb-4">
@@ -739,6 +819,20 @@
                                 </button>
                             </div>
                             @endif
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card action-card-no-header shadow mb-4">
+                                <div class="card-body">
+                                    <div class="btn-action-group">
+                                        <a href="{{ route('admin.pengajuan-instansi.index') }}" class="btn btn-secondary">
+                                            <i class="fas fa-arrow-left"></i> Kembali
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -884,6 +978,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
         const mobileOverlay = document.getElementById('mobileNavOverlay');
         const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
         const closeNavBtn = document.getElementById('closeNavBtn');

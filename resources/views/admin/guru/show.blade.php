@@ -18,6 +18,65 @@
             background-color: #f8f9fc;
         }
 
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
         .sidebar {
             background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
         }
@@ -425,6 +484,44 @@
             padding: 8px 15px;
         }
 
+        .action-card-no-header {
+            border: none;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        }
+        .action-card-no-header .card-body {
+            padding: 1.25rem;
+        }
+        .btn-action-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 576px) {
+            .btn-action-group {
+                flex-direction: column;
+            }
+            .btn-action-group .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        .row-custom-reorder {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 991px) {
+            .row-custom-reorder {
+                flex-direction: column;
+            }
+            .order-first-mobile {
+                order: -1;
+            }
+            .order-last-mobile {
+                order: 1;
+            }
+        }
+
         .swal2-popup {
             border-radius: 16px !important;
             padding: 0 !important;
@@ -437,35 +534,6 @@
             height: 60px !important;
             margin: 1.5rem auto 1rem !important;
             border-width: 3px !important;
-        }
-
-        .swal2-icon.swal2-error {
-            border-color: #ef4444 !important;
-        }
-
-        .swal2-icon.swal2-error .swal2-x-mark {
-            display: block !important;
-        }
-
-        .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
-            display: block !important;
-            position: absolute !important;
-            height: 3px !important;
-            width: 30px !important;
-            background-color: #ef4444 !important;
-            border-radius: 2px !important;
-        }
-
-        .swal2-icon.swal2-error .swal2-x-mark-line-left {
-            top: 28px !important;
-            left: 15px !important;
-            transform: rotate(45deg) !important;
-        }
-
-        .swal2-icon.swal2-error .swal2-x-mark-line-right {
-            top: 28px !important;
-            right: 15px !important;
-            transform: rotate(-45deg) !important;
         }
 
         .swal2-icon.swal2-warning {
@@ -542,15 +610,6 @@
 
         .swal2-styled:focus {
             box-shadow: none !important;
-        }
-
-        .swal2-confirm.swal2-confirm-single {
-            background: linear-gradient(135deg, #1e4179 0%, #2c5aa0 100%) !important;
-            box-shadow: 0 4px 12px rgba(30, 65, 121, 0.3) !important;
-        }
-
-        .swal2-confirm.swal2-confirm-single:hover {
-            box-shadow: 0 6px 16px rgba(30, 65, 121, 0.4) !important;
         }
 
         @media (max-width: 768px) {
@@ -634,6 +693,12 @@
 </head>
 
 <body id="page-top">
+    <div id="page-loader">
+        <img src="{{ asset('dist_admin/img/logo.png') }}" alt="IPKL" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Detail Guru...</div>
+    </div>
+
     <div id="wrapper">
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
@@ -744,20 +809,8 @@
                 </nav>
 
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Detail Data Guru</h1>
-                        <div>
-                            <a href="{{ route('admin.guru.edit', $guru->id_guru) }}" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                            <a href="{{ route('admin.guru.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Kembali
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-8">
+                    <div class="row row-custom-reorder">
+                        <div class="col-lg-8 order-last-mobile">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Informasi Pribadi</h6>
@@ -921,7 +974,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 order-first-mobile">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Ringkasan</h6>
@@ -980,31 +1033,36 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Aksi</h6>
-                                </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card action-card-no-header shadow mb-4">
                                 <div class="card-body">
-                                    <a href="{{ route('admin.guru.edit', $guru->id_guru) }}" 
-                                       class="btn btn-warning btn-block mb-2">
-                                        <i class="fas fa-edit"></i> Edit Data
-                                    </a>
-                                    <form action="{{ route('admin.guru.destroy', $guru->id_guru) }}" 
-                                          method="POST" 
-                                          class="delete-form"
-                                          id="deleteForm"
-                                          data-nama="{{ $guru->nama }}"
-                                          data-email="{{ $guru->email }}"
-                                          data-nohp="{{ $guru->no_hp }}"
-                                          data-instansi-count="{{ $guru->instansi ? $guru->instansi->count() : 0 }}"
-                                          data-has-instansi="{{ ($guru->instansi && $guru->instansi->count() > 0) ? 'true' : 'false' }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-block" id="deleteBtn">
-                                            <i class="fas fa-trash"></i> Hapus Data
-                                        </button>
-                                    </form>
+                                    <div class="btn-action-group">
+                                        <a href="{{ route('admin.guru.edit', $guru->id_guru) }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Edit Data
+                                        </a>
+                                        <form action="{{ route('admin.guru.destroy', $guru->id_guru) }}" 
+                                              method="POST" 
+                                              class="delete-form"
+                                              id="deleteForm"
+                                              data-nama="{{ $guru->nama }}"
+                                              data-email="{{ $guru->email }}"
+                                              data-nohp="{{ $guru->no_hp }}"
+                                              data-instansi-count="{{ $guru->instansi ? $guru->instansi->count() : 0 }}"
+                                              data-has-instansi="{{ ($guru->instansi && $guru->instansi->count() > 0) ? 'true' : 'false' }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger" id="deleteBtn">
+                                                <i class="fas fa-trash"></i> Hapus Data
+                                            </button>
+                                        </form>
+                                        <a href="{{ route('admin.guru.index') }}" class="btn btn-secondary">
+                                            <i class="fas fa-arrow-left"></i> Kembali
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1116,6 +1174,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
         const mobileOverlay = document.getElementById('mobileNavOverlay');
         const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
         const closeNavBtn = document.getElementById('closeNavBtn');
@@ -1162,95 +1226,51 @@
             const hasInstansi = form.getAttribute('data-has-instansi') === 'true';
 
             if (hasInstansi) {
-                const errorHTML = `
-                    <div style="padding: 0.5rem 0;">
-                        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                            <i class="fas fa-times-circle" style="font-size: 1.75rem; color: #dc2626;"></i>
-                        </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Tidak Dapat Menghapus</h3>
-                        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Guru ini tidak dapat dihapus karena masih membimbing ${instansiCount} instansi.</p>
-                        
-                        <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left;">
-                            <table style="width: 100%; font-size: 0.85rem;">
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600; width: 35%;">Nama Guru:</td>
-                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${nama}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Email:</td>
-                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${email}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Instansi:</td>
-                                    <td style="padding: 0.4rem 0; color: #dc2626; font-weight: 700;">${instansiCount} Instansi</td>
-                                
-                            </table>
-                        </div>
-                        
-                        <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
-                            <p style="font-size: 0.8rem; color: #991b1b; margin: 0; font-weight: 600;">
-                                <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
-                                Lepaskan guru dari semua instansi terlebih dahulu
-                            </p>
-                        </div>
-                    </div>
-                `;
-
                 Swal.fire({
-                    html: errorHTML,
-                    showCancelButton: false,
-                    confirmButtonText: '<i class="fas fa-check" style="margin-right: 0.5rem;"></i>Mengerti',
-                    buttonsStyling: true,
-                    customClass: {
-                        confirm: 'swal2-confirm-single'
-                    }
+                    icon: 'error',
+                    title: 'Tidak Dapat Menghapus',
+                    html: `
+                        <div style="text-align: left;">
+                            <p style="margin-bottom: 1rem;">Guru ini tidak dapat dihapus karena masih membimbing <strong>${instansiCount} instansi</strong>.</p>
+                            <div style="background: #f8fafc; padding: 0.75rem; border-radius: 8px;">
+                                <table style="width: 100%; font-size: 0.85rem;">
+                                    <tr><td style="padding: 0.25rem 0; color: #64748b;">Nama:</td><td style="padding: 0.25rem 0; font-weight: 600;">${nama}</td></tr>
+                                    <tr><td style="padding: 0.25rem 0; color: #64748b;">Email:</td><td style="padding: 0.25rem 0; font-weight: 600;">${email}</td></tr>
+                                    <tr><td style="padding: 0.25rem 0; color: #64748b;">Instansi:</td><td style="padding: 0.25rem 0; color: #dc2626; font-weight: 700;">${instansiCount} Instansi</td></tr>
+                                </table>
+                            </div>
+                            <div style="background: #fef2f2; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
+                                <p style="font-size: 0.8rem; color: #991b1b; margin: 0;">Lepaskan guru dari semua instansi terlebih dahulu</p>
+                            </div>
+                        </div>
+                    `,
+                    confirmButtonText: 'Mengerti',
+                    confirmButtonColor: '#dc2626'
                 });
             } else {
-                const confirmHTML = `
-                    <div style="padding: 0.5rem 0;">
-                        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                            <i class="fas fa-chalkboard-teacher" style="font-size: 1.75rem; color: #dc2626;"></i>
-                        </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Konfirmasi Hapus Guru</h3>
-                        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Apakah Anda yakin ingin menghapus data guru berikut?</p>
-                        
-                        <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left;">
-                            <table style="width: 100%; font-size: 0.85rem;">
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600; width: 30%;">Nama:</td>
-                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${nama}</td>
-                                
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Email:</td>
-                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${email}</td>
-                                
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">No HP:</td>
-                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${nohp}</td>
-                                
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Status:</td>
-                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">Belum Ditugaskan</td>
-                                
-                            </table>
-                        </div>
-                        
-                        <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
-                            <p style="font-size: 0.8rem; color: #991b1b; margin: 0; font-weight: 600;">
-                                <i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>
-                                Data yang dihapus tidak dapat dikembalikan
-                            </p>
-                        </div>
-                    </div>
-                `;
-
                 Swal.fire({
-                    html: confirmHTML,
+                    title: 'Konfirmasi Hapus',
+                    html: `
+                        <div style="text-align: left;">
+                            <p>Apakah Anda yakin ingin menghapus data guru berikut?</p>
+                            <div style="background: #f8fafc; padding: 0.75rem; border-radius: 8px;">
+                                <table style="width: 100%; font-size: 0.85rem;">
+                                    <tr><td style="padding: 0.25rem 0; color: #64748b;">Nama:</td><td style="padding: 0.25rem 0; font-weight: 600;">${nama}</td></tr>
+                                    <tr><td style="padding: 0.25rem 0; color: #64748b;">Email:</td><td style="padding: 0.25rem 0; font-weight: 600;">${email}</td></tr>
+                                    <tr><td style="padding: 0.25rem 0; color: #64748b;">No HP:</td><td style="padding: 0.25rem 0; font-weight: 600;">${nohp}</td></tr>
+                                </table>
+                            </div>
+                            <div style="background: #fef2f2; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
+                                <p style="font-size: 0.8rem; color: #991b1b; margin: 0;">Data yang dihapus tidak dapat dikembalikan</p>
+                            </div>
+                        </div>
+                    `,
+                    icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: '<i class="fas fa-trash-alt" style="margin-right: 0.5rem;"></i>Ya, Hapus',
-                    cancelButtonText: '<i class="fas fa-times" style="margin-right: 0.5rem;"></i>Batal',
-                    reverseButtons: true,
-                    buttonsStyling: true
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: '#dc2626',
+                    cancelButtonColor: '#6c757d'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         document.getElementById('deleteForm').submit();

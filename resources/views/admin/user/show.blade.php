@@ -18,6 +18,65 @@
             background-color: #f8f9fc;
         }
 
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
         .sidebar {
             background: linear-gradient(180deg, #0d1b3e 0%, #1e3a6e 100%) !important;
         }
@@ -410,7 +469,7 @@
 
         .detail-label {
             font-weight: 600;
-            color: #212121;
+            color: #4e73df;
             margin-bottom: 5px;
         }
         .detail-value {
@@ -425,215 +484,53 @@
             padding: 8px 15px;
         }
 
-        .swal2-popup {
-            border-radius: 16px !important;
-            padding: 0 !important;
-            width: 85% !important;
-            max-width: 450px !important;
+        .action-card-no-header {
+            border: none;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
         }
-
-        .swal2-icon {
-            width: 60px !important;
-            height: 60px !important;
-            margin: 1.5rem auto 1rem !important;
-            border-width: 3px !important;
+        .action-card-no-header .card-body {
+            padding: 1.25rem;
         }
-
-        .swal2-icon.swal2-error {
-            border-color: #ef4444 !important;
+        .btn-action-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
-
-        .swal2-icon.swal2-error .swal2-x-mark {
-            display: block !important;
-        }
-
-        .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
-            display: block !important;
-            position: absolute !important;
-            height: 3px !important;
-            width: 30px !important;
-            background-color: #ef4444 !important;
-            border-radius: 2px !important;
-        }
-
-        .swal2-icon.swal2-error .swal2-x-mark-line-left {
-            top: 28px !important;
-            left: 15px !important;
-            transform: rotate(45deg) !important;
-        }
-
-        .swal2-icon.swal2-error .swal2-x-mark-line-right {
-            top: 28px !important;
-            right: 15px !important;
-            transform: rotate(-45deg) !important;
-        }
-
-        .swal2-icon.swal2-warning {
-            border-color: #f59e0b !important;
-            color: #f59e0b !important;
-        }
-
-        .swal2-icon .swal2-icon-content {
-            font-size: 2.5rem !important;
-        }
-
-        .swal2-title {
-            font-size: 1.25rem !important;
-            font-weight: 700 !important;
-            color: #1a1a1a !important;
-            padding: 0 1.5rem !important;
-            margin-bottom: 0.75rem !important;
-            line-height: 1.3 !important;
-        }
-
-        .swal2-html-container {
-            margin: 0 !important;
-            padding: 0 1.5rem 1.5rem !important;
-            font-size: 0.9rem !important;
-            color: #64748b !important;
-            line-height: 1.5 !important;
-        }
-
-        .swal2-actions {
-            margin: 0 !important;
-            padding: 0 1.5rem 1.5rem !important;
-            gap: 0.75rem !important;
-            display: flex !important;
-            width: 100% !important;
-        }
-
-        .swal2-confirm {
-            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
-            color: #fff !important;
-            padding: 0.65rem 1.5rem !important;
-            border-radius: 10px !important;
-            font-weight: 700 !important;
-            font-size: 0.9rem !important;
-            border: none !important;
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
-            margin: 0 !important;
-            flex: 1 !important;
-            min-width: 0 !important;
-        }
-
-        .swal2-confirm:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4) !important;
-        }
-
-        .swal2-cancel {
-            background: #fff !important;
-            color: #64748b !important;
-            padding: 0.65rem 1.5rem !important;
-            border-radius: 10px !important;
-            font-weight: 700 !important;
-            font-size: 0.9rem !important;
-            border: 2px solid #e2e8f0 !important;
-            margin: 0 !important;
-            flex: 1 !important;
-            min-width: 0 !important;
-        }
-
-        .swal2-cancel:hover {
-            background: #f8fafc !important;
-            border-color: #cbd5e1 !important;
-            color: #475569 !important;
-        }
-
-        .swal2-styled:focus {
-            box-shadow: none !important;
-        }
-
-        .swal2-confirm.swal2-confirm-single {
-            background: linear-gradient(135deg, #1e4179 0%, #2c5aa0 100%) !important;
-            box-shadow: 0 4px 12px rgba(30, 65, 121, 0.3) !important;
-        }
-
-        .swal2-confirm.swal2-confirm-single:hover {
-            box-shadow: 0 6px 16px rgba(30, 65, 121, 0.4) !important;
-        }
-
-        @media (max-width: 768px) {
-            .swal2-popup {
-                width: 90% !important;
-                max-width: 380px !important;
-            }
-        }
-
         @media (max-width: 576px) {
-            .swal2-popup {
-                width: 92% !important;
-                max-width: 340px !important;
+            .btn-action-group {
+                flex-direction: column;
             }
-            
-            .swal2-icon {
-                width: 56px !important;
-                height: 56px !important;
-                margin: 1.25rem auto 0.75rem !important;
-            }
-            
-            .swal2-title {
-                font-size: 1.1rem !important;
-                padding: 0 1rem !important;
-                margin-bottom: 0.5rem !important;
-            }
-            
-            .swal2-html-container {
-                padding: 0 1rem 1.25rem !important;
-                font-size: 0.85rem !important;
-            }
-            
-            .swal2-actions {
-                padding: 0 1rem 1.25rem !important;
-                gap: 0.5rem !important;
-            }
-            
-            .swal2-confirm,
-            .swal2-cancel {
-                padding: 0.6rem 1.25rem !important;
-                font-size: 0.85rem !important;
+            .btn-action-group .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
             }
         }
 
-        @media (max-width: 400px) {
-            .swal2-popup {
-                width: 95% !important;
-                max-width: 300px !important;
+        .row-custom-reorder {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 991px) {
+            .row-custom-reorder {
+                flex-direction: column;
             }
-            
-            .swal2-icon {
-                width: 48px !important;
-                height: 48px !important;
-                margin: 1rem auto 0.5rem !important;
+            .order-first-mobile {
+                order: -1;
             }
-            
-            .swal2-title {
-                font-size: 1rem !important;
-                padding: 0 0.75rem !important;
-            }
-            
-            .swal2-html-container {
-                padding: 0 0.75rem 1rem !important;
-                font-size: 0.8rem !important;
-            }
-            
-            .swal2-actions {
-                padding: 0 0.75rem 1rem !important;
-                flex-direction: column !important;
-                gap: 0.5rem !important;
-            }
-            
-            .swal2-confirm,
-            .swal2-cancel {
-                padding: 0.55rem 1rem !important;
-                font-size: 0.8rem !important;
-                width: 100% !important;
+            .order-last-mobile {
+                order: 1;
             }
         }
     </style>
 </head>
 
 <body id="page-top">
+    <div id="page-loader">
+        <img src="{{ asset('dist_admin/img/logo.png') }}" alt="IPKL" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Detail User...</div>
+    </div>
+
     <div id="wrapper">
         
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -749,9 +646,9 @@
                 
                 <div class="container-fluid">
 
-                    <div class="row">
+                    <div class="row row-custom-reorder">
                         
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 order-last-mobile">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Informasi User</h6>
@@ -824,17 +721,17 @@
                         </div>
 
                         
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 order-first-mobile">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold">Ringkasan</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Ringkasan</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center mb-4">
                                         <div class="mb-3">
-                                            <i class="fas fa-user-circle fa-5x"></i>
+                                            <i class="fas fa-user-circle fa-5x text-primary"></i>
                                         </div>
-                                        <h5 class="font-weight-bold text-dark">{{ $user->name }}</h5>
+                                        <h5 class="font-weight-bold">{{ $user->name }}</h5>
                                         <p class="text-muted mb-2">{{ $user->username }}</p>
                                         @if($user->role == 'admin')
                                             <span class="badge badge-danger badge-custom">
@@ -857,7 +754,7 @@
 
                                     <hr>
 
-                                    <h6 class="font-weight-bold text-dark mb-3">Informasi Kontak</h6>
+                                    <h6 class="font-weight-bold text-primary mb-3">Informasi Kontak</h6>
                                     <p class="mb-2">
                                         <i class="fas fa-envelope text-success"></i>
                                         <small class="ml-2">{{ $user->email }}</small>
@@ -869,7 +766,7 @@
 
                                     <hr>
 
-                                    <h6 class="font-weight-bold text-dark mb-3">Status Akun</h6>
+                                    <h6 class="font-weight-bold text-primary mb-3">Status Akun</h6>
                                     <div class="alert alert-success">
                                         <i class="fas fa-check-circle"></i> 
                                         <strong>Akun Aktif</strong>
@@ -879,38 +776,43 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Aksi</h6>
-                                </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card action-card-no-header shadow mb-4">
                                 <div class="card-body">
-                                    <a href="{{ route('admin.user.edit', $user->id) }}" 
-                                       class="btn btn-warning btn-block mb-2">
-                                        <i class="fas fa-edit"></i> Edit User
-                                    </a>
-                                    
-                                    @if($user->id != auth()->id())
-                                    <form action="{{ route('admin.user.destroy', $user->id) }}" 
-                                          method="POST"
-                                          id="deleteForm"
-                                          class="delete-form"
-                                          data-nama="{{ $user->name }}"
-                                          data-username="{{ $user->username }}"
-                                          data-email="{{ $user->email }}"
-                                          data-role="{{ $user->role }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-danger btn-block" id="deleteBtn">
-                                            <i class="fas fa-trash"></i> Hapus User
+                                    <div class="btn-action-group">
+                                        <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i> Edit User
+                                        </a>
+                                        
+                                        @if($user->id != auth()->id())
+                                        <form action="{{ route('admin.user.destroy', $user->id) }}" 
+                                              method="POST"
+                                              id="deleteForm"
+                                              class="delete-form"
+                                              data-nama="{{ $user->name }}"
+                                              data-username="{{ $user->username }}"
+                                              data-email="{{ $user->email }}"
+                                              data-role="{{ $user->role }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger" id="deleteBtn">
+                                                <i class="fas fa-trash"></i> Hapus User
+                                            </button>
+                                        </form>
+                                        @else
+                                        <button class="btn btn-secondary" disabled>
+                                            <i class="fas fa-ban"></i> Tidak Bisa Hapus Akun Sendiri
                                         </button>
-                                    </form>
-                                    @else
-                                    <button class="btn btn-secondary btn-block" disabled>
-                                        <i class="fas fa-ban"></i> Tidak Bisa Hapus Akun Sendiri
-                                    </button>
-                                    @endif
+                                        @endif
+                                        
+                                        <a href="{{ route('admin.user.index') }}" class="btn btn-secondary">
+                                            <i class="fas fa-arrow-left"></i> Kembali
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1023,6 +925,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
         const mobileOverlay = document.getElementById('mobileNavOverlay');
         const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
         const closeNavBtn = document.getElementById('closeNavBtn');
@@ -1070,61 +978,45 @@
                 const role = form.getAttribute('data-role');
 
                 let roleBadge = '';
+                let roleIcon = '';
                 if (role === 'admin') {
                     roleBadge = '<span style="background: #fee2e2; color: #dc2626; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">Admin</span>';
+                    roleIcon = 'fa-user-shield';
                 } else if (role === 'guru') {
                     roleBadge = '<span style="background: #d1fae5; color: #065f46; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">Guru</span>';
+                    roleIcon = 'fa-chalkboard-teacher';
                 } else if (role === 'mentor') {
                     roleBadge = '<span style="background: #fef3c7; color: #d97706; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">Mentor</span>';
+                    roleIcon = 'fa-user-tie';
                 } else {
                     roleBadge = '<span style="background: #dbeafe; color: #1e40af; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">Siswa</span>';
+                    roleIcon = 'fa-user-graduate';
                 }
 
-                const confirmHTML = `
-                    <div style="padding: 0.5rem 0;">
-                        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                            <i class="fas fa-users" style="font-size: 1.75rem; color: #dc2626;"></i>
-                        </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Konfirmasi Hapus User</h3>
-                        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Apakah Anda yakin ingin menghapus user berikut?</p>
-                        
-                        <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left;">
-                            <table style="width: 100%; font-size: 0.85rem;">
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600; width: 30%;">Nama:NonNull
-                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${nama}NonNull
-                                
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Username:NonNull
-                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${username}NonNull
-                                </tr>
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Email:NonNull
-                                    <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${email}NonNull
-                                </tr>
-                                <tr>
-                                    <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Role:NonNull
-                                    <td style="padding: 0.4rem 0;">${roleBadge}NonNull
-                                </tr>
-                            </table>
-                        </div>
-                        
-                        <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
-                            <p style="font-size: 0.8rem; color: #991b1b; margin: 0; font-weight: 600;">
-                                <i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i>
-                                Data yang dihapus tidak dapat dikembalikan
-                            </p>
-                        </div>
-                    </div>
-                `;
-
                 Swal.fire({
-                    html: confirmHTML,
+                    title: 'Konfirmasi Hapus User',
+                    html: `
+                        <div style="text-align: left;">
+                            <p>Apakah Anda yakin ingin menghapus user berikut?</p>
+                            <div style="background: #f8fafc; padding: 0.75rem; border-radius: 8px;">
+                                <table style="width: 100%; font-size: 0.85rem;">
+                                    <tr><td style="padding: 0.25rem 0; color: #64748b;">Nama:</td><td style="padding: 0.25rem 0; font-weight: 600;">${nama}</td></tr>
+                                    <tr><td style="padding: 0.25rem 0; color: #64748b;">Username:</td><td style="padding: 0.25rem 0; font-weight: 600;">${username}</td></tr>
+                                    <tr><td style="padding: 0.25rem 0; color: #64748b;">Email:</td><td style="padding: 0.25rem 0; font-weight: 600;">${email}</td></tr>
+                                    <tr><td style="padding: 0.25rem 0; color: #64748b;">Role:</td><td style="padding: 0.25rem 0;">${roleBadge}</td>
+                                </table>
+                            </div>
+                            <div style="background: #fef2f2; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
+                                <p style="font-size: 0.8rem; color: #991b1b; margin: 0;">Data yang dihapus tidak dapat dikembalikan</p>
+                            </div>
+                        </div>
+                    `,
+                    icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: '<i class="fas fa-trash-alt" style="margin-right: 0.5rem;"></i>Ya, Hapus',
-                    cancelButtonText: '<i class="fas fa-times" style="margin-right: 0.5rem;"></i>Batal',
-                    reverseButtons: true,
-                    buttonsStyling: true
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal',
+                    confirmButtonColor: '#dc2626',
+                    cancelButtonColor: '#6c757d'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         document.getElementById('deleteForm').submit();
