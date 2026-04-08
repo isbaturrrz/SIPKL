@@ -155,9 +155,9 @@ Ikuti langkah-langkah berikut untuk menjalankan project di komputer lokal Anda:
 | Role | Username | Password |
 | :--- | :--- | :--- |
 | **Admin** | `admin` | `123456` |
-| **Guru** | `guru` | `123456` |
-| **Siswa** | `siswa` | `123456` |
-| **Mentor** | `mentor` | `123456` |
+| **Guru** | `nia.marlina@gmail.com` | `1982-12-22` |
+| **Siswa** | `232410256` | `2007-10-10` |
+| **Mentor** | `pt_sana_sini_bahagia` | `@mentor123` |
 
 ---
 

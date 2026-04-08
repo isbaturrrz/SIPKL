@@ -798,7 +798,7 @@
                                 </div>
 
                                 <div class="form-group mt-3">
-                                    <label class="font-weight-bold text-dark">Keterangan Tambahan</label>
+                                    <label class="font-weight-bold text-dark">Keterangan Tambahan (opsional)</label>
                                     <textarea name="keterangan" class="form-control" rows="3" placeholder="Contoh: Sangat baik dalam bekerja tim..."></textarea>
                                 </div>
 

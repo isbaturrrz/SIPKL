@@ -134,6 +134,13 @@ class SiswaController extends Controller
             return redirect()->back()->with('error', 'Anda tidak memiliki akses untuk siswa ini');
         }
 
+        // Ambil data instansi dari relasi siswa
+        // Asumsikan siswa memiliki relasi ke instansi (id_instansi)
+        $instansi = null;
+        if ($siswa->id_instansi) {
+            $instansi = \App\Models\Instansi::find($siswa->id_instansi);
+        }
+
         $bulanList = [
             'januari' => ['bulan' => 1, 'nama' => 'Januari'],
             'februari' => ['bulan' => 2, 'nama' => 'Februari'],
@@ -159,10 +166,10 @@ class SiswaController extends Controller
                 $namaBulan = $infobulan['nama'];
 
                 $jurnal = Jurnal::where('id_siswa', $siswa->id_siswa)
-                               ->where('status_verifikasi', 'verified')
-                               ->whereYear('tgl', $tahunSekarang)
-                               ->whereMonth('tgl', $bulan)
-                               ->get();
+                            ->where('status_verifikasi', 'verified')
+                            ->whereYear('tgl', $tahunSekarang)
+                            ->whereMonth('tgl', $bulan)
+                            ->get();
 
                 $data[] = [
                     'bulan' => $namaBulan,
@@ -175,6 +182,7 @@ class SiswaController extends Controller
             $pdf = Pdf::loadView('guru.siswa.pdf-semua-bulan', [
                 'siswa' => $siswa,
                 'guru' => $guru,
+                'instansi' => $instansi, // Tambahkan instansi
                 'data' => $data,
                 'bulanList' => $bulanList
             ]);
@@ -191,17 +199,18 @@ class SiswaController extends Controller
             $namaBulan = $infobulan['nama'];
 
             $jurnal = Jurnal::where('id_siswa', $siswa->id_siswa)
-                           ->where('status_verifikasi', 'verified')
-                           ->whereYear('tgl', $tahunSekarang)
-                           ->whereMonth('tgl', $bulan)
-                           ->orderBy('tgl', 'asc')
-                           ->get();
+                        ->where('status_verifikasi', 'verified')
+                        ->whereYear('tgl', $tahunSekarang)
+                        ->whereMonth('tgl', $bulan)
+                        ->orderBy('tgl', 'asc')
+                        ->get();
 
             $performa = $this->hitungPerforma($jurnal);
 
             $pdf = Pdf::loadView('guru.siswa.pdf-single-bulan', [
                 'siswa' => $siswa,
                 'guru' => $guru,
+                'instansi' => $instansi, // Tambahkan instansi
                 'bulan' => $namaBulan,
                 'tahun' => $tahunSekarang,
                 'jurnal' => $jurnal,

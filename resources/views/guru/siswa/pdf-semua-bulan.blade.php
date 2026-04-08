@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -138,31 +138,58 @@
         }
         
         .footer {
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 9pt;
         }
         
+        /* ─── Signature Section (gaya persis seperti pdf nilai) ─── */
         .signature-section {
-            margin-top: 10px;
-            text-align: right;
-        }
-        
-        .signature-box {
-            display: inline-block;
-            text-align: center;
-            min-width: 200px;
-        }
-        
-        .signature-line {
             margin-top: 40px;
+            width: 100%;
+            display: table;
+            table-layout: fixed;
+        }
+
+        .signature-col {
+            display: table-cell;
+            width: 50%;
+            text-align: center;
+            vertical-align: top;
+            padding: 0 10px;
+        }
+
+        .signature-col .sig-location {
+            font-weight: normal;
+            margin-bottom: 4px;
+        }
+
+        .signature-col .sig-role {
+            font-weight: bold;
+            margin-bottom: 75px; /* ruang untuk tanda tangan */
+        }
+
+        .signature-col .sig-line {
             border-top: 1px solid #000;
-            padding-top: 3px;
+            width: 175px;
+            margin: 0 auto 6px auto;
+        }
+
+        .signature-col .sig-name {
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .signature-col .sig-nip {
+            font-size: 10px;
+            margin-top: 2px;
         }
         
         .print-info {
             font-size: 8pt;
             color: #666;
             font-style: italic;
+            margin-top: 20px;
+            text-align: left;
         }
     </style>
 </head>
@@ -186,6 +213,15 @@
         $total_tidak_hadir = $total_izin + $total_sakit + $total_alfa;
         $total_hari = $total_hadir + $total_tidak_hadir;
         $persentase = $total_hari > 0 ? round(($total_hadir / $total_hari) * 100, 2) : 0;
+        
+        // Ambil data pemilik instansi dari variabel $instansi yang dikirim controller
+        $namaPemilik = isset($instansi) && !empty($instansi->pemilik) 
+            ? $instansi->pemilik 
+            : '(Pemilik Instansi)';
+            
+        $namaInstansi = isset($instansi) && !empty($instansi->nama_instansi) 
+            ? $instansi->nama_instansi 
+            : 'DU/DI';
     @endphp
 
     <div class="header">
@@ -210,9 +246,9 @@
             <td>{{ $siswa->kelas_lengkap }}</td>
         </tr>
         <tr>
-            <td class="label">Guru Pembimbing</td>
+            <td class="label">Instansi / DU/DI</td>
             <td class="separator">:</td>
-            <td>{{ $guru->nama }}</td>
+            <td>{{ $namaInstansi }}</td>
         </tr>
     </table>
 
@@ -278,17 +314,37 @@
         </table>
     </div>
 
-    <div class="footer">
-        <div class="signature-section">
-            <div class="signature-box">
-                <div>Mengetahui,</div>
-                <div style="margin-top: 5px; font-weight: bold;">Guru Pembimbing</div>
-                <div class="signature-line">{{ $guru->nama }}</div>
-            </div>
+    <!-- ─── Tanda Tangan Dua Kolom (Guru Pembimbing + Pemilik Instansi) ─── 
+         Gaya persis seperti PDF Nilai -->
+    <div class="signature-section">
+        <!-- Kolom Kiri: Guru Pembimbing Sekolah -->
+        <div class="signature-col">
+            <p class="sig-location">Bandung, {{ date('d F Y') }}</p>
+            <p class="sig-role">Guru Pembimbing</p>
+            <!-- ruang tanda tangan -->
+            <div class="sig-line"></div>
+            <p class="sig-name">{{ $guru->nama }}</p>
+            @if(isset($guru->nip) && $guru->nip)
+                <div class="sig-nip">NIP. {{ $guru->nip }}</div>
+            @endif
         </div>
-        
-        <div style="margin-top: 10px;">
-            <p class="print-info">Dokumen ini dicetak pada: {{ date('d F Y, H:i') }} WIB</p>
+
+        <!-- Kolom Kanan: Pemilik Instansi / Pimpinan DU/DI -->
+        <div class="signature-col">
+            <p class="sig-location">Bandung, {{ date('d F Y') }}</p>
+            <p class="sig-role">Pemilik Instansi</p>
+            <!-- ruang tanda tangan -->
+            <div class="sig-line"></div>
+            <p class="sig-name">{{ $namaPemilik }}</p>
+            @if(isset($instansi) && !empty($instansi->nip_pemilik))
+                <div class="sig-nip">NIP. {{ $instansi->nip_pemilik }}</div>
+            @endif
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="print-info">
+            Dokumen ini dicetak pada: {{ date('d F Y, H:i') }} WIB
         </div>
     </div>
 </body>

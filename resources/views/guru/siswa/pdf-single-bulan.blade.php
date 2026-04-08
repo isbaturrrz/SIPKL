@@ -112,27 +112,54 @@
             font-size: 9pt;
         }
         
+        /* ─── Signature Section (gaya persis seperti pdf nilai) ─── */
         .signature-section {
-            margin-top: 15px;
-            text-align: right;
+            margin-top: 40px;
+            width: 100%;
+            display: table;
+            table-layout: fixed;
         }
-        
-        .signature-box {
-            display: inline-block;
+
+        .signature-col {
+            display: table-cell;
+            width: 50%;
             text-align: center;
-            min-width: 200px;
+            vertical-align: top;
+            padding: 0 10px;
         }
-        
-        .signature-line {
-            margin-top: 50px;
+
+        .signature-col .sig-location {
+            font-weight: normal;
+            margin-bottom: 4px;
+        }
+
+        .signature-col .sig-role {
+            font-weight: bold;
+            margin-bottom: 75px; /* ruang untuk tanda tangan */
+        }
+
+        .signature-col .sig-line {
             border-top: 1px solid #000;
-            padding-top: 3px;
+            width: 175px;
+            margin: 0 auto 6px auto;
+        }
+
+        .signature-col .sig-name {
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .signature-col .sig-nip {
+            font-size: 10px;
+            margin-top: 2px;
         }
         
         .print-info {
             font-size: 8pt;
             color: #666;
             font-style: italic;
+            margin-top: 20px;
+            text-align: left;
         }
     </style>
 </head>
@@ -156,6 +183,16 @@
         $total_tidak_hadir = $izin + $sakit + $alfa;
         $total_hari = $total_hadir + $total_tidak_hadir;
         $persentase = $total_hari > 0 ? round(($total_hadir / $total_hari) * 100, 2) : 0;
+        
+        // Ambil data pemilik instansi dari variabel $instansi yang dikirim controller
+        // Data diambil dari tabel instansi row pemilik
+        $namaPemilik = isset($instansi) && !empty($instansi->pemilik) 
+            ? $instansi->pemilik 
+            : '(Pemilik Instansi)';
+            
+        $namaInstansi = isset($instansi) && !empty($instansi->nama_instansi) 
+            ? $instansi->nama_instansi 
+            : 'DU/DI';
     @endphp
 
     <div class="header">
@@ -180,9 +217,9 @@
             <td>{{ $siswa->kelas_lengkap }}</td>
         </tr>
         <tr>
-            <td class="label">Guru Pembimbing</td>
+            <td class="label">Instansi / DU/DI</td>
             <td class="separator">:</td>
-            <td>{{ $guru->nama }}</td>
+            <td>{{ $namaInstansi }}</td>
         </tr>
     </table>
 
@@ -234,17 +271,31 @@
         </table>
     </div>
 
-    <div class="footer">
-        <div class="signature-section">
-            <div class="signature-box">
-                <div>Mengetahui,</div>
-                <div style="margin-top: 5px; font-weight: bold;">Guru Pembimbing</div>
-                <div class="signature-line">{{ $guru->nama }}</div>
-            </div>
+    <!-- Tanda Tangan Pemilik Instansi (diambil dari tabel instansi row pemilik) -->
+    <div class="signature-section">
+        <!-- Kolom kiri: dikosongkan untuk menjaga simetri -->
+        <div class="signature-col">
+            <p class="sig-location">&nbsp;</p>
+            <p class="sig-role">&nbsp;</p>
+            <div class="sig-line" style="visibility: hidden;"></div>
+            <p class="sig-name">&nbsp;</p>
         </div>
-        
-        <div style="margin-top: 15px;">
-            <p class="print-info">Dokumen ini dicetak pada: {{ date('d F Y, H:i') }} WIB</p>
+
+        <!-- Kolom Kanan: Pemilik Instansi / Pimpinan DU/DI -->
+        <div class="signature-col">
+            <p class="sig-location">Bandung, {{ date('d F Y') }}</p>
+            <p class="sig-role">Pemilik Instansi</p>
+            <div class="sig-line"></div>
+            <p class="sig-name">{{ $namaPemilik }}</p>
+            @if(isset($instansi) && !empty($instansi->nip_pemilik))
+                <div class="sig-nip">NIP. {{ $instansi->nip_pemilik }}</div>
+            @endif
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="print-info">
+            Dokumen ini dicetak pada: {{ date('d F Y, H:i') }} WIB
         </div>
     </div>
 </body>

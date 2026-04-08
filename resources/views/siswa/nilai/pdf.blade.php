@@ -126,34 +126,54 @@
             background: #e3e3e3;
         }
 
+        /* ─── Signature Section ─── */
         .signature-section {
-            margin-top: 50px;
-            text-align: right;
+            margin-top: 40px;
+            width: 100%;
+            /* Use table layout so DomPDF renders columns correctly */
+            display: table;
+            table-layout: fixed;
         }
 
-        .signature-box {
-            display: inline-block;
+        .signature-col {
+            display: table-cell;
+            width: 50%;
             text-align: center;
-            padding: 20px;
+            vertical-align: top;
+            padding: 0 10px;
         }
 
-        .signature-box p {
-            margin-bottom: 80px;
+        .signature-col .sig-location {
+            font-weight: normal;
+            margin-bottom: 4px;
+        }
+
+        .signature-col .sig-role {
             font-weight: bold;
+            margin-bottom: 75px; /* space for handwritten signature */
         }
 
-        .signature-line {
+        .signature-col .sig-line {
             border-top: 1px solid #000;
-            display: inline-block;
             width: 175px;
-            margin-top: 10px;
+            margin: 0 auto 6px auto;
+        }
+
+        .signature-col .sig-name {
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .signature-col .sig-nip {
+            font-size: 10px;
+            margin-top: 2px;
         }
 
         @media print {
             body {
                 padding: 20px 40px;
             }
-            
+
             @page {
                 size: A4;
                 margin: 0;
@@ -162,6 +182,7 @@
     </style>
 </head>
 <body>
+    <!-- ─── Letterhead ─── -->
     <div class="header">
         <h1>SMK BUDI BAKTI CIWIDEY</h1>
         <p>Jl. Raya Ciwidey No. 82, RT 001/RW 007, Desa Kelurahan Ciwidey,</p>
@@ -169,6 +190,7 @@
         <p>Tlp. (022) 5928262</p>
     </div>
 
+    <!-- ─── Student & Company Info ─── -->
     <div class="info-section">
         <div class="info-grid">
             <div class="info-row">
@@ -222,6 +244,7 @@
         </div>
     </div>
 
+    <!-- ─── Score Table ─── -->
     <table class="nilai-table">
         <thead>
             <tr>
@@ -313,6 +336,7 @@
         </tbody>
     </table>
 
+    <!-- ─── Final Score & Notes ─── -->
     <table class="nilai-akhir-table">
         <thead>
             <tr>
@@ -335,21 +359,40 @@
             <tr>
                 <td colspan="2" style="text-align: left; padding: 8px;">
                     @if($penilaian->keterangan)
-                    Catatan: {{ $penilaian->keterangan }}
+                        Catatan: {{ $penilaian->keterangan }}
                     @else
-                    Catatan:<br>Demikian keterangan ini dibuat, untuk digunakan sebagaimana mestinya.
+                        Catatan:<br>Demikian keterangan ini dibuat, untuk digunakan sebagaimana mestinya.
                     @endif
                 </td>
             </tr>
         </tbody>
     </table>
 
+    <!-- ─── Dual Signature Section ─── -->
+    {{--
+        Layout surat formal: tanda tangan pihak instansi (kiri) dan guru pembimbing sekolah (kanan).
+        DomPDF mendukung display:table sehingga kolom sejajar dengan baik.
+    --}}
     <div class="signature-section">
-        <div class="signature-box">
-            <p>Bandung, {{ date('d F Y') }}<br>Pembimbing DU/DI</p>
-            <div class="signature-line"></div>
-            <p style="margin-top: 10px; margin-bottom: 0;">{{ $penilaian->instansi->pemilik ?? '(............................)' }}</p>
+
+        <!-- Kolom Kiri: Pembimbing DU/DI -->
+        <div class="signature-col">
+            <p class="sig-location">Bandung, {{ date('d F Y') }}</p>
+            <p class="sig-role">Pembimbing DU/DI</p>
+            <!-- ruang tanda tangan -->
+            <div class="sig-line"></div>
+            <p class="sig-name">{{ $penilaian->instansi->pemilik ?? '(............................)' }}</p>
         </div>
+
+        <!-- Kolom Kanan: Guru Pembimbing Sekolah -->
+        <div class="signature-col">
+            <p class="sig-location">Bandung, {{ date('d F Y') }}</p>
+            <p class="sig-role">Guru Pembimbing</p>
+            <!-- ruang tanda tangan -->
+            <div class="sig-line"></div>
+            <p class="sig-name">{{ $siswa->guru->nama ?? '(............................)' }}</p>
+        </div>
+
     </div>
 </body>
 </html>
