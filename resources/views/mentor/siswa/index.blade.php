@@ -146,10 +146,6 @@
             font-size: 1.1rem;
         }
 
-        .search-box {
-            position: relative;
-        }
-
         .search-box input {
             border: 2px solid #e2e8f0;
             border-radius: 8px;
@@ -163,41 +159,6 @@
             border-color: #2c5aa0;
             box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.1);
             outline: none;
-        }
-
-        .search-box button {
-           background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
-            border: none;
-            color: #fff;
-            padding: 0.6rem 1.25rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .search-box button:hover {
-            background: #2c5aa0;
-        }
-
-        .btn-reset {
-            background: #6c757d;
-            border: none;
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-reset:hover {
-            background: #5a6268;
-            color: #fff;
         }
 
         .table-responsive {
@@ -627,40 +588,14 @@
                 </nav>
             
                 <div class="container-fluid">
-
                     <div class="table-card">
                         <div class="table-header">
                             <h5>Cari Siswa</h5>
                         </div>
                         <div style="padding: 1.5rem 2rem;">
-                            <form method="GET" action="{{ route('mentor.siswa.index') }}">
-                                <div class="row">
-                                    <div class="col-md-10 mb-3">
-                                        <div class="search-box">
-                                            <input type="text" 
-                                                   name="search" 
-                                                   placeholder="Cari Nama Siswa..."
-                                                   value="{{ request('search') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 mb-3">
-                                        <div class="search-box">
-                                            <button type="submit" style="width: 100%;">
-                                                <i class="fas fa-search"></i> Cari
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                @if(request('search'))
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <a href="{{ route('mentor.siswa.index') }}" class="btn-reset">
-                                            <i class="fas fa-redo"></i> Reset
-                                        </a>
-                                    </div>
-                                </div>
-                                @endif
-                            </form>
+                            <div class="search-box">
+                                <input type="text" id="searchInput" placeholder="Cari siswa...">
+                            </div>
                         </div>
                     </div>
 
@@ -670,7 +605,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            @if($siswa->count() > 0)
+                            @if($siswaList->count() > 0)
                             <table class="jurnal-table">
                                 <thead>
                                     <tr>
@@ -683,8 +618,8 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach($siswa as $index => $item)
+                                <tbody id="siswaTable">
+                                    @foreach($siswaList as $index => $item)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $item->nama }}</td>
@@ -820,6 +755,13 @@
             item.addEventListener('click', function() {
                 moreMenu.classList.remove('active');
                 moreMenuOverlay.classList.remove('active');
+            });
+        });
+
+        $('#searchInput').on('keyup', function() {
+            var value = $(this).val().toLowerCase();
+            $('#siswaTable tr').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
     </script>

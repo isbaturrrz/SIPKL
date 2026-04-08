@@ -756,13 +756,10 @@
 
                
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Edit Data User</h1>
-                    </div>
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Form Edit User</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Form Edit Admin</h6>
                         </div>
                         <div class="card-body">
                             @if ($errors->any())
@@ -845,12 +842,9 @@
                                     <select class="form-control @error('role') is-invalid @enderror" 
                                             id="role" 
                                             name="role" 
-                                            required>
-                                        <option value="">-- Pilih Role --</option>
+                                            required
+                                            readonly>
                                         <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
-                                        <option value="guru" {{ old('role', $user->role) == 'guru' ? 'selected' : '' }}>Guru</option>
-                                        <option value="siswa" {{ old('role', $user->role) == 'siswa' ? 'selected' : '' }}>Siswa</option>
-                                        <option value="mentor" {{ old('role', $user->role) == 'mentor' ? 'selected' : '' }}>Mentor</option>
                                     </select>
                                     @error('role')
                                         <div class="invalid-feedback">{{ $message }}</div>

@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,65 @@
         body {
             font-family: 'Nunito', sans-serif;
             background-color: #f8f9fc;
+        }
+
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #182151 0%, #3F7FB6 50%, #010B40 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            letter-spacing: 0.5px;
         }
 
         .sidebar {
@@ -427,12 +487,9 @@
             border-width: 3px !important;
         }
 
-        .swal2-icon.swal2-success {
-            border-color: #10b981 !important;
-        }
-
-        .swal2-icon.swal2-success [class^='swal2-success-line'] {
-            background-color: #10b981 !important;
+        .swal2-icon.swal2-warning {
+            border-color: #f59e0b !important;
+            color: #f59e0b !important;
         }
 
         .swal2-icon .swal2-icon-content {
@@ -500,6 +557,10 @@
             background: #f8fafc !important;
             border-color: #cbd5e1 !important;
             color: #475569 !important;
+        }
+
+        .swal2-styled:focus {
+            box-shadow: none !important;
         }
 
         @media (max-width: 768px) {
@@ -583,6 +644,12 @@
 </head>
 
 <body id="page-top">
+    <div id="page-loader">
+        <img src="{{ asset('dist_admin/img/logo.png') }}" alt="IPKL" class="loader-logo">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Memuat Form Tambah Instansi...</div>
+    </div>
+
     <div id="wrapper">
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
@@ -740,9 +807,9 @@
                                                    value="{{ old('no_hp') }}"
                                                    placeholder="Masukkan nomor HP (maksimal 13 digit)"
                                                    maxlength="13" 
-                                                   pattern="[0-9]+" 
-                                                   oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                                   required>
+                                                    pattern="[0-9]+" 
+                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                                    required>
                                             @error('no_hp')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -992,4 +1059,228 @@
                         <i class="fas fa-inbox"></i>
                         <span>Pengajuan Instansi</span>
                     </a>
-                </li
+                </li>
+                <li class="{{ request()->routeIs('admin.guru*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.guru.index') }}">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Kelola Guru</span>
+                    </a>
+                </li>
+                <li class="{{ request()->routeIs('admin.user*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.user.index') }}">
+                        <i class="fas fa-users"></i>
+                        <span>Kelola User</span>
+                    </a>
+                </li>
+                <li class="{{ request()->routeIs('admin.import*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.import.index') }}">
+                        <i class="fas fa-file-import"></i>
+                        <span>Import Data</span>
+                    </a>
+                </li>
+                <li class="{{ request()->routeIs('admin.sistem*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.sistem.index') }}">
+                        <i class="fas fa-cogs"></i>
+                        <span>Kelola Sistem</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="mobile-nav-footer">
+            @auth
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <div class="user-details">
+                    <div class="user-name">{{ Auth::user()->name }}</div>
+                    <div class="user-role">Administrator</div>
+                </div>
+                <a href="#" class="logout-mobile" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+                <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+            @endauth
+        </div>
+    </div>
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+    <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('page-loader').classList.add('hidden');
+            }, 800);
+        });
+
+        const mobileOverlay = document.getElementById('mobileNavOverlay');
+        const hamburgerBtn = document.getElementById('hamburgerMenuBtn');
+        const closeNavBtn = document.getElementById('closeNavBtn');
+
+        function openMobileMenu() {
+            mobileOverlay.classList.add('active');
+            document.body.classList.add('menu-open');
+        }
+
+        function closeMobileMenu() {
+            mobileOverlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+
+        if (hamburgerBtn) {
+            hamburgerBtn.addEventListener('click', openMobileMenu);
+        }
+
+        if (closeNavBtn) {
+            closeNavBtn.addEventListener('click', closeMobileMenu);
+        }
+
+        mobileOverlay.addEventListener('click', function(e) {
+            if (e.target === mobileOverlay) {
+                closeMobileMenu();
+            }
+        });
+
+        const mobileMenuLinks = document.querySelectorAll('.mobile-nav-menu a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                setTimeout(() => {
+                    closeMobileMenu();
+                }, 100);
+            });
+        });
+
+        var map = L.map('map').setView([-6.914744, 107.609810], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var marker;
+
+        map.on('click', function(e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            marker = L.marker([lat, lng]).addTo(map);
+
+            document.getElementById('latitude').value = lat.toFixed(6);
+            document.getElementById('longitude').value = lng.toFixed(6);
+        });
+
+        document.getElementById('btnSubmit').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const namaInstansi = document.getElementById('nama_instansi').value;
+            const pemilik = document.getElementById('pemilik').value;
+            const noHp = document.getElementById('no_hp').value;
+            const kuotaSiswa = document.getElementById('kuota_siswa').value;
+            const jurusanValue = document.getElementById('jurusan_diterima').value;
+            const alamat = document.getElementById('alamat').value;
+
+            if (!namaInstansi || !pemilik || !noHp || !kuotaSiswa || !jurusanValue || !alamat) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Data Tidak Lengkap',
+                    text: 'Mohon isi semua field yang bertanda bintang (*)',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            const jurusanLabels = {
+                'PPLG': 'PPLG',
+                'BRP': 'BRP',
+                'DKV': 'DKV',
+                'PPLG-BRP': 'PPLG dan BRP',
+                'PPLG-DKV': 'PPLG dan DKV',
+                'BRP-DKV': 'BRP dan DKV',
+                'PPLG-BRP-DKV': 'Semua Jurusan'
+            };
+            const jurusanLabel = jurusanLabels[jurusanValue] || jurusanValue;
+            const guruSelect = document.getElementById('id_guru');
+            const guruText = guruSelect.options[guruSelect.selectedIndex]?.text || 'Tidak ada guru pembimbing';
+
+            const confirmHTML = `
+                <div style="padding: 0.5rem 0;">
+                    <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <i class="fas fa-building" style="font-size: 1.75rem; color: #10b981;"></i>
+                    </div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Konfirmasi Tambah Instansi</h3>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">Apakah Anda yakin ingin menambahkan data instansi berikut?</p>
+                    
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; text-align: left; max-height: 350px; overflow-y: auto;">
+                        <table style="width: 100%; font-size: 0.85rem;">
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600; width: 35%;">Nama Instansi:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${namaInstansi}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Pemilik:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${pemilik}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">No HP:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${noHp}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Kuota Siswa:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${kuotaSiswa} siswa</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Jurusan:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${jurusanLabel}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Guru:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${guruText}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0.4rem 0; color: #64748b; font-weight: 600;">Alamat:</td>
+                                <td style="padding: 0.4rem 0; color: #1a1a1a; font-weight: 700;">${alamat.substring(0, 50)}${alamat.length > 50 ? '...' : ''}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div style="background: #d1fae5; border-left: 4px solid #10b981; padding: 0.65rem 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <p style="font-size: 0.8rem; color: #065f46; margin: 0; font-weight: 600;">
+                            <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
+                            Akun mentor akan dibuat secara otomatis
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            Swal.fire({
+                html: confirmHTML,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fas fa-save" style="margin-right: 0.5rem;"></i>Ya, Simpan',
+                cancelButtonText: '<i class="fas fa-times" style="margin-right: 0.5rem;"></i>Batal',
+                reverseButtons: true,
+                buttonsStyling: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('instansiForm').submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+```

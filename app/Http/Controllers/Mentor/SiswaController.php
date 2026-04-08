@@ -17,18 +17,12 @@ class SiswaController extends Controller
         $user = Auth::user();
         $instansiId = $user->id_instansi;
 
-        $query = Siswa::with('guru')
-        ->where('id_instansi', $instansiId)
-        ->orderBy('nama', 'asc');
+        $siswaList = Siswa::with('guru')
+            ->where('id_instansi', $instansiId)
+            ->orderBy('nama', 'asc')
+            ->get();
 
-        if ($request->has('search') && $request->search != '') {
-            $search = $request->search;
-            $query->where('nama', 'like', '%' . $search . '%');
-        }
-
-        $siswa = $query->get();
-
-        foreach ($siswa as $s) {
+        foreach ($siswaList as $s) {
             $jurnalStats = DB::table('jurnal')
                 ->where('id_siswa', $s->id_siswa)
                 ->where('status_verifikasi', 'verified')
@@ -69,7 +63,7 @@ class SiswaController extends Controller
             $s->predikat = $this->getPredikat($s->persentase_kehadiran);
         }
 
-        return view('mentor.siswa.index', compact('siswa'));
+        return view('mentor.siswa.index', compact('siswaList'));
     }
 
     public function show($id)

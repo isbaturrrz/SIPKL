@@ -22,13 +22,6 @@ class RiwayatJurnalController extends Controller
             ->orderBy('tgl', 'desc')
             ->orderBy('created_at', 'desc');
 
-        if ($request->has('search') && $request->search != '') {
-            $search = $request->search;
-            $query->whereHas('siswa', function($q) use ($search) {
-                $q->where('nama', 'like', '%' . $search . '%');
-            });
-        }
-
         if ($request->has('tanggal') && $request->tanggal != '') {
             $query->whereDate('tgl', $request->tanggal);
         }

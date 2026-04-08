@@ -14,12 +14,8 @@ class NilaiController extends Controller
     {
         $user = Auth::user();
         $instansiId = $user->id_instansi;
-        $search = $request->search;
 
-        $siswa = Siswa::where('id_instansi', $instansiId) 
-            ->when($search, function($q) use ($search) {
-                $q->where('nama', 'like', "%$search%");
-            })
+        $siswa = Siswa::where('id_instansi', $instansiId)
             ->with('penilaian')
             ->orderBy('nama', 'asc')
             ->paginate(10);

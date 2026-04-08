@@ -186,57 +186,84 @@ class InstansiController extends Controller
             $siswa = Siswa::where('id', $user->id)->first();
 
             if (!$siswa) {
+                DB::rollBack();
                 return redirect()->route('siswa.dashboard')
                     ->with('error', 'Data siswa tidak ditemukan');
             }
 
+            // Cek apakah siswa sudah memiliki instansi
             if (!empty($siswa->id_instansi)) {
+                DB::rollBack();
                 return redirect()->route('siswa.instansi.index')
                     ->with('error', 'Anda sudah memiliki instansi PKL');
             }
 
+            // Ambil data instansi untuk validasi jurusan
             $instansi = Instansi::findOrFail($id);
 
-            if ($instansi->kuota_terpakai >= $instansi->kuota_siswa) {
-                return redirect()->back()
-                    ->with('error', 'Kuota instansi sudah penuh');
-            }
-
+            // Validasi kesesuaian jurusan
             if (!$this->checkJurusanMatch($siswa->jurusan, $instansi->jurusan_diterima)) {
+                DB::rollBack();
                 return redirect()->back()
                     ->with('error', 'Jurusan Anda (' . $siswa->jurusan . ') tidak sesuai dengan jurusan yang diterima di instansi ini');
             }
 
+            // ✅ ATOMIC UPDATE: Update kuota hanya jika masih tersedia
+            // Query ini akan memastikan hanya 1 user yang berhasil jika kuota terakhir
+            $rowsAffected = DB::table('instansi')
+                ->where('id_instansi', $id)
+                ->where('kuota_terpakai', '<', DB::raw('kuota_siswa'))
+                ->update([
+                    'kuota_terpakai' => DB::raw('kuota_terpakai + 1')
+                ]);
+
+            // Jika tidak ada row yang ter-update, berarti kuota sudah penuh
+            if ($rowsAffected === 0) {
+                DB::rollBack();
+                Log::warning("Kuota instansi {$id} penuh. User {$siswa->id_siswa} gagal memilih.");
+                return redirect()->back()
+                    ->with('error', 'Maaf, kuota instansi sudah penuh. Silakan pilih instansi lain.');
+            }
+
+            // Update data siswa
             $siswa->update([
                 'id_instansi' => $instansi->id_instansi,
                 'id_guru' => $instansi->id_guru,
                 'status_penempatan' => 'sudah',
             ]);
 
-            Instansi::where('id_instansi', $instansi->id_instansi)
-                ->increment('kuota_terpakai');
-
             DB::commit();
+
+            Log::info("Siswa {$siswa->id_siswa} berhasil memilih instansi {$instansi->id_instansi}");
 
             return redirect()->route('siswa.dashboard')
                 ->with('success', 'Berhasil memilih instansi: ' . $instansi->nama_instansi);
 
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            DB::rollback();
+            Log::error('Instansi tidak ditemukan: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Instansi tidak ditemukan');
         } catch (\Exception $e) {
             DB::rollback();
             Log::error('Error in InstansiController@pilih: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
             return redirect()->back()
-                ->with('error', 'Terjadi kesalahan sistem');
+                ->with('error', 'Terjadi kesalahan sistem. Silakan coba lagi.');
         }
     }
 
     private function checkJurusanMatch($jurusanSiswa, $jurusanDiterima)
     {
+        // Jika jurusan_diterima kosong, berarti menerima semua jurusan
         if (empty($jurusanDiterima)) {
             return true;
         }
 
+        // Pisahkan multiple jurusan dengan delimiter '-'
         $jurusanArray = explode('-', $jurusanDiterima);
         
+        // Cek apakah jurusan siswa ada dalam array jurusan yang diterima
         return in_array($jurusanSiswa, $jurusanArray);
     }
 }

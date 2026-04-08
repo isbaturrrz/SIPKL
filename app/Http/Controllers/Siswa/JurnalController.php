@@ -96,7 +96,7 @@ class JurnalController extends Controller
                 $siswa->instansi->longitude
             );
             
-            if ($distance > 100) {
+            if ($distance > 150) {
                 return back()->with('error', 'Anda berada terlalu jauh dari lokasi instansi PKL (Jarak: ' . round($distance) . ' meter). Maksimal 100 meter.')->withInput();
             }
         }
@@ -203,7 +203,7 @@ class JurnalController extends Controller
                 $siswa->instansi->longitude
             );
             
-            if ($distance > 100) {
+            if ($distance > 150) {
                 return back()->with('error', 'Anda berada terlalu jauh dari lokasi instansi PKL (Jarak: ' . round($distance) . ' meter)')->withInput();
             }
         }

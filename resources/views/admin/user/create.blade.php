@@ -755,12 +755,9 @@
 
                
                 <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Tambah Data User</h1>
-                    </div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Tambah Data User</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Tambah Akun Admin</h6>
                         </div>
                         <div class="card-body">
                             @if (session('error'))
@@ -825,12 +822,9 @@
                                     <select class="form-control @error('role') is-invalid @enderror" 
                                             id="role" 
                                             name="role" 
-                                            required>
-                                        <option value="">-- Pilih Role --</option>
-                                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                        <option value="guru" {{ old('role') == 'guru' ? 'selected' : '' }}>Guru</option>
-                                        <option value="siswa" {{ old('role') == 'siswa' ? 'selected' : '' }}>Siswa</option>
-                                        <option value="mentor" {{ old('role') == 'mentor' ? 'selected' : '' }}>Mentor</option>
+                                            required
+                                            readonly>
+                                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }} >Admin</option>
                                     </select>
                                     @error('role')
                                         <div class="invalid-feedback">{{ $message }}</div>

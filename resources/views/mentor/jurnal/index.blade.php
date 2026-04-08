@@ -147,28 +147,30 @@
             font-size: 1.1rem;
         }
 
-        .search-box {
-            position: relative;
-            max-width: 350px;
-        }
-
-        .search-box input {
+        .search-box input, .filter-box input {
             border: 2px solid #e2e8f0;
             border-radius: 8px;
             padding: 0.6rem 1rem;
-            padding-right: 3rem;
             font-size: 0.9rem;
             width: 100%;
             transition: all 0.3s;
         }
 
-        .search-box input:focus {
+        .search-box input:focus, .filter-box input:focus {
             border-color: #2c5aa0;
             box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.1);
             outline: none;
         }
 
-        .search-box button {
+        .search-box label, .filter-box label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
             background: linear-gradient(135deg,#182151 11%,#3F7FB6 75%,#010B40 100% );
             border: none;
             color: #fff;
@@ -180,7 +182,7 @@
             font-size: 0.9rem;
         }
 
-        .search-box button:hover {
+        .btn-primary:hover {
             background: #2c5aa0;
         }
 
@@ -506,15 +508,6 @@
                 max-width: 60px;
             }
 
-            .table-header {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .search-box {
-                max-width: 100%;
-            }
-
             .jurnal-table {
                 font-size: 0.8rem;
             }
@@ -664,40 +657,42 @@
 
                     <div class="table-card">
                         <div class="table-header">
-                            <h5>Filter Jurnal</h5>
+                            <h5>Filter Tanggal</h5>
                         </div>
                         <div style="padding: 1.5rem 2rem;">
-                            <form method="GET" action="{{ route('mentor.jurnal.index') }}">
+                            <form method="GET" action="{{ route('mentor.jurnal.index') }}" id="filterForm">
                                 <div class="row">
-                                    <div class="col-md-12 mb-3">
-                                        <div class="search-box" style="max-width: 100%;">
-                                            <input type="text" name="search" placeholder="Cari nama siswa..." value="{{ request('search') }}">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="filter-box">
+                                            <label>Pilih Tanggal</label>
+                                            <input type="date" name="tanggal" id="tanggalFilter" value="{{ request('tanggal') }}">
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12 mb-3">
-                                        <div class="search-box" style="max-width: 100%;">
-                                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #64748b; font-size: 0.9rem;">Filter Tanggal</label>
-                                            <input type="date" name="tanggal" value="{{ request('tanggal') }}">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="search-box" style="max-width: 100%; display: flex; gap: 0.75rem;">
-                                            <button type="submit">
-                                                <i class="fas fa-search"></i> Cari
+                                    <div class="col-md-8 mb-3 d-flex align-items-end">
+                                        <div style="display: flex; gap: 0.75rem;">
+                                            <button type="submit" class="btn-primary">
+                                                <i class="fas fa-filter"></i> Filter
                                             </button>
+                                            @if(request('tanggal'))
                                             <a href="{{ route('mentor.jurnal.index') }}" class="btn-reset">
-                                                <i class="fas fa-sync"></i> Reset
+                                                <i class="fas fa-sync"></i> Reset Filter
                                             </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-header">
+                            <h5>Cari Siswa</h5>
+                        </div>
+                        <div style="padding: 1.5rem 2rem;">
+                            <div class="search-box">
+                                <input type="text" id="searchInput" placeholder="Cari nama siswa...">
+                            </div>
                         </div>
                     </div>
 
@@ -719,9 +714,9 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="jurnalTable">
                                     @foreach($jurnal as $index => $item)
-                                    <tr>
+                                    <tr id="row-{{ $item->id_jurnal }}">
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $item->siswa->nama ?? '-' }}</td>
                                         <td>{{ $item->tgl ? $item->tgl->format('d M Y') : '-' }}</td>
@@ -821,7 +816,7 @@
 
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}</script>
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
     <script>
@@ -850,6 +845,13 @@
             item.addEventListener('click', function() {
                 moreMenu.classList.remove('active');
                 moreMenuOverlay.classList.remove('active');
+            });
+        });
+
+        $('#searchInput').on('keyup', function() {
+            var value = $(this).val().toLowerCase();
+            $('#jurnalTable tr').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
     </script>

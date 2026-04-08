@@ -432,6 +432,10 @@
             display: block !important;
         }
 
+        .radius-badge.success {
+            background: #10b981;
+        }
+
         .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
             display: block !important;
             position: absolute !important;
@@ -1216,7 +1220,7 @@
         
         const instansiLat = {{ $siswa->instansi->latitude ?? 0 }};
         const instansiLng = {{ $siswa->instansi->longitude ?? 0 }};
-        const MAX_DISTANCE = 100;
+        const MAX_DISTANCE = 150;
 
         function showValidationAlert(title, message, icon = 'warning') {
             Swal.fire({
@@ -1448,7 +1452,7 @@
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors',
                 maxZoom: 19
-            }).addTo(map);
+            }).addTo(map);  
 
             if (instansiLat && instansiLng) {
                 instansiMarker = L.marker([instansiLat, instansiLng], {
@@ -1483,6 +1487,7 @@
 
             try {
                 const position = await GPSHelper.getCurrentPosition();
+
                 locationPermissionGranted = true;
                 updateUserLocation(position.latitude, position.longitude);
                 mapLoading.style.display = 'none';
@@ -1526,7 +1531,7 @@
                 badge.className = 'radius-badge';
                 
                 if (result.isWithinRadius) {
-                    badge.classList.add('');
+                    badge.classList.add('success');
                     badge.innerHTML = '<i class="fas fa-check-circle"></i> Dalam Radius ('+result.distance+' m)';
                 } else {
                     badge.classList.add('danger');

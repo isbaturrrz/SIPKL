@@ -1163,7 +1163,7 @@
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <a href="{{ route('admin.user.create') }}" class="btn-add">
-                            <i class="fas fa-plus"></i> Tambah User
+                            <i class="fas fa-plus"></i> Tambah Admin
                         </a>
                     </div>
 
