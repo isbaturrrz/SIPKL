@@ -17,7 +17,7 @@ class UserController extends Controller
         $search = $request->search;
         $filterRole = $request->filter_role;
 
-        $users = User::whereIn('role', ['admin', 'guru', 'mentor'])
+        $users = User::whereIn('role', ['admin', 'mentor'])
             ->when($search, function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%")
                       ->orWhere('username', 'like', "%{$search}%")

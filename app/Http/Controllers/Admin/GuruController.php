@@ -139,6 +139,9 @@ class GuruController extends Controller
             ]);
 
             DB::beginTransaction();
+
+            // Simpan tgl_lahir lama sebelum update untuk deteksi perubahan
+            $oldTglLahir = $guru->tgl_lahir;
             
             $guru->update([
                 'nama' => $request->nama,
@@ -156,7 +159,7 @@ class GuruController extends Controller
                     'email' => $request->email,
                 ];
 
-                if ($guru->tgl_lahir != $request->tgl_lahir) {
+                if ($oldTglLahir != $request->tgl_lahir) {
                     $userUpdateData['password'] = Hash::make($request->tgl_lahir);
                     Log::info('Password diupdate karena tgl_lahir berubah', ['guru_id' => $guru->id]);
                 }

@@ -759,7 +759,7 @@
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Form Edit Admin</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Form Edit User</h6>
                         </div>
                         <div class="card-body">
                             @if ($errors->any())
@@ -842,9 +842,9 @@
                                     <select class="form-control @error('role') is-invalid @enderror" 
                                             id="role" 
                                             name="role" 
-                                            required
-                                            readonly>
+                                            required>
                                         <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
+                                        <option value="mentor" {{ old('role', $user->role) == 'mentor' ? 'selected' : '' }}>Mentor</option>
                                     </select>
                                     @error('role')
                                         <div class="invalid-feedback">{{ $message }}</div>

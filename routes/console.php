@@ -9,13 +9,13 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command('jurnal:reminder')
-    ->dailyAt('09:00')
-    ->timezone('Asia/Jakarta');
-
-Schedule::command('jurnal:reminder')
     ->dailyAt('12:00')
     ->timezone('Asia/Jakarta');
 
 Schedule::command('jurnal:reminder')
-    ->dailyAt('16:15')
+    ->dailyAt('17:00')
+    ->timezone('Asia/Jakarta');
+
+Schedule::command('jurnal:reminder')
+    ->dailyAt('20:00')
     ->timezone('Asia/Jakarta');

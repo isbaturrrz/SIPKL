@@ -1185,7 +1185,6 @@
                                             <select name="filter_role">
                                                 <option value="">-- Semua Role --</option>
                                                 <option value="admin" {{ request('filter_role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                                <option value="guru" {{ request('filter_role') == 'guru' ? 'selected' : '' }}>Guru</option>
                                                 <option value="mentor" {{ request('filter_role') == 'mentor' ? 'selected' : '' }}>Mentor</option>
                                             </select>
                                         </div>
