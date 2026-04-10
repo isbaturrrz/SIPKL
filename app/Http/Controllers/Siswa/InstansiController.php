@@ -82,13 +82,12 @@ class InstansiController extends Controller
                     ->with('error', 'Anda sudah memiliki instansi PKL');
             }
 
-            $pengajuanPending = PengajuanInstansi::where('id_siswa', $siswa->id_siswa)
-                ->where('status', 'pending')
-                ->exists();
+            // Cek apakah siswa sudah pernah mengajukan (status apapun)
+            $sudahMengajukan = PengajuanInstansi::where('id_siswa', $siswa->id_siswa)->exists();
 
-            if ($pengajuanPending) {
+            if ($sudahMengajukan) {
                 return redirect()->route('siswa.instansi.index')
-                    ->with('error', 'Anda masih memiliki pengajuan yang sedang diproses');
+                    ->with('error', 'Anda sudah pernah mengajukan instansi. Hanya satu pengajuan yang diperbolehkan.');
             }
 
             return view('siswa.instansi.create', compact('siswa'));
@@ -144,13 +143,12 @@ class InstansiController extends Controller
                     ->with('error', 'Anda sudah memiliki instansi PKL');
             }
 
-            $pengajuanPending = PengajuanInstansi::where('id_siswa', $siswa->id_siswa)
-                ->where('status', 'pending')
-                ->exists();
+            // Cek apakah siswa sudah pernah mengajukan (status apapun)
+            $sudahMengajukan = PengajuanInstansi::where('id_siswa', $siswa->id_siswa)->exists();
 
-            if ($pengajuanPending) {
+            if ($sudahMengajukan) {
                 return redirect()->route('siswa.instansi.index')
-                    ->with('error', 'Anda masih memiliki pengajuan yang sedang diproses');
+                    ->with('error', 'Anda sudah pernah mengajukan instansi. Hanya satu pengajuan yang diperbolehkan.');
             }
 
             PengajuanInstansi::create([
@@ -191,25 +189,20 @@ class InstansiController extends Controller
                     ->with('error', 'Data siswa tidak ditemukan');
             }
 
-            // Cek apakah siswa sudah memiliki instansi
             if (!empty($siswa->id_instansi)) {
                 DB::rollBack();
                 return redirect()->route('siswa.instansi.index')
                     ->with('error', 'Anda sudah memiliki instansi PKL');
             }
 
-            // Ambil data instansi untuk validasi jurusan
             $instansi = Instansi::findOrFail($id);
 
-            // Validasi kesesuaian jurusan
             if (!$this->checkJurusanMatch($siswa->jurusan, $instansi->jurusan_diterima)) {
                 DB::rollBack();
                 return redirect()->back()
                     ->with('error', 'Jurusan Anda (' . $siswa->jurusan . ') tidak sesuai dengan jurusan yang diterima di instansi ini');
             }
 
-            // ✅ ATOMIC UPDATE: Update kuota hanya jika masih tersedia
-            // Query ini akan memastikan hanya 1 user yang berhasil jika kuota terakhir
             $rowsAffected = DB::table('instansi')
                 ->where('id_instansi', $id)
                 ->where('kuota_terpakai', '<', DB::raw('kuota_siswa'))
@@ -217,7 +210,6 @@ class InstansiController extends Controller
                     'kuota_terpakai' => DB::raw('kuota_terpakai + 1')
                 ]);
 
-            // Jika tidak ada row yang ter-update, berarti kuota sudah penuh
             if ($rowsAffected === 0) {
                 DB::rollBack();
                 Log::warning("Kuota instansi {$id} penuh. User {$siswa->id_siswa} gagal memilih.");
@@ -225,7 +217,6 @@ class InstansiController extends Controller
                     ->with('error', 'Maaf, kuota instansi sudah penuh. Silakan pilih instansi lain.');
             }
 
-            // Update data siswa
             $siswa->update([
                 'id_instansi' => $instansi->id_instansi,
                 'id_guru' => $instansi->id_guru,
@@ -255,15 +246,12 @@ class InstansiController extends Controller
 
     private function checkJurusanMatch($jurusanSiswa, $jurusanDiterima)
     {
-        // Jika jurusan_diterima kosong, berarti menerima semua jurusan
         if (empty($jurusanDiterima)) {
             return true;
         }
 
-        // Pisahkan multiple jurusan dengan delimiter '-'
         $jurusanArray = explode('-', $jurusanDiterima);
-        
-        // Cek apakah jurusan siswa ada dalam array jurusan yang diterima
+
         return in_array($jurusanSiswa, $jurusanArray);
     }
 }

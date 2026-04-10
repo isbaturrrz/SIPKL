@@ -1053,13 +1053,13 @@
                                         </td>
                                         <td>{{ $item->created_at->format('d M Y') }}</td>
                                         <td>
-                                            <a href="{{ route('admin.pengajuan-instansi.show', $item->id_pengajuan) }}" class="btn-action btn-info">
+                                            <a href="{{ route('admin.pengajuan-instansi.show', $item->id_pengajuan) }}" class="btn-action btn-info mb-1">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             
                                             @if($item->status == 'pending')
                                             <button type="button" 
-                                                    class="btn-action btn-success" 
+                                                    class="btn-action btn-success mb-1" 
                                                     onclick="confirmApprove({{ $item->id_pengajuan }}, '{{ $item->nama_perusahaan }}')">
                                                 <i class="fas fa-check"></i>
                                             </button>
